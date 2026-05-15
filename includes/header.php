@@ -1,0 +1,155 @@
+<?php
+// Determine current page for active nav highlighting
+$current_page = basename($_SERVER['PHP_SELF'], '.php');
+$site_name    = get_setting('company_name', APP_NAME);
+$whatsapp     = get_setting('company_whatsapp', '');
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title><?= h($page_title ?? $site_name) ?> | <?= h($site_name) ?></title>
+  <meta name="description" content="<?= h($page_description ?? 'Affordable car hire, airport transfers, chauffeur and wedding packages in Kenya.') ?>">
+  <link rel="icon" href="/assets/favicon.png">
+  <link href="/assets/bundle.css" rel="stylesheet">
+  <style>[x-cloak]{display:none!important}</style>
+  <script>
+    function dropdown(){return{open:false,toggle(){this.open=!this.open},close(){this.open=false}}}
+    function megaMenu(){return{open:false,activeTab:'hotel',toggle(){this.open=!this.open},close(){this.open=false}}}
+    function navbar(){return{mobileOpen:false,searchOpen:false,isSticky:false,forceSticky:false,currentPage:'',handleScroll(){this.isSticky=this.forceSticky||window.scrollY>50},init(){this.forceSticky=this.$el.dataset.forceWhite==='1';this.handleScroll();this._sh=()=>this.handleScroll();window.addEventListener('scroll',this._sh,{passive:true});this.currentPage=window.location.pathname.split('/').pop().replace('.php','')},destroy(){if(this._sh)window.removeEventListener('scroll',this._sh)}}}
+    function carSinglePage(){return{gallery:[],activeImage:''}}
+    function accordion(){return{activeIndex:null,toggle(i){this.activeIndex=this.activeIndex===i?null:i}}}
+  </script>
+</head>
+<body x-data="{ loaded: true, mobileOpen: false, searchOpen: false }">
+
+<!-- Preloader -->
+<noscript><style>#gt-preloader{display:none!important}</style></noscript>
+<div id="gt-preloader"
+  class="js-preloader fixed inset-0 z-5000 flex flex-col items-center justify-center bg-white transition-opacity duration-500"
+  role="status" aria-live="polite" aria-label="Loading"
+  x-show="loaded"
+  x-init="window.addEventListener('DOMContentLoaded', () => { setTimeout(() => loaded = false, 400) })">
+  <div class="animate-gt-wrap relative flex h-[72px] w-[72px] items-center justify-center overflow-hidden rounded-[30px] bg-white shadow-[0_2px_24px_rgba(0,0,0,0.08)]">
+    <div class="animate-gt-icon absolute">
+      <svg class="h-[37px] w-[38px] text-blue-600" viewBox="0 0 38 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#pclip)">
+          <path d="M32.9675 13.9422C32.9675 6.25436 26.7129 0 19.0251 0C11.3372 0 5.08289 6.25436 5.08289 13.9422C5.08289 17.1322 7.32025 21.6568 11.7327 27.3906C13.0538 29.1071 14.3656 30.6662 15.4621 31.9166V35.8212C15.4621 36.4279 15.9539 36.92 16.561 36.92H21.4895C22.0965 36.92 22.5883 36.4279 22.5883 35.8212V31.9166C23.6849 30.6662 24.9966 29.1071 26.3177 27.3906C30.7302 21.6568 32.9675 17.1322 32.9675 13.9422Z" fill="currentColor"/>
+        </g>
+        <defs><clipPath id="pclip"><rect width="36.92" height="36.92" fill="white" transform="translate(0.54)"/></clipPath></defs>
+      </svg>
+    </div>
+  </div>
+  <div class="mt-4 text-2xl font-semibold text-slate-800"><?= h($site_name) ?></div>
+</div>
+<style>
+  .js-preloader.-is-hidden{opacity:0;pointer-events:none}
+  @keyframes gtWrap{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+  @keyframes gtIcon{0%{transform:translateY(150%) scale(1)}50%{transform:translateY(0%) scale(1.2) rotate(20deg)}100%{transform:translateY(-150%) rotate(-20deg)}}
+  .animate-gt-wrap{animation:gtWrap 1.8s ease infinite}
+  .animate-gt-icon{animation:gtIcon 1.8s ease infinite}
+</style>
+
+<div class="flex min-h-screen flex-col justify-between overflow-hidden">
+
+<!-- Header -->
+<header x-data="navbar()" data-force-white="<?= !empty($nav_white) ? '1' : '0' ?>"
+  :class="isSticky ? 'bg-white fixed border-border' : 'border-transparent bg-transparent absolute'"
+  class="inset-x-0 top-0 z-50 border-b transition-all duration-300">
+  <div class="mx-auto max-w-[1500px] px-8 sm:px-5">
+    <div class="flex h-20 items-center justify-between">
+
+      <!-- Logo + Desktop Nav -->
+      <div class="flex items-center">
+        <a href="/index.php" class="mr-12 min-w-[140px]">
+          <img src="/assets/images/general/logo-dark-2.svg" alt="<?= h($site_name) ?>" class="w-[140px]">
+        </a>
+        <nav class="hidden xl:flex">
+          <ul class="text-dark-1 flex items-center gap-6">
+            <li>
+              <a href="/index.php"
+                class="py-8 <?= $current_page === 'index' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="/cars.php"
+                class="py-8 <?= $current_page === 'cars' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
+                Car Hire
+              </a>
+            </li>
+            <li x-data="dropdown()" @mouseenter="open=true" @mouseleave="open=false" class="relative">
+              <button class="hover:text-blue-1 flex items-center py-8">
+                <span class="mr-2">Services</span>
+                <span :class="open?'rotate-180':''"><i class="icon-chevron-sm-down text-[8px]"></i></span>
+              </button>
+              <div x-cloak x-show="open" x-transition class="absolute top-full left-0 mt-0 w-52 rounded bg-white p-2.5 text-sm shadow-xl">
+                <a href="/index.php#airport-transfer" class="block rounded px-5 py-2 hover:text-blue-1 hover:bg-blue-1/5">Airport Transfer</a>
+                <a href="/index.php#chauffeur" class="block rounded px-5 py-2 hover:text-blue-1 hover:bg-blue-1/5">Chauffeur Service</a>
+                <a href="/index.php#wedding" class="block rounded px-5 py-2 hover:text-blue-1 hover:bg-blue-1/5">Wedding Packages</a>
+              </div>
+            </li>
+            <li>
+              <a href="/about.php"
+                class="py-8 <?= $current_page === 'about' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="/contact.php"
+                class="py-8 <?= $current_page === 'contact' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Right: CTA + Mobile Toggle -->
+      <div class="flex items-center gap-4">
+        <a href="/cars.php"
+          class="hidden xl:inline-flex bg-blue-1 text-white items-center h-12 rounded px-8 text-sm font-medium whitespace-nowrap transition-colors hover:bg-blue-2">
+          Book Now
+        </a>
+        <!-- Mobile icons -->
+        <div class="flex items-center space-x-4 xl:hidden">
+          <button @click="mobileOpen = !mobileOpen" class="text-dark-1 hover:text-blue-1">
+            <i class="icon-menu text-xl"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div x-cloak x-show="mobileOpen" class="fixed inset-0 z-50">
+    <div @click="mobileOpen=false" x-show="mobileOpen"
+      class="absolute inset-0 bg-black/50" style="display:none"></div>
+    <nav x-show="mobileOpen"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="-translate-x-full"
+      x-transition:enter-end="translate-x-0"
+      class="absolute inset-y-0 left-0 w-72 bg-white p-6 shadow-xl overflow-y-auto"
+      style="display:none">
+      <div class="mb-8 flex items-center justify-between">
+        <img src="/assets/images/general/logo-dark-2.svg" alt="<?= h($site_name) ?>" class="w-[120px]">
+        <button @click="mobileOpen=false"><i class="icon-close text-xl"></i></button>
+      </div>
+      <ul class="space-y-2 text-dark-1">
+        <li><a href="/index.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='index'?'text-blue-1 bg-blue-1/5':'' ?>">Home</a></li>
+        <li><a href="/cars.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='cars'?'text-blue-1 bg-blue-1/5':'' ?>">Car Hire</a></li>
+        <li><a href="/index.php#airport-transfer" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Airport Transfer</a></li>
+        <li><a href="/index.php#chauffeur" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Chauffeur Service</a></li>
+        <li><a href="/index.php#wedding" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Wedding Packages</a></li>
+        <li><a href="/about.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='about'?'text-blue-1 bg-blue-1/5':'' ?>">About Us</a></li>
+        <li><a href="/contact.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='contact'?'text-blue-1 bg-blue-1/5':'' ?>">Contact</a></li>
+      </ul>
+      <div class="mt-6">
+        <a href="/cars.php" class="bg-blue-1 text-white block text-center rounded px-4 py-3 font-medium">Book a Car</a>
+      </div>
+    </nav>
+  </div>
+</header>
