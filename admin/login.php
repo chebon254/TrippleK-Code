@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login | <?= h(get_setting('company_name', APP_NAME)) ?></title>
-  <link rel="icon" href="/assets/favicon.png">
+  <link rel="icon" href="/assets/images/logo/favicon.jpeg">
   <link href="/assets/bundle.css" rel="stylesheet">
 </head>
 <body class="bg-light-2 flex min-h-screen items-center justify-center px-4">
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Logo -->
   <div class="mb-8 text-center">
-    <img src="/assets/images/general/logo-dark.svg" alt="Logo" class="mx-auto mb-3 w-[160px]">
+    <img src="/assets/images/logo/tripplek-logo.jpeg" alt="Logo" width="220" height="56" class="mx-auto mb-3 w-[220px] h-[56px] object-contain">
     <p class="text-sm text-gray-500">Administration Panel</p>
   </div>
 

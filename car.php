@@ -68,7 +68,7 @@ require __DIR__ . '/includes/header.php';
 <main class="flex-grow pt-20" x-data="Object.assign(carSinglePage(), { gallery: _carGallery, activeImage: _carActive })">
 
   <!-- Breadcrumb -->
-  <div class="bg-light-2">
+  <div class="bg-dark-3">
     <section class="border-border flex items-center border-t py-5">
       <div class="container">
         <div class="flex flex-wrap items-center justify-between gap-y-2.5">
@@ -77,7 +77,7 @@ require __DIR__ . '/includes/header.php';
             <span>&gt;</span>
             <a href="/cars.php" class="hover:text-blue-1">Car Hire</a>
             <span>&gt;</span>
-            <span class="text-dark-1"><?= h($car['make'] . ' ' . $car['model']) ?></span>
+            <span class="text-white"><?= h($car['make'] . ' ' . $car['model']) ?></span>
           </div>
           <a href="/cars.php?category=<?= h($car['category_slug']) ?>" class="text-light-1 text-sm hover:text-blue-1">
             Browse <?= h($car['category_name']) ?> Cars
@@ -98,7 +98,7 @@ require __DIR__ . '/includes/header.php';
           <!-- Title & Actions -->
           <div class="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h1 class="text-26 text-dark-1 font-semibold">
+              <h1 class="text-26 text-white font-semibold">
                 <?= h($car['make'] . ' ' . $car['model']) ?>
               </h1>
               <div class="flex items-center gap-x-1.5 pt-1.5">
@@ -110,11 +110,11 @@ require __DIR__ . '/includes/header.php';
             </div>
             <div class="flex items-center gap-2">
               <?php if ($car['status'] === 'available'): ?>
-              <span class="bg-green-100 text-green-700 rounded-full px-3 py-1 text-sm font-medium">Available</span>
+              <span class="bg-green-500/15 text-green-400 rounded-full px-3 py-1 text-sm font-medium">Available</span>
               <?php elseif ($car['status'] === 'hired'): ?>
-              <span class="bg-yellow-100 text-yellow-700 rounded-full px-3 py-1 text-sm font-medium">Currently Hired</span>
+              <span class="bg-yellow-1/15 text-yellow-3 rounded-full px-3 py-1 text-sm font-medium">Currently Hired</span>
               <?php else: ?>
-              <span class="bg-red-100 text-red-700 rounded-full px-3 py-1 text-sm font-medium">Not Available</span>
+              <span class="bg-red-1/15 text-red-2 rounded-full px-3 py-1 text-sm font-medium">Not Available</span>
               <?php endif; ?>
             </div>
           </div>
@@ -130,7 +130,7 @@ require __DIR__ . '/includes/header.php';
             <div class="gap-3 max-sm:grid max-sm:grid-cols-4 sm:max-w-30">
               <template x-for="(image, index) in gallery" :key="index">
                 <button @click="activeImage = image"
-                  :class="activeImage === image ? 'border-dark-1' : ''"
+                  :class="activeImage === image ? 'border-blue-1' : ''"
                   class="border-border aspect-12/10 cursor-pointer overflow-hidden rounded border duration-300">
                   <img :src="image" alt="Car thumbnail" class="h-auto w-full object-cover object-center" />
                 </button>
@@ -143,66 +143,66 @@ require __DIR__ . '/includes/header.php';
             <h3 class="text-2xl font-semibold">Car Highlights</h3>
             <div class="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-4">
               <div class="flex items-start gap-3">
-                <i class="icon icon-user-2 mt-1 text-2xl text-gray-700"></i>
+                <i class="icon icon-user-2 mt-1 text-2xl text-white/70"></i>
                 <div>
-                  <div class="text-sm text-gray-500">Passengers</div>
+                  <div class="text-sm text-white/50">Passengers</div>
                   <div class="font-medium"><?= (int)$car['passenger_capacity'] ?></div>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <i class="icon icon-luggage mt-1 text-2xl text-gray-700"></i>
+                <i class="icon icon-luggage mt-1 text-2xl text-white/70"></i>
                 <div>
-                  <div class="text-sm text-gray-500">Luggage</div>
+                  <div class="text-sm text-white/50">Luggage</div>
                   <div class="font-medium"><?= (int)$car['luggage_capacity'] ?></div>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <i class="icon icon-transmission mt-1 text-2xl text-gray-700"></i>
+                <i class="icon icon-transmission mt-1 text-2xl text-white/70"></i>
                 <div>
-                  <div class="text-sm text-gray-500">Transmission</div>
+                  <div class="text-sm text-white/50">Transmission</div>
                   <div class="font-medium"><?= ucfirst(h($car['transmission'])) ?></div>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <i class="icon icon-speedometer mt-1 text-2xl text-gray-700"></i>
+                <i class="icon icon-speedometer mt-1 text-2xl text-white/70"></i>
                 <div>
-                  <div class="text-sm text-gray-500">Fuel</div>
+                  <div class="text-sm text-white/50">Fuel</div>
                   <div class="font-medium"><?= ucfirst(h($car['fuel_type'])) ?></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="my-10 border-t border-gray-200"></div>
+          <div class="my-10 border-t border-[#2a2a2a]"></div>
 
           <!-- Description -->
           <?php if ($car['description']): ?>
           <div>
             <h3 class="text-2xl font-semibold">Overview</h3>
-            <p class="mt-4 leading-relaxed text-gray-700"><?= nl2br(h($car['description'])) ?></p>
+            <p class="mt-4 leading-relaxed text-white/70"><?= nl2br(h($car['description'])) ?></p>
           </div>
-          <div class="my-10 border-t border-gray-200"></div>
+          <div class="my-10 border-t border-[#2a2a2a]"></div>
           <?php endif; ?>
 
           <!-- Specifications -->
           <div>
             <h3 class="text-2xl font-semibold">Specifications</h3>
             <div class="mt-4 grid grid-cols-1 gap-6 text-sm sm:grid-cols-3">
-              <div><div class="text-gray-500">Make</div><div class="font-medium"><?= h($car['make']) ?></div></div>
-              <div><div class="text-gray-500">Model</div><div class="font-medium"><?= h($car['model']) ?></div></div>
-              <div><div class="text-gray-500">Year</div><div class="font-medium"><?= (int)$car['year'] ?></div></div>
-              <div><div class="text-gray-500">Color</div><div class="font-medium"><?= h($car['color']) ?></div></div>
-              <div><div class="text-gray-500">Transmission</div><div class="font-medium"><?= ucfirst(h($car['transmission'])) ?></div></div>
-              <div><div class="text-gray-500">Fuel Type</div><div class="font-medium"><?= ucfirst(h($car['fuel_type'])) ?></div></div>
+              <div><div class="text-white/50">Make</div><div class="font-medium"><?= h($car['make']) ?></div></div>
+              <div><div class="text-white/50">Model</div><div class="font-medium"><?= h($car['model']) ?></div></div>
+              <div><div class="text-white/50">Year</div><div class="font-medium"><?= (int)$car['year'] ?></div></div>
+              <div><div class="text-white/50">Color</div><div class="font-medium"><?= h($car['color']) ?></div></div>
+              <div><div class="text-white/50">Transmission</div><div class="font-medium"><?= ucfirst(h($car['transmission'])) ?></div></div>
+              <div><div class="text-white/50">Fuel Type</div><div class="font-medium"><?= ucfirst(h($car['fuel_type'])) ?></div></div>
               <?php if ($car['engine_cc']): ?>
-              <div><div class="text-gray-500">Engine</div><div class="font-medium"><?= (int)$car['engine_cc'] ?> cc</div></div>
+              <div><div class="text-white/50">Engine</div><div class="font-medium"><?= (int)$car['engine_cc'] ?> cc</div></div>
               <?php endif; ?>
-              <div><div class="text-gray-500">Passengers</div><div class="font-medium"><?= (int)$car['passenger_capacity'] ?></div></div>
-              <div><div class="text-gray-500">Luggage</div><div class="font-medium"><?= (int)$car['luggage_capacity'] ?> bags</div></div>
+              <div><div class="text-white/50">Passengers</div><div class="font-medium"><?= (int)$car['passenger_capacity'] ?></div></div>
+              <div><div class="text-white/50">Luggage</div><div class="font-medium"><?= (int)$car['luggage_capacity'] ?> bags</div></div>
             </div>
           </div>
 
-          <div class="my-10 border-t border-gray-200"></div>
+          <div class="my-10 border-t border-[#2a2a2a]"></div>
 
           <!-- Amenities -->
           <div>
@@ -237,12 +237,12 @@ require __DIR__ . '/includes/header.php';
             </div>
           </div>
 
-          <div class="my-10 border-t border-gray-200"></div>
+          <div class="my-10 border-t border-[#2a2a2a]"></div>
 
           <!-- Requirements -->
           <div>
             <h3 class="text-2xl font-semibold">Rental Requirements</h3>
-            <ul class="mt-4 space-y-3 text-sm text-gray-700">
+            <ul class="mt-4 space-y-3 text-sm text-white/70">
               <li class="flex items-start gap-2"><i class="icon-check text-green-500 mt-0.5"></i> Original National ID or Valid Passport</li>
               <li class="flex items-start gap-2"><i class="icon-check text-green-500 mt-0.5"></i> Valid Driving License (min. 2 years experience)</li>
               <li class="flex items-start gap-2"><i class="icon-check text-green-500 mt-0.5"></i> Entry Visa — for foreign nationals</li>
@@ -257,15 +257,15 @@ require __DIR__ . '/includes/header.php';
         <!-- ===== Right Column – Booking Sidebar ===== -->
         <div class="lg:col-span-4">
           <div class="flex justify-end">
-            <div class="border-border sticky top-4 w-full rounded border bg-white p-7.5 lg:w-[360px]">
+            <div class="border-border sticky top-4 w-full rounded border bg-dark-3 p-7.5 lg:w-[360px]">
 
               <!-- Price -->
               <div class="mb-5 flex items-center justify-between">
                 <div class="text-light-1 text-sm">
-                  From <span class="text-dark-1 ml-1 text-xl font-medium"><?= format_kes($car['price_per_day']) ?></span> / day
+                  From <span class="text-white ml-1 text-xl font-medium"><?= format_kes($car['price_per_day']) ?></span> / day
                 </div>
                 <div class="bg-yellow-1 flex h-10 w-10 items-center justify-center rounded">
-                  <div class="text-dark-1 text-sm font-semibold">4.9</div>
+                  <div class="text-white text-sm font-semibold">4.9</div>
                 </div>
               </div>
 
@@ -276,7 +276,7 @@ require __DIR__ . '/includes/header.php';
 
                 <!-- Service type -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
-                  <p class="text-15 text-dark-1 mb-1 block font-medium">Service</p>
+                  <p class="text-15 text-white mb-1 block font-medium">Service</p>
                   <select name="service" class="outline-none text-light-1 w-full bg-transparent">
                     <?php foreach ($services as $svc): ?>
                     <option value="<?= h($svc['slug']) ?>"><?= h($svc['name']) ?></option>
@@ -286,35 +286,35 @@ require __DIR__ . '/includes/header.php';
 
                 <!-- Pickup location -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
-                  <p class="text-15 text-dark-1 mb-1 block font-medium">Pick up location</p>
+                  <p class="text-15 text-white mb-1 block font-medium">Pick up location</p>
                   <input type="text" name="pickup_location" placeholder="City or Airport"
                     class="outline-none text-light-1 w-full" required />
                 </div>
 
                 <!-- Drop off location -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
-                  <p class="text-15 text-dark-1 mb-1 block font-medium">Drop off location</p>
+                  <p class="text-15 text-white mb-1 block font-medium">Drop off location</p>
                   <input type="text" name="dropoff_location" placeholder="City or Airport (optional)"
                     class="outline-none text-light-1 w-full" />
                 </div>
 
                 <!-- Pickup date -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
-                  <p class="text-15 text-dark-1 mb-1 block font-medium">Pick up date</p>
+                  <p class="text-15 text-white mb-1 block font-medium">Pick up date</p>
                   <input type="date" name="pickup_date" min="<?= date('Y-m-d') ?>"
                     class="outline-none text-light-1 w-full" required />
                 </div>
 
                 <!-- Return date -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
-                  <p class="text-15 text-dark-1 mb-1 block font-medium">Return date</p>
+                  <p class="text-15 text-white mb-1 block font-medium">Return date</p>
                   <input type="date" name="return_date"
                     class="outline-none text-light-1 w-full" />
                 </div>
 
                 <!-- Submit -->
                 <button type="submit"
-                  class="bg-yellow-1 text-15 hover:bg-blue-1 text-dark-1 flex h-15 w-full cursor-pointer items-center justify-center gap-2.5 rounded px-9 duration-300 hover:text-white lg:inline-flex">
+                  class="bg-blue-1 text-15 hover:bg-dark-3 text-white flex h-15 w-full cursor-pointer items-center justify-center gap-2.5 rounded px-9 duration-300 lg:inline-flex">
                   Book Now
                 </button>
               </form>
@@ -322,19 +322,19 @@ require __DIR__ . '/includes/header.php';
               <!-- Airport Transfer pricing -->
               <?php if ($car['price_airport']): ?>
               <div class="mt-5 rounded bg-blue-1/5 p-4 text-sm">
-                <div class="text-dark-1 font-medium">Airport Transfer</div>
+                <div class="text-white font-medium">Airport Transfer</div>
                 <div class="text-light-1 mt-1">From <?= format_kes($car['price_airport']) ?></div>
               </div>
               <?php endif; ?>
               <?php if ($car['price_wedding']): ?>
               <div class="mt-3 rounded bg-yellow-1/10 p-4 text-sm">
-                <div class="text-dark-1 font-medium">Wedding Package</div>
+                <div class="text-white font-medium">Wedding Package</div>
                 <div class="text-light-1 mt-1">From <?= format_kes($car['price_wedding']) ?></div>
               </div>
               <?php endif; ?>
 
               <?php else: ?>
-              <div class="rounded bg-red-50 p-5 text-center text-sm text-red-700">
+              <div class="rounded bg-red-1/15 p-5 text-center text-sm text-red-2">
                 This vehicle is currently not available for booking.
                 <a href="/cars.php" class="mt-2 block font-medium text-blue-1 hover:underline">Browse other cars</a>
               </div>
@@ -352,7 +352,7 @@ require __DIR__ . '/includes/header.php';
   <section class="pb-20 pt-10 md:pb-30 md:pt-20">
     <div class="container">
       <div class="mb-10">
-        <h3 class="text-dark-1 text-2xl font-semibold">Similar Cars</h3>
+        <h3 class="text-white text-2xl font-semibold">Similar Cars</h3>
       </div>
       <?php
       $similar = $db->prepare('
@@ -375,7 +375,7 @@ require __DIR__ . '/includes/header.php';
         ?>
         <div class="group">
           <a href="/car.php?id=<?= (int)$sc['id'] ?>" class="block">
-            <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-gray-200">
+            <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
               <img src="<?= h($sc_thumb) ?>" alt="<?= h($sc['make'] . ' ' . $sc['model']) ?>"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 onerror="this.src='/assets/images/cars/1.png'">
@@ -386,20 +386,20 @@ require __DIR__ . '/includes/header.php';
                 <span class="bg-light-1 mx-2 h-1 w-1 rounded-full"></span>
                 <span class="uppercase"><?= h($sc['category_name']) ?></span>
               </div>
-              <h4 class="text-dark-1 mb-2 text-lg leading-tight font-medium">
+              <h4 class="text-white mb-2 text-lg leading-tight font-medium">
                 <?= h($sc['make'] . ' ' . $sc['model']) ?>
                 <span class="text-light-1 text-sm font-normal"><?= (int)$sc['year'] ?></span>
               </h4>
               <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
-                <div class="text-dark-1 flex items-center text-sm">
+                <div class="text-white flex items-center text-sm">
                   <span class="icon-user-2 mr-2"></span><span><?= (int)$sc['passenger_capacity'] ?></span>
                 </div>
-                <div class="text-dark-1 flex items-center text-sm">
+                <div class="text-white flex items-center text-sm">
                   <span class="icon-transmission mr-2"></span><span><?= ucfirst(h($sc['transmission'])) ?></span>
                 </div>
               </div>
               <div class="text-light-1 mt-4">
-                From <span class="text-dark-1 font-medium"><?= format_kes($sc['price_per_day']) ?></span> / day
+                From <span class="text-white font-medium"><?= format_kes($sc['price_per_day']) ?></span> / day
               </div>
             </div>
           </a>

@@ -56,7 +56,7 @@ require __DIR__ . '/includes/header.php';
     <?php else: ?>
     <div class="relative h-[400px] w-full bg-light-2 flex items-center justify-center">
       <div class="text-center">
-        <i class="icon-map text-dark-1 text-5xl mb-3"></i>
+        <i class="icon-map text-white text-5xl mb-3"></i>
         <p class="text-15 text-light-1">Map not configured — add it in Admin → Settings.</p>
       </div>
     </div>
@@ -68,27 +68,27 @@ require __DIR__ . '/includes/header.php';
         <div class="pointer-events-auto w-full max-w-[520px]">
 
           <?php if ($success): ?>
-          <div class="shadow-2 space-y-5 rounded bg-white p-5 sm:p-10 text-center">
+          <div class="shadow-2 space-y-5 rounded bg-dark-3 p-5 sm:p-10 text-center border border-border">
             <i class="icon-check text-blue-1 text-5xl"></i>
-            <h3 class="text-dark-1 text-2xl font-semibold">Message Sent!</h3>
+            <h3 class="text-white text-2xl font-semibold">Message Sent!</h3>
             <p class="text-15 text-light-1">Thank you for reaching out. We'll get back to you shortly.</p>
             <a href="/contact.php" class="text-15 text-blue-1 hover:underline">Send another message</a>
           </div>
 
           <?php else: ?>
-          <form method="post" class="shadow-2 space-y-5 rounded bg-white p-5 sm:p-10">
-            <h2 class="text-dark-1 text-2xl font-semibold">Send a message</h2>
+          <form method="post" class="shadow-2 space-y-5 rounded bg-dark-3 p-5 sm:p-10 border border-border">
+            <h2 class="text-white text-2xl font-semibold">Send a message</h2>
 
             <?php if ($error): ?>
-            <div class="rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"><?= h($error) ?></div>
+            <div class="rounded border border-red-2/30 bg-red-1/10 px-4 py-3 text-sm text-red-2"><?= h($error) ?></div>
             <?php endif; ?>
 
             <!-- Name -->
             <div class="relative">
               <input type="text" name="name" value="<?= h($_POST['name'] ?? '') ?>"
                 placeholder=" " aria-required="true"
-                class="peer border-border focus:border-dark-1 text-15 h-17.5 w-full rounded border px-4 placeholder-transparent outline-none focus:border-2">
-              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-dark-1 pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-base transition-all peer-not-placeholder-shown:top-4 peer-not-placeholder-shown:text-xs peer-focus:top-4 peer-focus:text-xs">
+                class="peer border-border focus:border-blue-1 text-15 h-17.5 w-full rounded border px-4 placeholder-transparent outline-none focus:border-2">
+              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-white pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-base transition-all peer-not-placeholder-shown:top-4 peer-not-placeholder-shown:text-xs peer-focus:top-4 peer-focus:text-xs">
                 Full Name *
               </label>
             </div>
@@ -97,8 +97,8 @@ require __DIR__ . '/includes/header.php';
             <div class="relative">
               <input type="email" name="email" value="<?= h($_POST['email'] ?? '') ?>"
                 placeholder=" " aria-required="true"
-                class="peer border-border focus:border-dark-1 text-15 h-17.5 w-full rounded border px-4 placeholder-transparent outline-none focus:border-2">
-              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-dark-1 pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-base transition-all peer-not-placeholder-shown:top-4 peer-not-placeholder-shown:text-xs peer-focus:top-4 peer-focus:text-xs">
+                class="peer border-border focus:border-blue-1 text-15 h-17.5 w-full rounded border px-4 placeholder-transparent outline-none focus:border-2">
+              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-white pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-base transition-all peer-not-placeholder-shown:top-4 peer-not-placeholder-shown:text-xs peer-focus:top-4 peer-focus:text-xs">
                 Email *
               </label>
             </div>
@@ -107,8 +107,8 @@ require __DIR__ . '/includes/header.php';
             <div class="relative">
               <input type="text" name="subject" value="<?= h($_POST['subject'] ?? '') ?>"
                 placeholder=" "
-                class="peer border-border focus:border-dark-1 text-15 h-17.5 w-full rounded border px-4 placeholder-transparent outline-none focus:border-2">
-              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-dark-1 pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-base transition-all peer-not-placeholder-shown:top-4 peer-not-placeholder-shown:text-xs peer-focus:top-4 peer-focus:text-xs">
+                class="peer border-border focus:border-blue-1 text-15 h-17.5 w-full rounded border px-4 placeholder-transparent outline-none focus:border-2">
+              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-white pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-base transition-all peer-not-placeholder-shown:top-4 peer-not-placeholder-shown:text-xs peer-focus:top-4 peer-focus:text-xs">
                 Subject
               </label>
             </div>
@@ -116,8 +116,8 @@ require __DIR__ . '/includes/header.php';
             <!-- Message -->
             <div class="relative">
               <textarea name="message" placeholder=" " aria-required="true" rows="5"
-                class="peer border-border focus:border-dark-1 text-15 w-full rounded border px-4 py-6 placeholder-transparent outline-none focus:border-2"><?= h($_POST['message'] ?? '') ?></textarea>
-              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-dark-1 pointer-events-none absolute top-6 left-4 text-base transition-all peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs peer-focus:top-2 peer-focus:text-xs">
+                class="peer border-border focus:border-blue-1 text-15 w-full rounded border px-4 py-6 placeholder-transparent outline-none focus:border-2"><?= h($_POST['message'] ?? '') ?></textarea>
+              <label class="text-light-1 peer-focus:text-blue-1 peer-not-placeholder-shown:text-white pointer-events-none absolute top-6 left-4 text-base transition-all peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs peer-focus:top-2 peer-focus:text-xs">
                 Message *
               </label>
             </div>
@@ -138,10 +138,10 @@ require __DIR__ . '/includes/header.php';
   </section>
 
   <!-- Contact Info -->
-  <section class="bg-white py-20 md:py-30">
+  <section class="bg-dark-2 py-20 md:py-30">
     <div class="container">
       <div class="mb-5">
-        <h2 class="text-dark-1 text-3xl font-semibold sm:text-2xl">Contact Us</h2>
+        <h2 class="text-white text-3xl font-semibold sm:text-2xl">Contact Us</h2>
       </div>
 
       <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12 xl:gap-20">
@@ -149,7 +149,7 @@ require __DIR__ . '/includes/header.php';
         <?php if ($company_address): ?>
         <div>
           <div class="text-light-1 mb-3 text-sm">Address</div>
-          <div class="text-dark-1 text-lg font-medium"><?= nl2br(h($company_address)) ?></div>
+          <div class="text-white text-lg font-medium"><?= nl2br(h($company_address)) ?></div>
         </div>
         <?php endif; ?>
 
@@ -157,7 +157,7 @@ require __DIR__ . '/includes/header.php';
         <div>
           <div class="text-light-1 mb-3 text-sm">Toll Free Customer Care</div>
           <a href="tel:<?= h(preg_replace('/\s+/', '', $company_phone)) ?>"
-            class="text-dark-1 hover:text-blue-1 text-lg font-medium transition">
+            class="text-white hover:text-blue-1 text-lg font-medium transition">
             <?= h($company_phone) ?>
           </a>
         </div>
@@ -167,7 +167,7 @@ require __DIR__ . '/includes/header.php';
         <div>
           <div class="text-light-1 mb-3 text-sm">Need live support?</div>
           <a href="mailto:<?= h($company_email) ?>"
-            class="text-dark-1 hover:text-blue-1 text-lg font-medium transition">
+            class="text-white hover:text-blue-1 text-lg font-medium transition">
             <?= h($company_email) ?>
           </a>
         </div>
@@ -178,7 +178,7 @@ require __DIR__ . '/includes/header.php';
           <div class="text-light-1 mb-3 text-sm">Chat with us</div>
           <a href="https://wa.me/<?= h(preg_replace('/[^0-9]/', '', $company_whatsapp)) ?>?text=Hello%2C+I+have+an+enquiry"
             target="_blank"
-            class="text-dark-1 hover:text-blue-1 text-lg font-medium transition">
+            class="text-white hover:text-blue-1 text-lg font-medium transition">
             WhatsApp Us
           </a>
           <p class="text-light-1 text-15 mt-1">Mon–Sat, 7am–9pm</p>

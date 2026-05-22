@@ -34,7 +34,7 @@ require __DIR__ . '/includes/header.php';
   <section class="pt-20 md:pt-30">
     <div class="container">
       <div class="mb-10 text-center">
-        <h2 class="text-dark-1 mb-3 text-3xl font-semibold">Why Choose Us</h2>
+        <h2 class="text-white mb-3 text-3xl font-semibold">Why Choose Us</h2>
         <p class="text-light-1 text-base">We go the extra mile so you don't have to worry</p>
       </div>
       <div class="-mx-4 flex flex-wrap justify-center gap-y-10 md:justify-between">
@@ -42,7 +42,7 @@ require __DIR__ . '/includes/header.php';
           <div class="mx-auto flex max-w-[300px] flex-col items-center text-center">
             <img src="/assets/src/images/featureIcons/1/1.svg" alt="Best Price Guarantee" class="size-17.5">
             <div class="mt-8">
-              <h4 class="text-dark-1 text-lg font-medium">Best Price Guarantee</h4>
+              <h4 class="text-white text-lg font-medium">Best Price Guarantee</h4>
               <p class="text-15 text-light-1 mt-2">Competitive daily and weekly rates with no hidden charges.</p>
             </div>
           </div>
@@ -51,7 +51,7 @@ require __DIR__ . '/includes/header.php';
           <div class="mx-auto flex max-w-[300px] flex-col items-center text-center">
             <img src="/assets/src/images/featureIcons/1/2.svg" alt="Easy & Quick Booking" class="size-17.5">
             <div class="mt-8">
-              <h4 class="text-dark-1 text-lg font-medium">Easy &amp; Quick Booking</h4>
+              <h4 class="text-white text-lg font-medium">Easy &amp; Quick Booking</h4>
               <p class="text-15 text-light-1 mt-2">Book online in minutes and get instant confirmation.</p>
             </div>
           </div>
@@ -60,7 +60,7 @@ require __DIR__ . '/includes/header.php';
           <div class="mx-auto flex max-w-[300px] flex-col items-center text-center">
             <img src="/assets/src/images/featureIcons/1/3.svg" alt="Customer Care 24/7" class="size-17.5">
             <div class="mt-8">
-              <h4 class="text-dark-1 text-lg font-medium">Customer Care 24/7</h4>
+              <h4 class="text-white text-lg font-medium">Customer Care 24/7</h4>
               <p class="text-15 text-light-1 mt-2">We're available around the clock for bookings and roadside support.</p>
             </div>
           </div>
@@ -74,9 +74,9 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="grid gap-7.5 lg:grid-cols-2">
         <div class="w-full self-center lg:max-w-[520px]">
-          <h2 class="text-dark-1 text-3xl font-semibold">About <?= h($company_name) ?></h2>
+          <h2 class="text-white text-3xl font-semibold">About <?= h($company_name) ?></h2>
           <p class="text-light-1 mt-2 text-base">Premier car hire and transport in Kenya</p>
-          <p class="text-dark-1 text-15 mt-15">
+          <p class="text-white text-15 mt-15">
             <?= h($company_name) ?> is a trusted car hire and transport service company based in Kenya.
             We provide reliable, comfortable, and affordable vehicle rental solutions for individuals,
             corporates, and special occasions across the country.
@@ -92,7 +92,7 @@ require __DIR__ . '/includes/header.php';
             <?php if ($company_whatsapp): ?>
             <a href="https://wa.me/<?= h(preg_replace('/[^0-9]/', '', $company_whatsapp)) ?>?text=Hello%2C+I%27d+like+to+learn+more"
               target="_blank"
-              class="border-border hover:border-dark-1 text-15 inline-flex h-15 items-center gap-2 rounded border px-6 font-medium text-dark-1 transition">
+              class="border-border hover:border-blue-1 text-15 inline-flex h-15 items-center gap-2 rounded border px-6 font-medium text-white transition">
               WhatsApp Us
             </a>
             <?php endif; ?>
@@ -100,24 +100,24 @@ require __DIR__ . '/includes/header.php';
         </div>
         <div>
           <div class="grid grid-cols-2 gap-4">
-            <div class="rounded border border-border bg-blue-1/5 p-6 text-center">
+            <div class="rounded border border-border bg-blue-1/10 p-6 text-center hover:border-blue-1">
               <i class="icon-car text-blue-1 text-4xl"></i>
-              <div class="mt-3 font-semibold text-dark-1">Car Hire</div>
+              <div class="mt-3 font-semibold text-white">Car Hire</div>
               <p class="text-15 text-light-1 mt-1">Daily &amp; weekly rentals</p>
             </div>
-            <div class="rounded border border-border bg-light-2 p-6 text-center">
+            <div class="rounded border border-border bg-dark-3 p-6 text-center hover:border-blue-1">
               <i class="icon-plane text-blue-1 text-4xl"></i>
-              <div class="mt-3 font-semibold text-dark-1">Airport Transfer</div>
+              <div class="mt-3 font-semibold text-white">Airport Transfer</div>
               <p class="text-15 text-light-1 mt-1">On-time, every time</p>
             </div>
-            <div class="rounded border border-border bg-light-2 p-6 text-center">
-              <i class="icon-user text-dark-1 text-4xl"></i>
-              <div class="mt-3 font-semibold text-dark-1">Chauffeur</div>
+            <div class="rounded border border-border bg-dark-3 p-6 text-center hover:border-blue-1">
+              <i class="icon-user text-white text-4xl"></i>
+              <div class="mt-3 font-semibold text-white">Chauffeur</div>
               <p class="text-15 text-light-1 mt-1">Professional drivers</p>
             </div>
-            <div class="rounded border border-border bg-blue-1/5 p-6 text-center">
+            <div class="rounded border border-border bg-blue-1/10 p-6 text-center hover:border-blue-1">
               <i class="icon-heart text-blue-1 text-4xl"></i>
-              <div class="mt-3 font-semibold text-dark-1">Wedding</div>
+              <div class="mt-3 font-semibold text-white">Wedding</div>
               <p class="text-15 text-light-1 mt-1">Elegant &amp; memorable</p>
             </div>
           </div>
@@ -131,19 +131,19 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="border-border grid grid-cols-1 gap-8 border-b pb-10 text-center sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div class="text-dark-1 text-3xl font-semibold sm:text-40"><?= $fleet_count ?>+</div>
+          <div class="text-white text-3xl font-semibold sm:text-40"><?= $fleet_count ?>+</div>
           <div class="text-light-1 mt-2 text-sm">Vehicles in Fleet</div>
         </div>
         <div>
-          <div class="text-dark-1 text-3xl font-semibold sm:text-40"><?= $booking_count ?>+</div>
+          <div class="text-white text-3xl font-semibold sm:text-40"><?= $booking_count ?>+</div>
           <div class="text-light-1 mt-2 text-sm">Happy Customers</div>
         </div>
         <div>
-          <div class="text-dark-1 text-3xl font-semibold sm:text-40">4</div>
+          <div class="text-white text-3xl font-semibold sm:text-40">4</div>
           <div class="text-light-1 mt-2 text-sm">Services Offered</div>
         </div>
         <div>
-          <div class="text-dark-1 text-3xl font-semibold sm:text-40">24/7</div>
+          <div class="text-white text-3xl font-semibold sm:text-40">24/7</div>
           <div class="text-light-1 mt-2 text-sm">Customer Support</div>
         </div>
       </div>
@@ -155,7 +155,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="grid gap-7.5 lg:grid-cols-2 lg:items-start">
         <div>
-          <h2 class="text-dark-1 text-3xl font-semibold">Rental Requirements</h2>
+          <h2 class="text-white text-3xl font-semibold">Rental Requirements</h2>
           <p class="text-light-1 text-15 mt-2">To hire a vehicle from us, you'll need the following:</p>
           <ul class="mt-6 space-y-3">
             <?php
@@ -170,7 +170,7 @@ require __DIR__ . '/includes/header.php';
             ?>
             <li class="flex items-start gap-3">
               <i class="icon-check text-blue-1 mt-0.5 shrink-0"></i>
-              <span class="text-dark-1 text-15"><?= h($req) ?></span>
+              <span class="text-white text-15"><?= h($req) ?></span>
             </li>
             <?php endforeach; ?>
           </ul>
@@ -180,7 +180,7 @@ require __DIR__ . '/includes/header.php';
           <p class="text-15 mt-2 text-white/80">Browse our fleet and book your car online in minutes. Instant confirmation on most vehicles.</p>
           <div class="mt-6 space-y-3">
             <a href="/cars.php"
-              class="block w-full rounded bg-white py-3 text-center text-sm font-semibold text-blue-1 hover:bg-light-2 transition">
+              class="block w-full rounded bg-dark-1 py-3 text-center text-sm font-semibold text-blue-1 hover:bg-dark-3 border border-blue-1/30 transition">
               Browse Available Cars
             </a>
             <?php if ($company_phone): ?>

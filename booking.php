@@ -34,23 +34,23 @@ if ($step === 'payment' && $booking_ref) {
         <div class="container">
           <div class="mx-auto max-w-2xl">
 
-            <h1 class="text-dark-1 mb-2 text-3xl font-semibold">Complete Your Payment</h1>
+            <h1 class="text-white mb-2 text-3xl font-semibold">Complete Your Payment</h1>
             <p class="text-light-1 text-15 mb-8">
-              Booking Reference: <strong class="font-mono text-dark-1"><?= h($booking['booking_ref']) ?></strong>
+              Booking Reference: <strong class="font-mono text-white"><?= h($booking['booking_ref']) ?></strong>
             </p>
 
             <!-- Booking Summary -->
-            <div class="border-border mb-8 rounded border bg-white p-6">
-              <h2 class="text-dark-1 mb-4 text-base font-semibold">Booking Summary</h2>
+            <div class="border-border mb-8 rounded border bg-dark-3 p-6">
+              <h2 class="text-white mb-4 text-base font-semibold">Booking Summary</h2>
               <div class="space-y-2 text-sm">
-                <div class="flex justify-between"><span class="text-light-1">Vehicle</span><span class="font-medium text-dark-1"><?= h($booking['make'] . ' ' . $booking['model']) ?></span></div>
-                <div class="flex justify-between"><span class="text-light-1">Service</span><span class="text-dark-1"><?= h($booking['service_name']) ?></span></div>
-                <div class="flex justify-between"><span class="text-light-1">Pickup</span><span class="text-dark-1"><?= h(display_date($booking['pickup_date'])) ?> at <?= h(substr($booking['pickup_time'] ?? '08:00', 0, 5)) ?></span></div>
+                <div class="flex justify-between"><span class="text-light-1">Vehicle</span><span class="font-medium text-white"><?= h($booking['make'] . ' ' . $booking['model']) ?></span></div>
+                <div class="flex justify-between"><span class="text-light-1">Service</span><span class="text-white"><?= h($booking['service_name']) ?></span></div>
+                <div class="flex justify-between"><span class="text-light-1">Pickup</span><span class="text-white"><?= h(display_date($booking['pickup_date'])) ?> at <?= h(substr($booking['pickup_time'] ?? '08:00', 0, 5)) ?></span></div>
                 <?php if ($booking['return_date']): ?>
-                <div class="flex justify-between"><span class="text-light-1">Return</span><span class="text-dark-1"><?= h(display_date($booking['return_date'])) ?></span></div>
+                <div class="flex justify-between"><span class="text-light-1">Return</span><span class="text-white"><?= h(display_date($booking['return_date'])) ?></span></div>
                 <?php endif; ?>
-                <div class="flex justify-between"><span class="text-light-1">Duration</span><span class="text-dark-1"><?= $booking['num_days'] ?> day<?= $booking['num_days'] > 1 ? 's' : '' ?></span></div>
-                <div class="border-border mt-3 flex justify-between border-t pt-3 font-bold text-dark-1">
+                <div class="flex justify-between"><span class="text-light-1">Duration</span><span class="text-white"><?= $booking['num_days'] ?> day<?= $booking['num_days'] > 1 ? 's' : '' ?></span></div>
+                <div class="border-border mt-3 flex justify-between border-t pt-3 font-bold text-white">
                   <span>Total Amount</span>
                   <span><?= format_kes($booking['total_amount']) ?></span>
                 </div>
@@ -60,24 +60,24 @@ if ($step === 'payment' && $booking_ref) {
             <!-- Payment Options -->
             <div x-data="paymentForm(<?= json_encode($booking['booking_ref']) ?>, <?= (float)$booking['total_amount'] ?>)">
 
-              <h2 class="text-dark-1 mb-4 text-base font-semibold">Select Payment Method</h2>
+              <h2 class="text-white mb-4 text-base font-semibold">Select Payment Method</h2>
 
               <!-- M-Pesa -->
-              <div class="border-border mb-4 rounded border bg-white p-5">
+              <div class="border-border mb-4 rounded border bg-dark-3 p-5">
                 <div class="mb-4 flex items-center gap-3">
                   <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-1/5">
                     <span class="text-sm font-bold text-blue-1">M</span>
                   </div>
                   <div>
-                    <div class="font-semibold text-dark-1">M-Pesa (Lipa Na MPesa)</div>
+                    <div class="font-semibold text-white">M-Pesa (Lipa Na MPesa)</div>
                     <div class="text-15 text-light-1">Safaricom STK Push — instant payment</div>
                   </div>
                 </div>
                 <div x-show="!mpesa.sent">
                   <div class="mb-3">
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">M-Pesa Phone Number</label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">M-Pesa Phone Number</label>
                     <input type="tel" x-model="mpesa.phone" placeholder="e.g. 0712345678"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none">
                   </div>
                   <button @click="sendMpesa()"
                     class="bg-blue-1 hover:bg-dark-1 text-15 w-full rounded px-4 py-3 font-medium text-white transition"
@@ -87,7 +87,7 @@ if ($step === 'payment' && $booking_ref) {
                   </button>
                 </div>
                 <div x-show="mpesa.sent" class="text-center">
-                  <div class="text-15 text-dark-1 mb-3">STK Push sent to <strong x-text="mpesa.phone"></strong>. Enter your PIN on your phone.</div>
+                  <div class="text-15 text-white mb-3">STK Push sent to <strong x-text="mpesa.phone"></strong>. Enter your PIN on your phone.</div>
                   <div class="animate-spin mx-auto mb-3 h-6 w-6 rounded-full border-2 border-blue-1 border-t-transparent"></div>
                   <div class="text-15 text-light-1">Waiting for payment confirmation...</div>
                   <div x-show="mpesa.error" class="mt-2 text-sm text-red-600" x-text="mpesa.error"></div>
@@ -96,13 +96,13 @@ if ($step === 'payment' && $booking_ref) {
               </div>
 
               <!-- Card / Airtel via Flutterwave -->
-              <div class="border-border mb-4 rounded border bg-white p-5">
+              <div class="border-border mb-4 rounded border bg-dark-3 p-5">
                 <div class="mb-4 flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded bg-light-2">
-                    <span class="text-sm font-bold text-dark-1">F</span>
+                  <div class="flex h-10 w-10 items-center justify-center rounded bg-dark-4">
+                    <span class="text-sm font-bold text-white">F</span>
                   </div>
                   <div>
-                    <div class="font-semibold text-dark-1">Card / Airtel Money</div>
+                    <div class="font-semibold text-white">Card / Airtel Money</div>
                     <div class="text-15 text-light-1">Visa, Mastercard, Airtel Money via Flutterwave</div>
                   </div>
                 </div>
@@ -115,43 +115,43 @@ if ($step === 'payment' && $booking_ref) {
               </div>
 
               <!-- Bank Transfer -->
-              <div class="border-border mb-4 rounded border bg-white p-5">
+              <div class="border-border mb-4 rounded border bg-dark-3 p-5">
                 <div class="mb-4 flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded bg-light-2">
-                    <i class="icon-building text-dark-1"></i>
+                  <div class="flex h-10 w-10 items-center justify-center rounded bg-dark-4">
+                    <i class="icon-building text-white"></i>
                   </div>
                   <div>
-                    <div class="font-semibold text-dark-1">Bank Transfer</div>
+                    <div class="font-semibold text-white">Bank Transfer</div>
                     <div class="text-15 text-light-1">Booking confirmed after payment proof received</div>
                   </div>
                 </div>
                 <div x-show="!bank.shown">
                   <button @click="bank.shown=true"
-                    class="border-border w-full rounded border px-4 py-3 text-sm text-dark-1 hover:bg-light-2 transition">
+                    class="border-border w-full rounded border px-4 py-3 text-sm text-white hover:bg-dark-4 transition">
                     View Bank Details
                   </button>
                 </div>
-                <div x-show="bank.shown" class="mt-3 rounded bg-light-2 px-4 py-3 text-sm">
+                <div x-show="bank.shown" class="mt-3 rounded bg-dark-4 px-4 py-3 text-sm">
                   <?php
                   $bank_name    = get_setting('invoice_bank_name', '');
                   $bank_account = get_setting('invoice_bank_account', '');
                   $bank_branch  = get_setting('invoice_bank_branch', '');
                   ?>
                   <?php if ($bank_name): ?>
-                  <div class="mb-1"><span class="text-light-1">Bank:</span> <strong class="text-dark-1"><?= h($bank_name) ?></strong></div>
+                  <div class="mb-1"><span class="text-light-1">Bank:</span> <strong class="text-white"><?= h($bank_name) ?></strong></div>
                   <?php endif; ?>
                   <?php if ($bank_account): ?>
-                  <div class="mb-1"><span class="text-light-1">Account:</span> <strong class="font-mono text-dark-1"><?= h($bank_account) ?></strong></div>
+                  <div class="mb-1"><span class="text-light-1">Account:</span> <strong class="font-mono text-white"><?= h($bank_account) ?></strong></div>
                   <?php endif; ?>
                   <?php if ($bank_branch): ?>
-                  <div class="mb-1"><span class="text-light-1">Branch:</span> <span class="text-dark-1"><?= h($bank_branch) ?></span></div>
+                  <div class="mb-1"><span class="text-light-1">Branch:</span> <span class="text-white"><?= h($bank_branch) ?></span></div>
                   <?php endif; ?>
-                  <div><span class="text-light-1">Reference:</span> <strong class="font-mono text-dark-1"><?= h($booking['booking_ref']) ?></strong></div>
+                  <div><span class="text-light-1">Reference:</span> <strong class="font-mono text-white"><?= h($booking['booking_ref']) ?></strong></div>
                   <p class="text-15 text-light-1 mt-3">After transfer, WhatsApp us your receipt to confirm your booking.</p>
                   <?php $wa = get_setting('company_whatsapp',''); if ($wa): ?>
                   <a href="https://wa.me/<?= h(preg_replace('/[^0-9]/', '', $wa)) ?>?text=Hello%2C+I%27ve+completed+bank+transfer+for+booking+<?= urlencode($booking['booking_ref']) ?>"
                     target="_blank"
-                    class="mt-3 flex items-center gap-2 text-sm font-medium text-dark-1 hover:text-blue-1 transition">
+                    class="mt-3 flex items-center gap-2 text-sm font-medium text-white hover:text-blue-1 transition">
                     <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
                     Send Receipt on WhatsApp
                   </a>
@@ -159,7 +159,7 @@ if ($step === 'payment' && $booking_ref) {
                 </div>
               </div>
 
-              <div x-show="error" class="mt-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600" x-text="error"></div>
+              <div x-show="error" class="mt-4 rounded border border-red-2/30 bg-red-1/10 px-4 py-3 text-sm text-red-2" x-text="error"></div>
 
             </div>
 
@@ -414,7 +414,7 @@ require __DIR__ . '/includes/header.php';
                 :class="step >= 1 ? 'text-white' : 'text-blue-1'">1</span>
             </div>
             <span class="hidden text-base font-medium sm:inline md:text-lg"
-              :class="step === 1 ? 'text-dark-1' : 'text-light-1'">Your Details</span>
+              :class="step === 1 ? 'text-white' : 'text-light-1'">Your Details</span>
           </div>
 
           <div class="bg-border mx-4 hidden h-px flex-1 md:block"></div>
@@ -430,7 +430,7 @@ require __DIR__ . '/includes/header.php';
                 :class="step >= 2 ? 'text-white' : 'text-blue-1'">2</span>
             </div>
             <span class="hidden text-base font-medium sm:inline md:text-lg"
-              :class="step === 2 ? 'text-dark-1' : 'text-light-1'">Review</span>
+              :class="step === 2 ? 'text-white' : 'text-light-1'">Review</span>
           </div>
 
           <div class="bg-border mx-4 hidden h-px flex-1 md:block"></div>
@@ -456,89 +456,89 @@ require __DIR__ . '/includes/header.php';
               x-transition:enter-start="opacity-0 scale-95"
               x-transition:enter-end="opacity-100 scale-100">
 
-              <h2 class="text-dark-1 mb-2 text-xl font-semibold md:text-2xl">Let us know who you are</h2>
+              <h2 class="text-white mb-2 text-xl font-semibold md:text-2xl">Let us know who you are</h2>
               <p class="text-light-1 text-15 mb-8">Fill in your details to complete the booking.</p>
 
               <div class="space-y-5">
 
                 <!-- Full name -->
                 <div>
-                  <label class="mb-1.5 block text-sm font-medium text-dark-1">Full Name <span class="text-red-500">*</span></label>
+                  <label class="mb-1.5 block text-sm font-medium text-white">Full Name <span class="text-red-500">*</span></label>
                   <input type="text" x-model="form.full_name"
                     placeholder="John Kamau"
-                    class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                    class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                 </div>
 
                 <!-- Email + Phone -->
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Email Address <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Email Address <span class="text-red-500">*</span></label>
                     <input type="email" x-model="form.email"
                       placeholder="john@email.com"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                   </div>
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Phone Number <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Phone Number <span class="text-red-500">*</span></label>
                     <input type="tel" x-model="form.phone"
                       placeholder="+254 7XX XXX XXX"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                   </div>
                 </div>
 
                 <!-- ID / Passport -->
                 <div>
-                  <label class="mb-1.5 block text-sm font-medium text-dark-1">ID / Passport Number</label>
+                  <label class="mb-1.5 block text-sm font-medium text-white">ID / Passport Number</label>
                   <input type="text" x-model="form.id_number"
                     placeholder="National ID or Passport No."
-                    class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                    class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                 </div>
 
                 <!-- Pickup / Dropoff -->
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Pickup Location <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Pickup Location <span class="text-red-500">*</span></label>
                     <input type="text" x-model="form.pickup_location"
                       placeholder="e.g. JKIA, Nairobi CBD"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                   </div>
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Drop-off Location</label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Drop-off Location</label>
                     <input type="text" x-model="form.dropoff_location"
                       placeholder="Same as pickup or different"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                   </div>
                 </div>
 
                 <!-- Dates -->
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Pickup Date <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Pickup Date <span class="text-red-500">*</span></label>
                     <input type="date" x-model="form.pickup_date"
                       min="<?= date('Y-m-d') ?>"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                   </div>
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Return Date</label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Return Date</label>
                     <input type="date" x-model="form.return_date"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                   </div>
                 </div>
 
                 <!-- Service + Passengers -->
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Service</label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Service</label>
                     <select x-model="form.service_slug"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                       <?php foreach ($services as $svc): ?>
                       <option value="<?= h($svc['slug']) ?>"><?= h($svc['name']) ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-dark-1">Passengers</label>
+                    <label class="mb-1.5 block text-sm font-medium text-white">Passengers</label>
                     <select x-model="form.num_passengers"
-                      class="border-border focus:border-dark-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
                       <?php for ($i = 1; $i <= $car['passenger_capacity']; $i++): ?>
                       <option value="<?= $i ?>"><?= $i ?> passenger<?= $i > 1 ? 's' : '' ?></option>
                       <?php endfor; ?>
@@ -548,15 +548,15 @@ require __DIR__ . '/includes/header.php';
 
                 <!-- Special Requests -->
                 <div>
-                  <label class="mb-1.5 block text-sm font-medium text-dark-1">Special Requests</label>
+                  <label class="mb-1.5 block text-sm font-medium text-white">Special Requests</label>
                   <textarea x-model="form.special_requests" rows="3"
                     placeholder="Baby seat, extra driver, airport greeting sign..."
-                    class="border-border focus:border-dark-1 text-15 w-full resize-none rounded border px-4 py-3 outline-none focus:border-2"></textarea>
+                    class="border-border focus:border-blue-1 text-15 w-full resize-none rounded border px-4 py-3 outline-none focus:border-2"></textarea>
                 </div>
 
                 <!-- Error -->
                 <div x-show="formError"
-                  class="rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+                  class="rounded border border-red-2/30 bg-red-1/10 px-4 py-3 text-sm text-red-2"
                   x-text="formError"></div>
 
                 <!-- CTA -->
@@ -577,80 +577,80 @@ require __DIR__ . '/includes/header.php';
               x-transition:enter-start="opacity-0 scale-95"
               x-transition:enter-end="opacity-100 scale-100">
 
-              <h2 class="text-dark-1 mb-2 text-xl font-semibold md:text-2xl">Review Your Booking</h2>
+              <h2 class="text-white mb-2 text-xl font-semibold md:text-2xl">Review Your Booking</h2>
               <p class="text-light-1 text-15 mb-8">Please confirm all details before proceeding to payment.</p>
 
               <!-- Details summary -->
-              <div class="border-border mb-6 rounded border bg-white">
-                <h3 class="text-dark-1 border-border border-b px-6 py-4 text-sm font-semibold uppercase tracking-wide">Your Information</h3>
+              <div class="border-border mb-6 rounded border bg-dark-3">
+                <h3 class="text-white border-border border-b px-6 py-4 text-sm font-semibold uppercase tracking-wide">Your Information</h3>
                 <div class="divide-border divide-y px-6">
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Full Name</span>
-                    <span class="text-dark-1 font-medium" x-text="form.full_name"></span>
+                    <span class="text-white font-medium" x-text="form.full_name"></span>
                   </div>
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Email</span>
-                    <span class="text-dark-1 text-sm" x-text="form.email"></span>
+                    <span class="text-white text-sm" x-text="form.email"></span>
                   </div>
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Phone</span>
-                    <span class="text-dark-1 text-sm" x-text="form.phone"></span>
+                    <span class="text-white text-sm" x-text="form.phone"></span>
                   </div>
                   <div class="flex items-center justify-between py-4" x-show="form.id_number">
                     <span class="text-light-1 text-sm">ID / Passport</span>
-                    <span class="text-dark-1 text-sm" x-text="form.id_number"></span>
+                    <span class="text-white text-sm" x-text="form.id_number"></span>
                   </div>
                 </div>
               </div>
 
               <!-- Trip details summary -->
-              <div class="border-border mb-6 rounded border bg-white">
-                <h3 class="text-dark-1 border-border border-b px-6 py-4 text-sm font-semibold uppercase tracking-wide">Trip Details</h3>
+              <div class="border-border mb-6 rounded border bg-dark-3">
+                <h3 class="text-white border-border border-b px-6 py-4 text-sm font-semibold uppercase tracking-wide">Trip Details</h3>
                 <div class="divide-border divide-y px-6">
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Vehicle</span>
-                    <span class="text-dark-1 font-medium"><?= h($car['make'] . ' ' . $car['model']) ?></span>
+                    <span class="text-white font-medium"><?= h($car['make'] . ' ' . $car['model']) ?></span>
                   </div>
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Service</span>
-                    <span class="text-dark-1 text-sm" x-text="form.service_slug"></span>
+                    <span class="text-white text-sm" x-text="form.service_slug"></span>
                   </div>
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Pickup Location</span>
-                    <span class="text-dark-1 text-sm" x-text="form.pickup_location"></span>
+                    <span class="text-white text-sm" x-text="form.pickup_location"></span>
                   </div>
                   <div class="flex items-center justify-between py-4" x-show="form.dropoff_location">
                     <span class="text-light-1 text-sm">Drop-off Location</span>
-                    <span class="text-dark-1 text-sm" x-text="form.dropoff_location"></span>
+                    <span class="text-white text-sm" x-text="form.dropoff_location"></span>
                   </div>
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Pickup Date</span>
-                    <span class="text-dark-1 text-sm" x-text="form.pickup_date"></span>
+                    <span class="text-white text-sm" x-text="form.pickup_date"></span>
                   </div>
                   <div class="flex items-center justify-between py-4" x-show="form.return_date">
                     <span class="text-light-1 text-sm">Return Date</span>
-                    <span class="text-dark-1 text-sm" x-text="form.return_date"></span>
+                    <span class="text-white text-sm" x-text="form.return_date"></span>
                   </div>
                   <div class="flex items-center justify-between py-4">
                     <span class="text-light-1 text-sm">Passengers</span>
-                    <span class="text-dark-1 text-sm" x-text="form.num_passengers + ' passenger(s)'"></span>
+                    <span class="text-white text-sm" x-text="form.num_passengers + ' passenger(s)'"></span>
                   </div>
                   <div class="flex items-center justify-between py-4" x-show="form.special_requests">
                     <span class="text-light-1 text-sm">Special Requests</span>
-                    <span class="text-dark-1 text-sm max-w-xs text-right" x-text="form.special_requests"></span>
+                    <span class="text-white text-sm max-w-xs text-right" x-text="form.special_requests"></span>
                   </div>
                 </div>
               </div>
 
               <!-- Error -->
               <div x-show="submitError"
-                class="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+                class="mb-4 rounded border border-red-2/30 bg-red-1/10 px-4 py-3 text-sm text-red-2"
                 x-text="submitError"></div>
 
               <!-- Actions -->
               <div class="flex flex-wrap items-center justify-between gap-4">
                 <button @click="step = 1; formError = ''"
-                  class="border-border text-light-1 hover:text-dark-1 inline-flex items-center gap-2 rounded border px-5 py-3 text-sm transition hover:bg-gray-50">
+                  class="border-border text-light-1 hover:text-white inline-flex items-center gap-2 rounded border px-5 py-3 text-sm transition hover:bg-gray-50">
                   <i class="icon-chevron-left text-xs"></i>
                   Edit Details
                 </button>
@@ -669,29 +669,29 @@ require __DIR__ . '/includes/header.php';
 
           <!-- RIGHT: Car Summary Card -->
           <div class="lg:col-span-5">
-            <div class="border-border space-y-0 rounded border bg-white lg:sticky lg:top-28">
+            <div class="border-border space-y-0 rounded border bg-dark-3 lg:sticky lg:top-28">
 
               <!-- Car image + name -->
               <div class="p-6 md:p-8">
-                <h3 class="text-dark-1 mb-5 text-lg font-medium md:text-xl">Your booking details</h3>
+                <h3 class="text-white mb-5 text-lg font-medium md:text-xl">Your booking details</h3>
 
                 <div class="mb-5 flex gap-4">
                   <img src="<?= h($thumb) ?>" alt="<?= h($car['make'] . ' ' . $car['model']) ?>"
                     class="h-24 w-24 flex-shrink-0 rounded object-cover md:h-28 md:w-28"
                     onerror="this.src='/assets/images/cars/1.png'">
                   <div class="flex-1 min-w-0">
-                    <h4 class="text-dark-1 mb-1 text-sm font-semibold leading-tight md:text-base">
+                    <h4 class="text-white mb-1 text-sm font-semibold leading-tight md:text-base">
                       <?= h($car['make'] . ' ' . $car['model']) ?>
                     </h4>
                     <p class="text-light-1 text-xs md:text-sm">
                       <?= h($car['category_name']) ?> &middot; <?= $car['year'] ?>
                     </p>
                     <div class="mt-3 space-y-1">
-                      <div class="text-dark-1 flex items-center gap-2 text-xs">
+                      <div class="text-white flex items-center gap-2 text-xs">
                         <i class="icon-transmission text-blue-1 text-sm"></i>
                         <?= ucfirst(h($car['transmission'])) ?>
                       </div>
-                      <div class="text-dark-1 flex items-center gap-2 text-xs">
+                      <div class="text-white flex items-center gap-2 text-xs">
                         <i class="icon-user-2 text-blue-1 text-sm"></i>
                         <?= $car['passenger_capacity'] ?> passengers max
                       </div>
@@ -707,19 +707,19 @@ require __DIR__ . '/includes/header.php';
                 <div class="grid grid-cols-2 gap-4">
                   <div>
                     <div class="text-light-1 text-xs mb-1">Pick-up</div>
-                    <div class="text-dark-1 text-sm font-medium">
+                    <div class="text-white text-sm font-medium">
                       <?= $pickup_date_url ? h(display_date($pickup_date_url)) : '—' ?>
                     </div>
                   </div>
                   <div class="text-right">
                     <div class="text-light-1 text-xs mb-1">Return</div>
-                    <div class="text-dark-1 text-sm font-medium">
+                    <div class="text-white text-sm font-medium">
                       <?= $return_date_url ? h(display_date($return_date_url)) : '—' ?>
                     </div>
                   </div>
                 </div>
                 <div class="text-light-1 mt-3 text-xs">
-                  Duration: <strong class="text-dark-1"><?= $days ?> day<?= $days !== 1 ? 's' : '' ?></strong>
+                  Duration: <strong class="text-white"><?= $days ?> day<?= $days !== 1 ? 's' : '' ?></strong>
                 </div>
               </div>
 
@@ -730,16 +730,16 @@ require __DIR__ . '/includes/header.php';
                 <div class="space-y-2.5 text-sm">
                   <div class="flex justify-between">
                     <span class="text-light-1"><?= format_kes($car['price_per_day']) ?> &times; <?= $days ?> day<?= $days !== 1 ? 's' : '' ?></span>
-                    <span class="text-dark-1"><?= format_kes($total_preview) ?></span>
+                    <span class="text-white"><?= format_kes($total_preview) ?></span>
                   </div>
                   <?php if ($car['price_airport'] && $service_slug === 'airport-transfer'): ?>
                   <div class="flex justify-between">
                     <span class="text-light-1">Airport Transfer Fee</span>
-                    <span class="text-dark-1"><?= format_kes($car['price_airport']) ?></span>
+                    <span class="text-white"><?= format_kes($car['price_airport']) ?></span>
                   </div>
                   <?php endif; ?>
                   <div class="border-border mt-3 flex justify-between border-t pt-3 font-semibold">
-                    <span class="text-dark-1">Estimated Total</span>
+                    <span class="text-white">Estimated Total</span>
                     <span class="text-blue-1 text-base"><?= format_kes($total_preview) ?></span>
                   </div>
                   <p class="text-light-1 text-xs">Final amount confirmed on review.</p>
@@ -751,7 +751,7 @@ require __DIR__ . '/includes/header.php';
               <!-- Requirements note -->
               <div class="p-6 md:p-8">
                 <p class="text-light-1 text-xs leading-relaxed">
-                  <strong class="text-dark-1">Required:</strong> Valid ID / Passport + Driving License.
+                  <strong class="text-white">Required:</strong> Valid ID / Passport + Driving License.
                   Security deposit <?= format_kes((float)get_setting('security_deposit_min','15000')) ?>–<?= format_kes((float)get_setting('security_deposit_max','50000')) ?> payable at pickup.
                 </p>
               </div>

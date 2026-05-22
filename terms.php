@@ -19,15 +19,15 @@ require __DIR__ . '/includes/header.php';
 
         <!-- Sidebar -->
         <div class="lg:col-span-3">
-          <div class="border-border rounded border bg-white p-8">
+          <div class="border-border rounded border bg-dark-3 p-8">
             <nav class="space-y-3" role="tablist">
               <button @click="activeTab = 'terms'"
-                :class="activeTab === 'terms' ? 'text-blue-1 font-medium' : 'text-dark-1 hover:text-blue-1'"
+                :class="activeTab === 'terms' ? 'text-blue-1 font-medium' : 'text-white hover:text-blue-1'"
                 class="text-15 w-full cursor-pointer rounded px-3 py-2 text-left transition">
                 Terms &amp; Conditions
               </button>
               <button @click="activeTab = 'privacy'"
-                :class="activeTab === 'privacy' ? 'text-blue-1 font-medium' : 'text-dark-1 hover:text-blue-1'"
+                :class="activeTab === 'privacy' ? 'text-blue-1 font-medium' : 'text-white hover:text-blue-1'"
                 class="text-15 w-full cursor-pointer rounded px-3 py-2 text-left transition">
                 Privacy Policy
               </button>
@@ -62,7 +62,7 @@ require __DIR__ . '/includes/header.php';
             ?>
             <div class="<?= $i > 0 ? 'mt-9' : '' ?>">
               <h2 class="text-base font-medium"><?= $heading ?></h2>
-              <div class="text-dark-1 text-15 mt-2 space-y-4 leading-relaxed">
+              <div class="text-white text-15 mt-2 space-y-4 leading-relaxed">
                 <p><?= $body ?></p>
               </div>
             </div>
@@ -71,7 +71,7 @@ require __DIR__ . '/includes/header.php';
             <!-- Cancellations as a list -->
             <div class="mt-9">
               <h2 class="text-base font-medium">5. Cancellations &amp; Refunds</h2>
-              <ul class="text-dark-1 text-15 mt-2 space-y-2 leading-relaxed list-disc pl-5">
+              <ul class="text-white text-15 mt-2 space-y-2 leading-relaxed list-disc pl-5">
                 <li>More than 48 hours before pickup: full refund minus a KES 500 processing fee.</li>
                 <li>24–48 hours before pickup: 50% refund.</li>
                 <li>Less than 24 hours before pickup: no refund.</li>
@@ -103,7 +103,7 @@ require __DIR__ . '/includes/header.php';
             <div class="<?= $i > 0 ? 'mt-9' : '' ?>">
               <h2 class="text-base font-medium"><?= $heading ?></h2>
               <?php if ($i === 1): ?>
-              <ul class="text-dark-1 text-15 mt-2 space-y-2 leading-relaxed list-disc pl-5">
+              <ul class="text-white text-15 mt-2 space-y-2 leading-relaxed list-disc pl-5">
                 <li>To process and confirm your booking</li>
                 <li>To communicate with you about your reservation</li>
                 <li>To process payments securely</li>
@@ -111,14 +111,14 @@ require __DIR__ . '/includes/header.php';
                 <li>To improve our services and website</li>
               </ul>
               <?php else: ?>
-              <div class="text-dark-1 text-15 mt-2 leading-relaxed"><p><?= $body ?></p></div>
+              <div class="text-white text-15 mt-2 leading-relaxed"><p><?= $body ?></p></div>
               <?php endif; ?>
             </div>
             <?php endforeach; ?>
 
             <div class="mt-9">
               <h2 class="text-base font-medium">8. Contact</h2>
-              <div class="text-dark-1 text-15 mt-2 leading-relaxed">
+              <div class="text-white text-15 mt-2 leading-relaxed">
                 <p>For any privacy-related enquiries, please contact us via the details on our <a href="/contact.php" class="text-blue-1 hover:underline">Contact page</a>.</p>
               </div>
             </div>

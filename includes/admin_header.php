@@ -28,7 +28,7 @@ try {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
   <title><?= h($page_title ?? 'Admin') ?> | <?= h($site_name) ?> Admin</title>
-  <link rel="icon" href="/assets/favicon.png">
+  <link rel="icon" href="/assets/images/logo/favicon.jpeg">
   <link href="/assets/bundle.css" rel="stylesheet">
   <style>
     [x-cloak]{display:none!important}
@@ -97,7 +97,7 @@ try {
         <!-- Left: Logo + Toggles + Search -->
         <div class="flex items-center gap-6">
           <a href="/admin/index.php" class="flex min-w-[140px] items-center">
-            <img src="/assets/images/general/logo-dark.svg" alt="<?= h($site_name) ?>" class="w-[140px]">
+            <img src="/assets/images/logo/tripplek-logo.jpeg" alt="<?= h($site_name) ?>" width="200" height="48" class="w-[200px] h-[48px] object-contain">
           </a>
 
           <!-- Mobile toggle -->

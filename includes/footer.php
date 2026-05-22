@@ -14,19 +14,19 @@ $year           = date('Y');
             <div class="grid grid-cols-1 gap-10 md:grid-cols-4">
 
               <div>
-                <img src="/assets/images/general/logo-light-2.svg" alt="<?= h($company_name) ?>" class="mb-6 w-[140px]">
+                <img src="/assets/images/logo/tripplek-logo.jpeg" alt="<?= h($company_name) ?>" width="200" height="48" class="mb-6 w-[200px] h-[48px] object-contain">
                 <?php if ($company_phone): ?>
                 <div class="mt-4">
                   <div class="text-sm text-white/70">Call Us</div>
                   <a href="tel:<?= h(preg_replace('/\s/', '', $company_phone)) ?>"
-                    class="mt-1 block text-lg font-medium hover:text-blue-1"><?= h($company_phone) ?></a>
+                    class="mt-1 block text-lg font-medium hover:text-yellow-3"><?= h($company_phone) ?></a>
                 </div>
                 <?php endif; ?>
                 <?php if ($company_email): ?>
                 <div class="mt-4">
                   <div class="text-sm text-white/70">Email Us</div>
                   <a href="mailto:<?= h($company_email) ?>"
-                    class="mt-1 block font-medium hover:text-blue-1"><?= h($company_email) ?></a>
+                    class="mt-1 block font-medium hover:text-yellow-3"><?= h($company_email) ?></a>
                 </div>
                 <?php endif; ?>
                 <?php if ($kra_pin): ?>
@@ -60,7 +60,7 @@ $year           = date('Y');
                 <h5 class="mb-6 text-base font-medium">Quick Book</h5>
                 <p class="mb-4 text-sm text-white/70">Ready to hit the road? Browse our fleet and book online.</p>
                 <a href="/cars.php"
-                  class="inline-block bg-blue-1 text-white rounded px-6 py-3 text-sm font-medium hover:bg-blue-2 transition-colors">
+                  class="inline-block bg-blue-1 text-white rounded px-6 py-3 text-sm font-medium hover:bg-yellow-3 hover:text-dark-1 transition-colors">
                   Browse Cars
                 </a>
                 <?php if ($company_wa): ?>

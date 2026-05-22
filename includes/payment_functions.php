@@ -131,7 +131,7 @@ function flutterwave_initiate_payment(array $booking, array $customer): array {
         'customizations' => [
             'title'       => APP_NAME . ' Payment',
             'description' => 'Booking ' . $booking['booking_ref'],
-            'logo'        => APP_URL . '/assets/images/logo/logo-1.png',
+            'logo'        => APP_URL . '/assets/images/logo/favicon.jpeg',
         ],
         'meta'           => ['booking_ref' => $booking['booking_ref']],
     ];

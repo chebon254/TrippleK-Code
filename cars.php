@@ -120,13 +120,13 @@ require __DIR__ . '/includes/header.php';
 
               <!-- Search bar -->
               <div class="border-border relative z-20 mb-7.5 w-full rounded border p-5">
-                <h3 class="text-dark-1 mb-3 text-lg font-medium">Search</h3>
+                <h3 class="text-white mb-3 text-lg font-medium">Search</h3>
                 <div class="flex w-full flex-col items-center gap-5">
                   <div class="grid w-full gap-5">
 
                     <!-- Pickup date -->
                     <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
-                      <p class="text-15 text-dark-1 mb-1 block font-medium">Pick up date</p>
+                      <p class="text-15 text-white mb-1 block font-medium">Pick up date</p>
                       <input type="date" name="date_from" value="<?= h($f_date_from) ?>"
                         min="<?= date('Y-m-d') ?>"
                         class="outline-none text-light-1 w-full" />
@@ -134,7 +134,7 @@ require __DIR__ . '/includes/header.php';
 
                     <!-- Return date -->
                     <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
-                      <p class="text-15 text-dark-1 mb-1 block font-medium">Return date</p>
+                      <p class="text-15 text-white mb-1 block font-medium">Return date</p>
                       <input type="date" name="date_to" value="<?= h($f_date_to) ?>"
                         min="<?= h($f_date_from ?: date('Y-m-d')) ?>"
                         class="outline-none text-light-1 w-full" />
@@ -142,7 +142,7 @@ require __DIR__ . '/includes/header.php';
 
                     <!-- Passengers -->
                     <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
-                      <p class="text-15 text-dark-1 mb-1 block font-medium">Passengers</p>
+                      <p class="text-15 text-white mb-1 block font-medium">Passengers</p>
                       <select name="passengers" class="outline-none text-light-1 w-full bg-transparent">
                         <option value="">Any</option>
                         <?php foreach ([1,2,3,4,5,6,7,8] as $p): ?>
@@ -154,7 +154,7 @@ require __DIR__ . '/includes/header.php';
 
                   <div class="w-full">
                     <button type="submit"
-                      class="bg-yellow-1 text-15 hover:bg-dark-1 text-dark-1 flex h-15 w-full cursor-pointer items-center justify-center gap-2.5 rounded px-9 duration-300 hover:text-white lg:inline-flex">
+                      class="bg-blue-1 text-15 hover:bg-dark-3 text-white flex h-15 w-full cursor-pointer items-center justify-center gap-2.5 rounded px-9 duration-300 lg:inline-flex">
                       <div class="icon-search text-xl"></div>
                       Search
                     </button>
@@ -165,11 +165,11 @@ require __DIR__ . '/includes/header.php';
               <!-- Car Category -->
               <div>
                 <h3 class="mb-3 text-lg font-medium">Car Category</h3>
-                <div class="text-dark-1 space-y-3 text-sm">
+                <div class="text-white space-y-3 text-sm">
                   <label class="flex items-center justify-between cursor-pointer">
                     <div class="flex items-center">
                       <input type="radio" name="category" value=""
-                        class="h-4 w-4 text-blue-600"
+                        class="h-4 w-4 accent-blue-1"
                         <?= $f_category === '' ? 'checked' : '' ?>>
                       <span class="ml-3">All Categories</span>
                     </div>
@@ -178,7 +178,7 @@ require __DIR__ . '/includes/header.php';
                   <label class="flex items-center justify-between cursor-pointer">
                     <div class="flex items-center">
                       <input type="radio" name="category" value="<?= h($cat['slug']) ?>"
-                        class="h-4 w-4 text-blue-600"
+                        class="h-4 w-4 accent-blue-1"
                         <?= $f_category === $cat['slug'] ? 'checked' : '' ?>>
                       <span class="ml-3"><?= h($cat['name']) ?></span>
                     </div>
@@ -190,22 +190,22 @@ require __DIR__ . '/includes/header.php';
               <!-- Transmission -->
               <div>
                 <h3 class="mb-3 text-lg font-medium">Transmission</h3>
-                <div class="text-dark-1 space-y-3 text-sm">
+                <div class="text-white space-y-3 text-sm">
                   <label class="flex items-center cursor-pointer">
                     <input type="radio" name="transmission" value=""
-                      class="h-4 w-4 text-blue-600"
+                      class="h-4 w-4 accent-blue-1"
                       <?= $f_transmission === '' ? 'checked' : '' ?>>
                     <span class="ml-3">Any</span>
                   </label>
                   <label class="flex items-center cursor-pointer">
                     <input type="radio" name="transmission" value="automatic"
-                      class="h-4 w-4 text-blue-600"
+                      class="h-4 w-4 accent-blue-1"
                       <?= $f_transmission === 'automatic' ? 'checked' : '' ?>>
                     <span class="ml-3">Automatic</span>
                   </label>
                   <label class="flex items-center cursor-pointer">
                     <input type="radio" name="transmission" value="manual"
-                      class="h-4 w-4 text-blue-600"
+                      class="h-4 w-4 accent-blue-1"
                       <?= $f_transmission === 'manual' ? 'checked' : '' ?>>
                     <span class="ml-3">Manual</span>
                   </label>
@@ -215,8 +215,8 @@ require __DIR__ . '/includes/header.php';
               <!-- Price Range -->
               <div class="pb-6"
                 x-data="rangeSlider({ min: 0, max: <?= $max_price_db ?>, startLower: <?= (int)($f_min_price ?: 0) ?>, startUpper: <?= (int)($f_max_price ?: $max_price_db) ?>, step: 500 })">
-                <h5 class="text-dark-1 mb-3 text-lg font-medium">Price / Day (KES)</h5>
-                <div class="text-dark-1 mb-5 flex justify-between text-base">
+                <h5 class="text-white mb-3 text-lg font-medium">Price / Day (KES)</h5>
+                <div class="text-white mb-5 flex justify-between text-base">
                   <span>KES <span x-text="lower.toLocaleString()"></span></span>
                   <span>KES <span x-text="upper.toLocaleString()"></span></span>
                 </div>
@@ -228,10 +228,10 @@ require __DIR__ . '/includes/header.php';
               <!-- Specifications -->
               <div>
                 <h3 class="mb-3 text-lg font-medium">Specifications</h3>
-                <div class="text-dark-1 space-y-3 text-sm">
+                <div class="text-white space-y-3 text-sm">
                   <label class="flex items-center cursor-pointer">
                     <input type="checkbox" name="has_ac" value="1"
-                      class="h-4 w-4 text-blue-600"
+                      class="h-4 w-4 accent-blue-1"
                       <?= $f_has_ac ? 'checked' : '' ?>>
                     <span class="ml-3">Air Conditioning</span>
                   </label>
@@ -248,7 +248,7 @@ require __DIR__ . '/includes/header.php';
           <!-- Results Header -->
           <div class="border-border mb-7.5 flex flex-wrap items-center justify-between gap-4 border-b pb-7.5">
             <div class="text-light-1 text-15">
-              <span class="text-dark-1 text-lg font-medium"><?= number_format($total_cars) ?></span>
+              <span class="text-white text-lg font-medium"><?= number_format($total_cars) ?></span>
               car<?= $total_cars !== 1 ? 's' : '' ?> found
               <?php if ($f_category): ?>
               <span class="ml-1">in <strong><?= h(array_column($categories, 'name', 'slug')[$f_category] ?? $f_category) ?></strong></span>
@@ -283,7 +283,7 @@ require __DIR__ . '/includes/header.php';
             ?>
             <div class="group">
               <a href="/car.php?id=<?= (int)$car['id'] ?>" class="block">
-                <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-gray-200">
+                <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
                   <img src="<?= h($thumb) ?>" alt="<?= h($car['make'] . ' ' . $car['model']) ?>"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     onerror="this.src='/assets/src/images/cars/1.png'">
@@ -294,29 +294,29 @@ require __DIR__ . '/includes/header.php';
                     <span class="bg-light-1 mx-2 h-1 w-1 rounded-full"></span>
                     <span class="uppercase"><?= h($car['category_name']) ?></span>
                   </div>
-                  <h4 class="text-dark-1 mb-2 text-lg leading-tight font-medium">
+                  <h4 class="text-white mb-2 text-lg leading-tight font-medium">
                     <?= h($car['make'] . ' ' . $car['model']) ?>
                     <span class="text-light-1 text-sm font-normal"><?= (int)$car['year'] ?></span>
                   </h4>
                   <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
-                    <div class="text-dark-1 flex items-center text-sm">
+                    <div class="text-white flex items-center text-sm">
                       <span class="icon-user-2 mr-2"></span><span><?= (int)$car['passenger_capacity'] ?></span>
                     </div>
-                    <div class="text-dark-1 flex items-center text-sm">
+                    <div class="text-white flex items-center text-sm">
                       <span class="icon-luggage mr-2"></span><span><?= (int)$car['luggage_capacity'] ?></span>
                     </div>
-                    <div class="text-dark-1 flex items-center text-sm">
+                    <div class="text-white flex items-center text-sm">
                       <span class="icon-transmission mr-2"></span>
                       <span><?= ucfirst(h($car['transmission'])) ?></span>
                     </div>
                     <?php if ($car['has_ac']): ?>
-                    <div class="text-dark-1 flex items-center text-sm">
+                    <div class="text-white flex items-center text-sm">
                       <span class="icon-ac mr-2"></span><span>A/C</span>
                     </div>
                     <?php endif; ?>
                   </div>
                   <div class="text-light-1 mt-4">
-                    From <span class="text-dark-1 font-medium"><?= format_kes($car['price_per_day']) ?></span> / day
+                    From <span class="text-white font-medium"><?= format_kes($car['price_per_day']) ?></span> / day
                   </div>
                 </div>
               </a>
