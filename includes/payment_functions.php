@@ -1,171 +1,131 @@
 <?php
 require_once __DIR__ . '/functions.php';
 
-// ─── M-Pesa Daraja ───────────────────────────────────────────────────────────
+// ─── Paystack ─────────────────────────────────────────────────────────────────
 
-function mpesa_base_url(): string {
-    $env = get_setting('mpesa_env', 'sandbox');
-    return $env === 'live'
-        ? 'https://api.safaricom.co.ke'
-        : 'https://sandbox.safaricom.co.ke';
+define('PAYSTACK_API', 'https://api.paystack.co');
+
+function paystack_secret_key(): string {
+    return get_setting('paystack_secret_key', '');
 }
 
-function mpesa_get_token(): string {
-    $key    = get_setting('mpesa_consumer_key');
-    $secret = get_setting('mpesa_consumer_secret');
+/**
+ * Initialize a Paystack transaction.
+ * Returns the full Paystack API response array.
+ * On success: $result['data']['authorization_url'] and $result['data']['reference'].
+ */
+function paystack_initialize_transaction(array $booking, array $customer): array {
+    $amount_kobo = (int) round((float)$booking['total_amount'] * 100); // KES → kobo/cents
 
-    $ch = curl_init(mpesa_base_url() . '/oauth/v1/generate?grant_type=client_credentials');
+    $payload = [
+        'email'        => $customer['email'],
+        'amount'       => $amount_kobo,
+        'currency'     => 'KES',
+        'reference'    => $booking['booking_ref'],
+        'callback_url' => APP_URL . '/booking.php?payment=complete&ref=' . urlencode($booking['booking_ref']),
+        'channels'     => ['card', 'mobile_money', 'bank'],
+        'metadata'     => [
+            'booking_ref'  => $booking['booking_ref'],
+            'customer_name'=> $customer['full_name'] ?? '',
+            'phone'        => $customer['phone']     ?? '',
+            'custom_fields'=> [
+                [
+                    'display_name'  => 'Booking Reference',
+                    'variable_name' => 'booking_ref',
+                    'value'         => $booking['booking_ref'],
+                ],
+            ],
+        ],
+    ];
+
+    $ch = curl_init(PAYSTACK_API . '/transaction/initialize');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_USERPWD        => "{$key}:{$secret}",
-        CURLOPT_HTTPHEADER     => ['Accept: application/json'],
-        CURLOPT_TIMEOUT        => 15,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($payload),
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . paystack_secret_key(),
+            'Content-Type: application/json',
+            'Cache-Control: no-cache',
+        ],
+        CURLOPT_TIMEOUT        => 30,
         CURLOPT_SSL_VERIFYPEER => APP_ENV === 'production',
     ]);
     $response = curl_exec($ch);
+    $err      = curl_error($ch);
     curl_close($ch);
 
-    $data = json_decode($response, true);
-    return $data['access_token'] ?? throw new RuntimeException('M-Pesa token request failed');
-}
-
-function mpesa_stk_push(string $phone, float $amount, string $booking_ref): array {
-    $shortcode  = get_setting('mpesa_shortcode');
-    $passkey    = get_setting('mpesa_passkey');
-    $timestamp  = date('YmdHis');
-    $password   = base64_encode($shortcode . $passkey . $timestamp);
-    $callback   = APP_URL . '/api/mpesa-callback.php';
-
-    // M-Pesa requires phone as 254XXXXXXXXX (no +)
-    $phone = preg_replace('/^\+/', '', $phone);
-    if (str_starts_with($phone, '0')) {
-        $phone = '254' . substr($phone, 1);
+    if ($err) {
+        throw new RuntimeException('Paystack cURL error: ' . $err);
     }
 
-    $token = mpesa_get_token();
-
-    $payload = [
-        'BusinessShortCode' => $shortcode,
-        'Password'          => $password,
-        'Timestamp'         => $timestamp,
-        'TransactionType'   => 'CustomerPayBillOnline',
-        'Amount'            => (int) ceil($amount),
-        'PartyA'            => $phone,
-        'PartyB'            => $shortcode,
-        'PhoneNumber'       => $phone,
-        'CallBackURL'       => $callback,
-        'AccountReference'  => $booking_ref,
-        'TransactionDesc'   => 'Tripple K Booking ' . $booking_ref,
-    ];
-
-    $ch = curl_init(mpesa_base_url() . '/mpesa/stkpush/v1/processrequest');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => json_encode($payload),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-        CURLOPT_TIMEOUT        => 30,
-        CURLOPT_SSL_VERIFYPEER => APP_ENV === 'production',
-    ]);
-    $response = curl_exec($ch);
-    curl_close($ch);
-
     return json_decode($response, true) ?? [];
 }
 
-function mpesa_query_stk(string $checkout_request_id): array {
-    $shortcode = get_setting('mpesa_shortcode');
-    $passkey   = get_setting('mpesa_passkey');
-    $timestamp = date('YmdHis');
-    $password  = base64_encode($shortcode . $passkey . $timestamp);
-
-    $token = mpesa_get_token();
-
-    $payload = [
-        'BusinessShortCode' => $shortcode,
-        'Password'          => $password,
-        'Timestamp'         => $timestamp,
-        'CheckoutRequestID' => $checkout_request_id,
-    ];
-
-    $ch = curl_init(mpesa_base_url() . '/mpesa/stkpushquery/v1/query');
+/**
+ * Verify a Paystack transaction by reference.
+ * Returns the full Paystack API response array.
+ * Check $result['data']['status'] === 'success' and $result['data']['amount'].
+ */
+function paystack_verify_transaction(string $reference): array {
+    $ch = curl_init(PAYSTACK_API . '/transaction/verify/' . rawurlencode($reference));
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => json_encode($payload),
         CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
+            'Authorization: Bearer ' . paystack_secret_key(),
+            'Cache-Control: no-cache',
         ],
         CURLOPT_TIMEOUT        => 15,
         CURLOPT_SSL_VERIFYPEER => APP_ENV === 'production',
     ]);
     $response = curl_exec($ch);
+    $err      = curl_error($ch);
     curl_close($ch);
+
+    if ($err) {
+        throw new RuntimeException('Paystack verify cURL error: ' . $err);
+    }
 
     return json_decode($response, true) ?? [];
 }
 
-// ─── Flutterwave ─────────────────────────────────────────────────────────────
-
-function flutterwave_base_url(): string {
-    return 'https://api.flutterwave.com/v3';
+/**
+ * Verify the X-Paystack-Signature header from a webhook request.
+ */
+function paystack_verify_webhook_signature(string $payload, string $signature): bool {
+    $expected = hash_hmac('sha512', $payload, paystack_secret_key());
+    return hash_equals($expected, $signature);
 }
 
-function flutterwave_initiate_payment(array $booking, array $customer): array {
-    $secret = get_setting('flutterwave_secret_key');
+/**
+ * Record a successful Paystack payment and confirm the booking in one transaction.
+ */
+function paystack_confirm_booking(PDO $db, int $booking_id, string $reference, array $data): void {
+    $amount   = (float)($data['amount'] ?? 0) / 100; // convert kobo back to KES
+    $channel  = $data['channel'] ?? 'card';
+    $currency = $data['currency'] ?? 'KES';
 
-    $payload = [
-        'tx_ref'         => $booking['booking_ref'],
-        'amount'         => $booking['total_amount'],
-        'currency'       => 'KES',
-        'redirect_url'   => APP_URL . '/booking.php?payment=complete&ref=' . urlencode($booking['booking_ref']),
-        'customer'       => [
-            'email'       => $customer['email'],
-            'phonenumber' => $customer['phone'],
-            'name'        => $customer['full_name'],
-        ],
-        'customizations' => [
-            'title'       => APP_NAME . ' Payment',
-            'description' => 'Booking ' . $booking['booking_ref'],
-            'logo'        => APP_URL . '/assets/images/logo/favicon.jpeg',
-        ],
-        'meta'           => ['booking_ref' => $booking['booking_ref']],
-    ];
+    $db->beginTransaction();
+    try {
+        $db->prepare('
+            INSERT INTO payments
+              (booking_id, payment_method, transaction_ref, gateway_ref, amount, currency, status, gateway_response, paid_at)
+            VALUES (?, ?, ?, ?, ?, ?, "completed", ?, NOW())
+        ')->execute([
+            $booking_id,
+            $channel,
+            $reference,
+            $data['id'] ?? $reference,
+            $amount,
+            $currency,
+            json_encode($data),
+        ]);
 
-    $ch = curl_init(flutterwave_base_url() . '/payments');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => json_encode($payload),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $secret,
-            'Content-Type: application/json',
-        ],
-        CURLOPT_TIMEOUT        => 30,
-        CURLOPT_SSL_VERIFYPEER => APP_ENV === 'production',
-    ]);
-    $response = curl_exec($ch);
-    curl_close($ch);
+        $db->prepare("UPDATE bookings SET status = 'confirmed' WHERE id = ?")->execute([$booking_id]);
 
-    return json_decode($response, true) ?? [];
-}
-
-function flutterwave_verify_transaction(string $transaction_id): array {
-    $secret = get_setting('flutterwave_secret_key');
-
-    $ch = curl_init(flutterwave_base_url() . '/transactions/' . $transaction_id . '/verify');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $secret],
-        CURLOPT_TIMEOUT        => 15,
-        CURLOPT_SSL_VERIFYPEER => APP_ENV === 'production',
-    ]);
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    return json_decode($response, true) ?? [];
+        $db->commit();
+    } catch (Throwable $e) {
+        $db->rollBack();
+        throw $e;
+    }
 }

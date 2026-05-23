@@ -37,8 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'company_name','company_tagline','company_phone','company_whatsapp',
         'company_email','company_address','company_hours','company_website','maps_embed_url',
         'kra_pin','tra_license','security_deposit_min','security_deposit_max',
-        'mpesa_env','mpesa_shortcode','mpesa_consumer_key','mpesa_consumer_secret','mpesa_passkey',
-        'flutterwave_env','flutterwave_public_key','flutterwave_secret_key','flutterwave_hash',
+        'paystack_env','paystack_public_key','paystack_secret_key',
         'invoice_prefix','invoice_footer','invoice_bank_name','invoice_bank_account','invoice_bank_branch',
     ];
 
@@ -142,77 +141,39 @@ require __DIR__ . '/../includes/admin_header.php';
         </div>
       </div>
 
-      <!-- M-Pesa -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-1 border-b border-gray-100 pb-3 text-base font-medium text-dark-1">M-Pesa (Daraja API)</h2>
-        <p class="mb-4 text-xs text-gray-400">Get credentials from <strong>developer.safaricom.co.ke</strong></p>
+      <!-- Paystack -->
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-1 border-b border-border pb-3 text-base font-medium text-white">Paystack (Cards, M-Pesa &amp; Mobile Money)</h2>
+        <p class="mb-4 text-xs text-light-1">Get credentials from <strong class="text-white">dashboard.paystack.com</strong> → Settings → API Keys &amp; Webhooks</p>
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Environment</label>
-            <select name="mpesa_env" class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
-              <option value="sandbox" <?= ($s['mpesa_env'] ?? '') === 'sandbox' ? 'selected' : '' ?>>Sandbox (Testing)</option>
-              <option value="live"    <?= ($s['mpesa_env'] ?? '') === 'live'    ? 'selected' : '' ?>>Live (Production)</option>
+            <label class="mb-1.5 block text-sm font-medium text-white">Environment</label>
+            <select name="paystack_env" class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 px-3 py-2.5 text-sm outline-none text-white">
+              <option value="test" <?= ($s['paystack_env'] ?? 'test') === 'test' ? 'selected' : '' ?>>Test (Sandbox)</option>
+              <option value="live" <?= ($s['paystack_env'] ?? '') === 'live' ? 'selected' : '' ?>>Live (Production)</option>
             </select>
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Paybill / Till Number</label>
-            <input type="text" name="mpesa_shortcode" value="<?= h($s['mpesa_shortcode'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
-          </div>
-          <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Consumer Key</label>
-            <input type="text" name="mpesa_consumer_key" value="<?= h($s['mpesa_consumer_key'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none font-mono text-xs">
-          </div>
-          <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Consumer Secret</label>
-            <input type="password" name="mpesa_consumer_secret" value="<?= h($s['mpesa_consumer_secret'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none font-mono text-xs">
+            <label class="mb-1.5 block text-sm font-medium text-white">Public Key <span class="text-light-1">(pk_test_ or pk_live_)</span></label>
+            <input type="text" name="paystack_public_key" value="<?= h($s['paystack_public_key'] ?? '') ?>"
+              placeholder="pk_test_xxxxxxxxxxxxxxxxxx"
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 px-3 py-2.5 text-sm outline-none font-mono text-white">
           </div>
           <div class="sm:col-span-2">
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Passkey (Lipa Na MPesa)</label>
-            <input type="password" name="mpesa_passkey" value="<?= h($s['mpesa_passkey'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none font-mono text-xs">
+            <label class="mb-1.5 block text-sm font-medium text-white">Secret Key <span class="text-light-1">(sk_test_ or sk_live_)</span></label>
+            <input type="password" name="paystack_secret_key" value="<?= h($s['paystack_secret_key'] ?? '') ?>"
+              placeholder="sk_test_xxxxxxxxxxxxxxxxxx"
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 px-3 py-2.5 text-sm outline-none font-mono text-white">
           </div>
         </div>
-        <p class="mt-3 text-xs text-gray-400">
-          Callback URL (register this with Safaricom):<br>
-          <code class="bg-gray-50 px-2 py-1 rounded text-xs"><?= APP_URL ?>/api/mpesa-callback.php</code>
-        </p>
-      </div>
-
-      <!-- Flutterwave -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-1 border-b border-gray-100 pb-3 text-base font-medium text-dark-1">Flutterwave (Cards & Airtel Money)</h2>
-        <p class="mb-4 text-xs text-gray-400">Get credentials from <strong>dashboard.flutterwave.com</strong></p>
-        <div class="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Environment</label>
-            <select name="flutterwave_env" class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
-              <option value="test" <?= ($s['flutterwave_env'] ?? '') === 'test' ? 'selected' : '' ?>>Test</option>
-              <option value="live" <?= ($s['flutterwave_env'] ?? '') === 'live' ? 'selected' : '' ?>>Live</option>
-            </select>
+        <div class="mt-4 rounded bg-dark-4 border border-border px-4 py-3 text-xs text-light-1 space-y-1">
+          <div><span class="text-white font-medium">Callback URL</span> — Paystack redirects customers here after payment:<br>
+            <code class="text-blue-1 font-mono"><?= APP_URL ?>/booking.php?payment=complete&amp;ref={reference}</code>
           </div>
-          <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Public Key</label>
-            <input type="text" name="flutterwave_public_key" value="<?= h($s['flutterwave_public_key'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none font-mono text-xs">
-          </div>
-          <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Secret Key</label>
-            <input type="password" name="flutterwave_secret_key" value="<?= h($s['flutterwave_secret_key'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none font-mono text-xs">
-          </div>
-          <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Webhook Hash</label>
-            <input type="password" name="flutterwave_hash" value="<?= h($s['flutterwave_hash'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none font-mono text-xs">
+          <div class="pt-1"><span class="text-white font-medium">Webhook URL</span> — Register this in your Paystack dashboard:<br>
+            <code class="text-blue-1 font-mono"><?= APP_URL ?>/api/paystack-webhook.php</code>
           </div>
         </div>
-        <p class="mt-3 text-xs text-gray-400">
-          Webhook URL (register in Flutterwave dashboard):<br>
-          <code class="bg-gray-50 px-2 py-1 rounded text-xs"><?= APP_URL ?>/api/flutterwave-callback.php</code>
-        </p>
       </div>
 
       <!-- Invoice / Bank -->

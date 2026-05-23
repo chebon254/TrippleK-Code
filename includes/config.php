@@ -9,8 +9,8 @@ define('DB_SOCKET',  '/home/kibe/.config/Local/run/8CM_ebu2L/mysql/mysqld.sock')
 define('DB_CHARSET', 'utf8mb4');
 
 // ─── Application ─────────────────────────────────────────────────────────────
-define('APP_URL',  'http://tripplek.local');   // → https://tripplek.co.ke on deploy
-define('APP_ENV',  'development');              // → 'production' on deploy
+define('APP_URL',  'https://saddlebrown-coyote-537196.hostingersite.com');  // → https://tripplek.co.ke on final deploy
+define('APP_ENV',  'production');               // 'development' | 'production'
 define('APP_NAME', 'Tripple K');
 
 // ─── Paths ───────────────────────────────────────────────────────────────────

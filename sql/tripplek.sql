@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
 CREATE TABLE IF NOT EXISTS `payments` (
   `id`               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
   `booking_id`       INT UNSIGNED  NOT NULL,
-  `payment_method`   ENUM('mpesa','airtel_money','bank_transfer','card','cash') NOT NULL,
+  `payment_method`   ENUM('card','mobile_money','bank_transfer','bank','cash') NOT NULL,
   `transaction_ref`  VARCHAR(100),
   `gateway_ref`      VARCHAR(100),
   `phone_number`     VARCHAR(20),
@@ -247,16 +247,10 @@ INSERT IGNORE INTO `settings` (`setting_key`, `setting_val`, `label`, `group_nam
   ('tra_license',            '',                               'TRA License Number',     'legal', 2),
   ('security_deposit_min',   '15000',                          'Min Security Deposit (KES)', 'legal', 3),
   ('security_deposit_max',   '50000',                          'Max Security Deposit (KES)', 'legal', 4),
-  -- Payments
-  ('mpesa_env',              'sandbox',                        'M-Pesa Environment',     'payments', 1),
-  ('mpesa_shortcode',        '',                               'M-Pesa Paybill/Till No', 'payments', 2),
-  ('mpesa_consumer_key',     '',                               'Daraja Consumer Key',    'payments', 3),
-  ('mpesa_consumer_secret',  '',                               'Daraja Consumer Secret', 'payments', 4),
-  ('mpesa_passkey',          '',                               'Daraja Passkey',         'payments', 5),
-  ('flutterwave_env',        'test',                           'Flutterwave Environment','payments', 6),
-  ('flutterwave_public_key', '',                               'Flutterwave Public Key', 'payments', 7),
-  ('flutterwave_secret_key', '',                               'Flutterwave Secret Key', 'payments', 8),
-  ('flutterwave_hash',       '',                               'Flutterwave Webhook Hash','payments', 9),
+  -- Payments (Paystack)
+  ('paystack_env',           'test',                           'Paystack Environment',   'payments', 1),
+  ('paystack_public_key',    '',                               'Paystack Public Key',    'payments', 2),
+  ('paystack_secret_key',    '',                               'Paystack Secret Key',    'payments', 3),
   -- Invoices
   ('invoice_prefix',         'TK',                             'Invoice Prefix',         'invoices', 1),
   ('invoice_footer',         'Thank you for choosing Tripple K!', 'Invoice Footer Text', 'invoices', 2),

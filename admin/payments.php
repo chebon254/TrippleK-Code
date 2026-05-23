@@ -15,7 +15,7 @@ $per_page    = 20;
 $current_page = max(1, (int)($_GET['page'] ?? 1));
 $offset       = ($current_page - 1) * $per_page;
 
-$allowed_methods  = ['mpesa', 'card', 'airtel_money', 'bank_transfer', 'cash'];
+$allowed_methods  = ['card', 'mobile_money', 'bank_transfer', 'bank', 'cash'];
 $allowed_statuses = ['processing', 'completed', 'failed', 'refunded', 'pending'];
 
 $where  = [];
@@ -101,10 +101,10 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
     <select name="method" class="border-border focus:border-dark-1 rounded border px-3 py-2.5 text-sm outline-none focus:border-2">
       <option value="">All Methods</option>
-      <option value="mpesa"         <?= $method_f === 'mpesa'         ? 'selected' : '' ?>>M-Pesa</option>
-      <option value="card"          <?= $method_f === 'card'          ? 'selected' : '' ?>>Card</option>
-      <option value="airtel_money"  <?= $method_f === 'airtel_money'  ? 'selected' : '' ?>>Airtel Money</option>
+      <option value="card"          <?= $method_f === 'card'          ? 'selected' : '' ?>>Card (Visa/Mastercard)</option>
+      <option value="mobile_money"  <?= $method_f === 'mobile_money'  ? 'selected' : '' ?>>Mobile Money (M-Pesa)</option>
       <option value="bank_transfer" <?= $method_f === 'bank_transfer' ? 'selected' : '' ?>>Bank Transfer</option>
+      <option value="bank"          <?= $method_f === 'bank'          ? 'selected' : '' ?>>Bank</option>
       <option value="cash"          <?= $method_f === 'cash'          ? 'selected' : '' ?>>Cash</option>
     </select>
     <select name="status" class="border-border focus:border-dark-1 rounded border px-3 py-2.5 text-sm outline-none focus:border-2">
@@ -164,11 +164,11 @@ require __DIR__ . '/../includes/admin_header.php';
           <td class="px-4 py-4 text-sm font-medium text-dark-1 hidden md:table-cell whitespace-nowrap">
             <?php
             echo match($p['payment_method']) {
-                'mpesa'         => 'M-Pesa',
-                'card'          => 'Card',
-                'airtel_money'  => 'Airtel Money',
-                'bank_transfer' => 'Bank Transfer',
-                'cash'          => 'Cash',
+                'card'          => '💳 Card',
+                'mobile_money'  => '📱 Mobile Money',
+                'bank_transfer' => '🏦 Bank Transfer',
+                'bank'          => '🏦 Bank',
+                'cash'          => '💵 Cash',
                 default         => ucwords(str_replace('_', ' ', $p['payment_method'])),
             };
             ?>

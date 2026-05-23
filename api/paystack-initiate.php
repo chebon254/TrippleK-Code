@@ -15,6 +15,10 @@ if (!$booking_ref) {
     json_response(['success' => false, 'error' => 'Booking reference required'], 400);
 }
 
+if (!paystack_secret_key()) {
+    json_response(['success' => false, 'error' => 'Payment gateway not configured. Please contact us.'], 503);
+}
+
 $db = get_db();
 
 $stmt = $db->prepare('
@@ -39,21 +43,22 @@ if ($booking['status'] === 'cancelled') {
 }
 
 try {
-    $result = flutterwave_initiate_payment(
+    $result = paystack_initialize_transaction(
         ['booking_ref' => $booking['booking_ref'], 'total_amount' => (float)$booking['total_amount']],
-        ['full_name'   => $booking['full_name'],   'email'        => $booking['email'], 'phone' => $booking['phone']]
+        ['full_name'   => $booking['full_name'],   'email'        => $booking['email'],  'phone' => $booking['phone']]
     );
 
-    if (isset($result['data']['link'])) {
+    if (!empty($result['status']) && !empty($result['data']['authorization_url'])) {
         json_response([
-            'success' => true,
-            'link'    => $result['data']['link'],
+            'success'           => true,
+            'authorization_url' => $result['data']['authorization_url'],
+            'reference'         => $result['data']['reference'],
         ]);
     } else {
-        $msg = $result['message'] ?? 'Payment gateway error. Please try again.';
+        $msg = $result['message'] ?? 'Could not reach payment gateway. Please try again.';
         json_response(['success' => false, 'error' => $msg], 502);
     }
 } catch (Throwable $e) {
-    error_log('Flutterwave initiate error: ' . $e->getMessage());
+    error_log('Paystack initiate error: ' . $e->getMessage());
     json_response(['success' => false, 'error' => 'Payment initiation failed. Please try again.'], 500);
 }

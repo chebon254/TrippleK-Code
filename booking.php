@@ -6,14 +6,43 @@ require_once __DIR__ . '/includes/booking_functions.php';
 
 $db = get_db();
 
-// Handle payment complete redirect from Flutterwave
+require_once __DIR__ . '/includes/payment_functions.php';
+
+// Handle Paystack payment callback redirect
 $payment_status = $_GET['payment'] ?? '';
 $booking_ref    = trim($_GET['ref'] ?? '');
 
 if ($payment_status === 'complete' && $booking_ref) {
     $booking = get_booking_by_ref($booking_ref);
+
     if ($booking && $booking['status'] === 'confirmed') {
+        // Already confirmed (webhook beat us here)
         redirect('/invoice.php?ref=' . urlencode($booking_ref));
+    }
+
+    // Verify the transaction with Paystack API before confirming
+    if ($booking && $booking['status'] !== 'confirmed') {
+        try {
+            $verified = paystack_verify_transaction($booking_ref);
+            $tx_data  = $verified['data'] ?? [];
+
+            if (($tx_data['status'] ?? '') === 'success') {
+                $expected_kobo = (int) round((float)$booking['total_amount'] * 100);
+                $paid_kobo     = (int)($tx_data['amount'] ?? 0);
+
+                if ($paid_kobo >= $expected_kobo) {
+                    // Check no payment already recorded (webhook may have run)
+                    $existing = $db->prepare('SELECT id FROM payments WHERE transaction_ref = ? LIMIT 1');
+                    $existing->execute([$booking_ref]);
+                    if (!$existing->fetch()) {
+                        paystack_confirm_booking($db, (int)$booking['id'], $booking_ref, $tx_data);
+                    }
+                    redirect('/invoice.php?ref=' . urlencode($booking_ref));
+                }
+            }
+        } catch (Throwable $e) {
+            error_log('Paystack callback verify error: ' . $e->getMessage());
+        }
     }
 }
 
@@ -60,58 +89,34 @@ if ($step === 'payment' && $booking_ref) {
             <!-- Payment Options -->
             <div x-data="paymentForm(<?= json_encode($booking['booking_ref']) ?>, <?= (float)$booking['total_amount'] ?>)">
 
-              <h2 class="text-white mb-4 text-base font-semibold">Select Payment Method</h2>
+              <h2 class="text-white mb-4 text-base font-semibold">Choose Payment Method</h2>
 
-              <!-- M-Pesa -->
+              <!-- Paystack (Card, M-Pesa, Mobile Money) -->
               <div class="border-border mb-4 rounded border bg-dark-3 p-5">
                 <div class="mb-4 flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-1/5">
-                    <span class="text-sm font-bold text-blue-1">M</span>
+                  <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-1/10">
+                    <svg class="h-5 w-5 text-blue-1 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
                   </div>
                   <div>
-                    <div class="font-semibold text-white">M-Pesa (Lipa Na MPesa)</div>
-                    <div class="text-15 text-light-1">Safaricom STK Push — instant payment</div>
+                    <div class="font-semibold text-white">Pay Online via Paystack</div>
+                    <div class="text-15 text-light-1">Card (Visa/Mastercard), M-Pesa &amp; Mobile Money</div>
                   </div>
                 </div>
-                <div x-show="!mpesa.sent">
-                  <div class="mb-3">
-                    <label class="mb-1.5 block text-sm font-medium text-white">M-Pesa Phone Number</label>
-                    <input type="tel" x-model="mpesa.phone" placeholder="e.g. 0712345678"
-                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none">
-                  </div>
-                  <button @click="sendMpesa()"
-                    class="bg-blue-1 hover:bg-dark-1 text-15 w-full rounded px-4 py-3 font-medium text-white transition"
-                    :disabled="mpesa.loading">
-                    <span x-show="!mpesa.loading">Pay <?= format_kes($booking['total_amount']) ?> via M-Pesa</span>
-                    <span x-show="mpesa.loading">Sending STK Push...</span>
-                  </button>
-                </div>
-                <div x-show="mpesa.sent" class="text-center">
-                  <div class="text-15 text-white mb-3">STK Push sent to <strong x-text="mpesa.phone"></strong>. Enter your PIN on your phone.</div>
-                  <div class="animate-spin mx-auto mb-3 h-6 w-6 rounded-full border-2 border-blue-1 border-t-transparent"></div>
-                  <div class="text-15 text-light-1">Waiting for payment confirmation...</div>
-                  <div x-show="mpesa.error" class="mt-2 text-sm text-red-600" x-text="mpesa.error"></div>
-                  <button @click="mpesa.sent=false; mpesa.error=''" class="mt-3 text-15 text-blue-1 hover:underline">Try again</button>
-                </div>
-              </div>
-
-              <!-- Card / Airtel via Flutterwave -->
-              <div class="border-border mb-4 rounded border bg-dark-3 p-5">
-                <div class="mb-4 flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded bg-dark-4">
-                    <span class="text-sm font-bold text-white">F</span>
-                  </div>
-                  <div>
-                    <div class="font-semibold text-white">Card / Airtel Money</div>
-                    <div class="text-15 text-light-1">Visa, Mastercard, Airtel Money via Flutterwave</div>
-                  </div>
-                </div>
-                <button @click="payFlutterwave()"
-                  class="bg-blue-1 hover:bg-dark-1 text-15 w-full rounded px-4 py-3 font-medium text-white transition"
-                  :disabled="flw.loading">
-                  <span x-show="!flw.loading">Pay via Card / Airtel Money</span>
-                  <span x-show="flw.loading">Redirecting to payment...</span>
+                <button @click="payPaystack()"
+                  class="bg-blue-1 hover:bg-yellow-3 hover:text-dark-1 text-15 w-full rounded px-4 py-3.5 font-semibold text-white transition flex items-center justify-center gap-2"
+                  :disabled="paystack.loading">
+                  <span x-show="!paystack.loading" class="flex items-center gap-2">
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                    Pay <?= format_kes($booking['total_amount']) ?> Securely
+                  </span>
+                  <span x-show="paystack.loading" class="flex items-center gap-2">
+                    <span class="animate-spin h-4 w-4 rounded-full border-2 border-white border-t-transparent inline-block"></span>
+                    Redirecting to Paystack...
+                  </span>
                 </button>
+                <p class="mt-3 text-xs text-light-1 text-center">
+                  Secured by <strong class="text-white">Paystack</strong> &mdash; 256-bit SSL encryption
+                </p>
               </div>
 
               <!-- Bank Transfer -->
@@ -175,72 +180,29 @@ if ($step === 'payment' && $booking_ref) {
     function paymentForm(bookingRef, totalAmount) {
       return {
         bookingRef, totalAmount,
-        mpesa: { phone: '', loading: false, sent: false, error: '', pollTimer: null },
-        flw:   { loading: false },
-        bank:  { shown: false },
+        paystack: { loading: false },
+        bank:     { shown: false },
         error: '',
 
-        async sendMpesa() {
-          if (!this.mpesa.phone) { this.error = 'Please enter your M-Pesa phone number'; return; }
-          this.mpesa.loading = true;
+        async payPaystack() {
+          this.paystack.loading = true;
           this.error = '';
           try {
-            const res = await fetch('/api/mpesa-initiate.php', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ booking_ref: this.bookingRef, phone: this.mpesa.phone }),
-            });
-            const data = await res.json();
-            if (data.success) {
-              this.mpesa.sent = true;
-              this.pollPayment(data.checkout_request_id);
-            } else {
-              this.error = data.error || 'M-Pesa request failed.';
-            }
-          } catch(e) {
-            this.error = 'Network error. Please try again.';
-          } finally {
-            this.mpesa.loading = false;
-          }
-        },
-
-        pollPayment(checkoutId) {
-          this.mpesa.pollTimer = setInterval(async () => {
-            const res = await fetch(`/api/check-payment.php?checkout_request_id=${checkoutId}&booking_ref=${this.bookingRef}`);
-            const data = await res.json();
-            if (data.paid && data.redirect) {
-              clearInterval(this.mpesa.pollTimer);
-              window.location.href = data.redirect;
-            } else if (data.failed) {
-              clearInterval(this.mpesa.pollTimer);
-              this.mpesa.error = 'Payment failed. Please try again.';
-            }
-          }, 3000);
-          setTimeout(() => {
-            clearInterval(this.mpesa.pollTimer);
-            if (this.mpesa.sent) this.mpesa.error = 'Payment timed out. If you paid, please contact us.';
-          }, 180000);
-        },
-
-        async payFlutterwave() {
-          this.flw.loading = true;
-          this.error = '';
-          try {
-            const res = await fetch('/api/flutterwave-initiate.php', {
+            const res = await fetch('/api/paystack-initiate.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ booking_ref: this.bookingRef }),
             });
             const data = await res.json();
-            if (data.link) {
-              window.location.href = data.link;
+            if (data.success && data.authorization_url) {
+              window.location.href = data.authorization_url;
             } else {
-              this.error = data.error || 'Could not initiate card payment.';
-              this.flw.loading = false;
+              this.error = data.error || 'Could not connect to payment gateway. Please try again.';
+              this.paystack.loading = false;
             }
           } catch(e) {
-            this.error = 'Network error. Please try again.';
-            this.flw.loading = false;
+            this.error = 'Network error. Please check your connection and try again.';
+            this.paystack.loading = false;
           }
         },
       };
