@@ -30,6 +30,7 @@ try {
   <title><?= h($page_title ?? 'Admin') ?> | <?= h($site_name) ?> Admin</title>
   <link rel="icon" href="/assets/images/logo/favicon.jpeg">
   <link href="/assets/bundle.css" rel="stylesheet">
+  <link href="/assets/admin.css" rel="stylesheet">
   <style>
     [x-cloak]{display:none!important}
     @keyframes gtWrap{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}

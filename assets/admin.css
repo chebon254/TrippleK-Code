@@ -1,0 +1,53 @@
+/*
+ * Admin supplementary styles
+ * Fills gaps not compiled into bundle.css
+ * (classes added to PHP files after the Tailwind build was run)
+ */
+
+/* ── Colours ─────────────────────────────────────────────── */
+.bg-dark-4                { background-color: #222222; }
+.text-dark-4              { color: #222222; }
+.border-dark-4            { border-color: #222222; }
+.hover\:bg-dark-4:hover   { background-color: #222222; }
+.focus\:border-blue-1:focus { border-color: #c8942a; }
+.border-blue-1            { border-color: #c8942a; }
+
+/* gold tint bg for active nav */
+.bg-blue-1\/10            { background-color: rgba(200,148,42,.10); }
+.border-blue-1\/20        { border-color:     rgba(200,148,42,.20); }
+.bg-blue-1\/20            { background-color: rgba(200,148,42,.20); }
+.text-yellow-3            { color: #f0c040; }
+.bg-yellow-3              { background-color: #f0c040; }
+
+/* ── Form inputs ─────────────────────────────────────────── */
+input, select, textarea {
+  color-scheme: dark;
+}
+
+/* Admin inputs should always look like inputs on dark bg */
+.admin-main input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
+.admin-main select,
+.admin-main textarea {
+  background-color: #222222;
+  color: #ffffff;
+  border-color: #2a2a2a;
+}
+
+.admin-main input::placeholder,
+.admin-main textarea::placeholder {
+  color: #a89878;
+}
+
+.admin-main select option {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+/* ── Table rows ──────────────────────────────────────────── */
+.admin-main tbody tr:hover { background-color: #222222; }
+
+/* ── Sidebar & header extras ─────────────────────────────── */
+.bg-dark-2 { background-color: #111111; }
+
+/* ── Misc ────────────────────────────────────────────────── */
+.divide-border > * + * { border-color: #2a2a2a; }
