@@ -80,10 +80,10 @@ require __DIR__ . '/../includes/admin_header.php';
 <!-- Page Header -->
 <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
   <div>
-    <h1 class="text-dark-1 mb-2 text-3xl font-semibold">Payments</h1>
+    <h1 class="text-white mb-2 text-3xl font-semibold">Payments</h1>
     <p class="text-light-1"><?= number_format($total) ?> transaction<?= $total !== 1 ? 's' : '' ?></p>
   </div>
-  <div class="rounded bg-white px-6 py-4 shadow-[0_10px_30px_0_#05103608] text-right">
+  <div class="rounded bg-dark-3 px-6 py-4 shadow-[0_10px_30px_0_#05103608] text-right">
     <div class="text-light-1 text-xs mb-1">Total Collected</div>
     <div class="text-dark-1 text-xl font-bold"><?= format_kes($totals['total']) ?></div>
     <div class="text-light-1 text-xs mt-1"><?= number_format($totals['cnt']) ?> successful payments</div>
@@ -91,15 +91,15 @@ require __DIR__ . '/../includes/admin_header.php';
 </div>
 
 <!-- Filters -->
-<form method="get" class="mb-6 rounded bg-white p-4 shadow-[0_10px_30px_0_#05103608]">
+<form method="get" class="mb-6 rounded bg-dark-3 border border-border p-4">
   <div class="flex flex-wrap gap-3">
     <div class="relative flex-1 min-w-[200px]">
       <input type="text" name="search" value="<?= h($search) ?>"
         placeholder="Booking ref, customer, receipt..."
-        class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-4 pl-10 text-sm outline-none focus:border-2">
+        class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 py-2.5 pr-4 pl-10 text-sm outline-none">
       <i class="icon-search text-light-1 absolute top-1/2 left-3 -translate-y-1/2 text-base"></i>
     </div>
-    <select name="method" class="border-border focus:border-dark-1 rounded border px-3 py-2.5 text-sm outline-none focus:border-2">
+    <select name="method" class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
       <option value="">All Methods</option>
       <option value="card"          <?= $method_f === 'card'          ? 'selected' : '' ?>>Card (Visa/Mastercard)</option>
       <option value="mobile_money"  <?= $method_f === 'mobile_money'  ? 'selected' : '' ?>>Mobile Money (M-Pesa)</option>
@@ -107,7 +107,7 @@ require __DIR__ . '/../includes/admin_header.php';
       <option value="bank"          <?= $method_f === 'bank'          ? 'selected' : '' ?>>Bank</option>
       <option value="cash"          <?= $method_f === 'cash'          ? 'selected' : '' ?>>Cash</option>
     </select>
-    <select name="status" class="border-border focus:border-dark-1 rounded border px-3 py-2.5 text-sm outline-none focus:border-2">
+    <select name="status" class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
       <option value="">All Statuses</option>
       <option value="processing" <?= $status_f === 'processing' ? 'selected' : '' ?>>Processing</option>
       <option value="completed"  <?= $status_f === 'completed'  ? 'selected' : '' ?>>Completed</option>
@@ -120,7 +120,7 @@ require __DIR__ . '/../includes/admin_header.php';
       Filter
     </button>
     <?php if ($search || $method_f || $status_f): ?>
-    <a href="payments.php" class="border-border rounded border px-4 py-2.5 text-sm text-gray-500 transition hover:bg-gray-50">
+    <a href="payments.php" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">
       Clear
     </a>
     <?php endif; ?>
@@ -128,29 +128,29 @@ require __DIR__ . '/../includes/admin_header.php';
 </form>
 
 <!-- Payments Table -->
-<div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+<div class="rounded bg-dark-3 border border-border p-6">
   <div class="overflow-x-auto">
     <table class="w-full border-collapse">
-      <thead class="bg-light-2">
+      <thead class="bg-dark-4">
         <tr>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Booking</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Customer</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Method</th>
-          <th class="text-dark-1 px-4 py-3 text-right text-sm font-semibold whitespace-nowrap">Amount</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden lg:table-cell">Receipt / Ref</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Status</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Date</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Action</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Booking</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Customer</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Method</th>
+          <th class="text-white px-4 py-3 text-right text-sm font-semibold whitespace-nowrap">Amount</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden lg:table-cell">Receipt / Ref</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Status</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Date</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Action</th>
         </tr>
       </thead>
       <tbody class="divide-border divide-y divide-dashed">
         <?php if (!$payments): ?>
         <tr>
-          <td colspan="8" class="px-4 py-12 text-center text-gray-400">No payment records found.</td>
+          <td colspan="8" class="px-4 py-12 text-center text-light-1">No payment records found.</td>
         </tr>
         <?php else: ?>
         <?php foreach ($payments as $p): ?>
-        <tr class="transition hover:bg-gray-50">
+        <tr class="transition hover:bg-dark-4">
           <td class="px-4 py-4 whitespace-nowrap">
             <a href="booking-view.php?id=<?= (int)$p['booking_id'] ?>"
               class="text-blue-1 font-mono text-sm font-medium hover:underline">
@@ -158,7 +158,7 @@ require __DIR__ . '/../includes/admin_header.php';
             </a>
           </td>
           <td class="px-4 py-4">
-            <div class="text-dark-1 text-sm font-medium"><?= h($p['full_name']) ?></div>
+            <div class="text-white text-sm font-medium"><?= h($p['full_name']) ?></div>
             <div class="text-light-1 text-xs"><?= h($p['phone']) ?></div>
           </td>
           <td class="px-4 py-4 text-sm font-medium text-dark-1 hidden md:table-cell whitespace-nowrap">
@@ -190,7 +190,7 @@ require __DIR__ . '/../includes/admin_header.php';
               <?= ucfirst($p['status']) ?>
             </span>
           </td>
-          <td class="px-4 py-4 text-xs text-gray-500 hidden md:table-cell whitespace-nowrap">
+          <td class="px-4 py-4 text-xs text-light-1 hidden md:table-cell whitespace-nowrap">
             <?= $p['paid_at'] ? display_datetime($p['paid_at']) : display_datetime($p['created_at']) ?>
           </td>
           <td class="px-4 py-4 whitespace-nowrap">
@@ -213,11 +213,11 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="flex flex-wrap items-center justify-between gap-4">
       <?php if ($pagination['has_prev']): ?>
       <a href="<?= $pagination['prev_url'] ?>"
-        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 items-center justify-center rounded-full border bg-white text-xs duration-300 hover:text-white">
+        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs duration-300 hover:text-white">
         <i class="icon-chevron-left"></i>
       </a>
       <?php else: ?>
-      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-white text-xs opacity-40">
+      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs opacity-40">
         <i class="icon-chevron-left"></i>
       </span>
       <?php endif; ?>
@@ -228,11 +228,11 @@ require __DIR__ . '/../includes/admin_header.php';
 
       <?php if ($pagination['has_next']): ?>
       <a href="<?= $pagination['next_url'] ?>"
-        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 items-center justify-center rounded-full border bg-white text-xs duration-300 hover:text-white">
+        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs duration-300 hover:text-white">
         <i class="icon-chevron-right"></i>
       </a>
       <?php else: ?>
-      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-white text-xs opacity-40">
+      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs opacity-40">
         <i class="icon-chevron-right"></i>
       </span>
       <?php endif; ?>

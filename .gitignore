@@ -1,0 +1,11 @@
+# Environment / secrets — never commit these
+../.env
+.env
+
+# Uploads (user content)
+uploads/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp

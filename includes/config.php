@@ -1,16 +1,33 @@
 <?php
+// ─── Load .env (one level above web root — never web-accessible) ──────────────
+(function () {
+    $env_file = dirname(dirname(__DIR__)) . '/.env';  // app/.env
+    if (!file_exists($env_file)) return;
+    foreach (file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim($line);
+        if ($line === '' || $line[0] === '#' || !str_contains($line, '=')) continue;
+        [$key, $val] = explode('=', $line, 2);
+        $key = trim($key);
+        $val = trim($val);
+        if (!isset($_ENV[$key])) {
+            $_ENV[$key] = $val;
+            putenv("{$key}={$val}");
+        }
+    }
+})();
+
 // ─── Database ────────────────────────────────────────────────────────────────
-define('DB_HOST',    '127.0.0.1');
-define('DB_PORT',    '10009');
-define('DB_NAME',    'tripplek');
-define('DB_USER',    'root');
-define('DB_PASS',    'root');
-define('DB_SOCKET',  '/home/kibe/.config/Local/run/8CM_ebu2L/mysql/mysqld.sock');
+define('DB_HOST',    'localhost');
+define('DB_PORT',    '3306');
+define('DB_NAME',    'u687796233_tripplek');
+define('DB_USER',    'u687796233_tripple');
+define('DB_PASS',    $_ENV['DB_PASS'] ?? '');          // set in .env
+define('DB_SOCKET',  '');                               // empty = use host+port (required on shared hosting)
 define('DB_CHARSET', 'utf8mb4');
 
 // ─── Application ─────────────────────────────────────────────────────────────
 define('APP_URL',  'https://saddlebrown-coyote-537196.hostingersite.com');  // → https://tripplek.co.ke on final deploy
-define('APP_ENV',  'production');               // 'development' | 'production'
+define('APP_ENV',  'production');
 define('APP_NAME', 'Tripple K');
 
 // ─── Paths ───────────────────────────────────────────────────────────────────

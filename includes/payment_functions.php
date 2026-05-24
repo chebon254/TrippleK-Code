@@ -5,8 +5,20 @@ require_once __DIR__ . '/functions.php';
 
 define('PAYSTACK_API', 'https://api.paystack.co');
 
+/**
+ * Env vars take precedence over DB settings.
+ * Set PAYSTACK_* in app/.env (one level above web root).
+ */
+function paystack_env(): string {
+    return getenv('PAYSTACK_ENV') ?: get_setting('paystack_env', 'test');
+}
+
+function paystack_public_key(): string {
+    return getenv('PAYSTACK_PUBLIC_KEY') ?: get_setting('paystack_public_key', '');
+}
+
 function paystack_secret_key(): string {
-    return get_setting('paystack_secret_key', '');
+    return getenv('PAYSTACK_SECRET_KEY') ?: get_setting('paystack_secret_key', '');
 }
 
 /**

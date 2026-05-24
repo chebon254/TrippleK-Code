@@ -42,7 +42,7 @@ require __DIR__ . '/../includes/admin_header.php';
   <a href="booking-view.php?id=<?= $booking['id'] ?>" class="text-sm text-blue-1 hover:underline">&larr; Back to Booking</a>
   <div class="flex gap-3">
     <a href="<?= APP_URL ?>/invoice.php?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
-      class="inline-flex h-9 items-center gap-1.5 rounded border border-gray-200 px-4 text-sm text-gray-600 hover:bg-gray-50 transition">
+      class="inline-flex h-9 items-center gap-1.5 rounded border border-gray-200 px-4 text-sm text-light-1 hover:bg-dark-4 transition">
       Public Link
     </a>
     <button onclick="window.print()"
@@ -53,7 +53,7 @@ require __DIR__ . '/../includes/admin_header.php';
 </div>
 
 <!-- Invoice Card -->
-<div class="overflow-hidden rounded bg-white shadow-[0_10px_30px_0_#05103608]" id="invoice-card">
+<div class="overflow-hidden rounded bg-dark-3 border border-border" id="invoice-card">
   <div class="px-8 py-10 md:px-12">
 
     <!-- Header -->
@@ -80,7 +80,7 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
     </div>
 
-    <div class="my-8 border-t border-gray-100"></div>
+    <div class="my-8 border-t border-border"></div>
 
     <!-- Parties -->
     <div class="grid gap-8 sm:grid-cols-2">
@@ -100,7 +100,7 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
     </div>
 
-    <div class="my-8 border-t border-gray-100"></div>
+    <div class="my-8 border-t border-border"></div>
 
     <!-- Booking Details -->
     <div class="mb-8">
@@ -135,7 +135,7 @@ require __DIR__ . '/../includes/admin_header.php';
           </tr>
         </thead>
         <tbody>
-          <tr class="border-t border-gray-100">
+          <tr class="border-t border-border">
             <td class="px-4 py-3">
               <?= h($booking['service_name']) ?> — <?= h($booking['make'] . ' ' . $booking['model']) ?>
               <?php if ($booking['registration_number']): ?>
@@ -148,7 +148,7 @@ require __DIR__ . '/../includes/admin_header.php';
             </td>
             <td class="px-4 py-3 text-right"><?= format_kes($booking['total_amount']) ?></td>
           </tr>
-          <tr class="border-t border-gray-100 bg-gray-50">
+          <tr class="border-t border-border bg-dark-4">
             <td class="px-4 py-4 font-semibold text-dark-1" colspan="3">Total Amount</td>
             <td class="px-4 py-4 font-bold text-dark-1 text-right text-base"><?= format_kes($booking['total_amount']) ?></td>
           </tr>
@@ -176,7 +176,7 @@ require __DIR__ . '/../includes/admin_header.php';
   </div>
 
   <!-- Footer -->
-  <div class="border-t border-gray-100 px-8 py-6 text-center text-sm text-gray-400">
+  <div class="border-t border-border px-8 py-6 text-center text-sm text-gray-400">
     <div class="flex flex-wrap justify-center gap-x-8 gap-y-1">
       <?php if ($company_website): ?><span><?= h($company_website) ?></span><?php endif; ?>
       <?php if ($company_email): ?><span><?= h($company_email) ?></span><?php endif; ?>

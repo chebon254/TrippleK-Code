@@ -128,10 +128,10 @@ require __DIR__ . '/../includes/admin_header.php';
 
 <div class="mb-6 flex items-center justify-between">
   <div>
-    <h1 class="text-dark-1 mb-2 text-3xl font-semibold">Add New Car</h1>
+    <h1 class="text-white mb-2 text-3xl font-semibold">Add New Car</h1>
     <p class="text-light-1">Add a vehicle to the Tripple K fleet</p>
   </div>
-  <a href="/admin/cars.php" class="rounded border border-gray-200 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">&larr; Back to Fleet</a>
+  <a href="/admin/cars.php" class="rounded border border-gray-200 px-4 py-2 text-sm text-light-1 hover:bg-dark-4">&larr; Back to Fleet</a>
 </div>
 
 <?php if ($errors): ?>
@@ -151,14 +151,14 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="lg:col-span-2 space-y-6">
 
       <!-- Basic Info -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Vehicle Information</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Vehicle Information</h2>
         <div class="grid gap-4 sm:grid-cols-2">
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Category *</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Category *</label>
             <select name="category_id" required
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
               <option value="">Select category...</option>
               <?php foreach ($categories as $cat): ?>
               <option value="<?= $cat['id'] ?>" <?= ($_POST['category_id'] ?? '') == $cat['id'] ? 'selected' : '' ?>>
@@ -169,8 +169,8 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Status</label>
-            <select name="status" class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+            <label class="mb-1.5 block text-sm font-medium text-white">Status</label>
+            <select name="status" class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
               <?php foreach (['available'=>'Available','hired'=>'Hired','maintenance'=>'Maintenance','inactive'=>'Inactive'] as $v=>$l): ?>
               <option value="<?= $v ?>" <?= ($_POST['status'] ?? 'available') === $v ? 'selected' : '' ?>><?= $l ?></option>
               <?php endforeach; ?>
@@ -178,28 +178,28 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Make *</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Make *</label>
             <input type="text" name="make" required placeholder="e.g. Toyota"
               value="<?= h($_POST['make'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Model *</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Model *</label>
             <input type="text" name="model" required placeholder="e.g. Land Cruiser V8"
               value="<?= h($_POST['model'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Year *</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Year *</label>
             <input type="number" name="year" required min="2000" max="<?= date('Y') + 1 ?>"
               value="<?= h($_POST['year'] ?? date('Y')) ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Registration Number *</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Registration Number *</label>
             <input type="text" name="registration_number" required placeholder="e.g. KDA 123X"
               value="<?= h($_POST['registration_number'] ?? '') ?>"
               class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none uppercase"
@@ -207,30 +207,30 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Color</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Color</label>
             <input type="text" name="color" placeholder="e.g. Pearl White"
               value="<?= h($_POST['color'] ?? 'White') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Engine CC</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Engine CC</label>
             <input type="number" name="engine_cc" placeholder="e.g. 2500"
               value="<?= h($_POST['engine_cc'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Transmission</label>
-            <select name="transmission" class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+            <label class="mb-1.5 block text-sm font-medium text-white">Transmission</label>
+            <select name="transmission" class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
               <option value="automatic" <?= ($_POST['transmission'] ?? 'automatic') === 'automatic' ? 'selected' : '' ?>>Automatic</option>
               <option value="manual"    <?= ($_POST['transmission'] ?? '') === 'manual' ? 'selected' : '' ?>>Manual</option>
             </select>
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Fuel Type</label>
-            <select name="fuel_type" class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+            <label class="mb-1.5 block text-sm font-medium text-white">Fuel Type</label>
+            <select name="fuel_type" class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
               <?php foreach (['petrol'=>'Petrol','diesel'=>'Diesel','hybrid'=>'Hybrid','electric'=>'Electric'] as $v=>$l): ?>
               <option value="<?= $v ?>" <?= ($_POST['fuel_type'] ?? 'petrol') === $v ? 'selected' : '' ?>><?= $l ?></option>
               <?php endforeach; ?>
@@ -238,32 +238,32 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Passenger Capacity</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Passenger Capacity</label>
             <input type="number" name="passenger_capacity" min="1" max="50"
               value="<?= h($_POST['passenger_capacity'] ?? '5') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Luggage / Bags</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Luggage / Bags</label>
             <input type="number" name="luggage_capacity" min="0" max="20"
               value="<?= h($_POST['luggage_capacity'] ?? '2') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
 
         </div>
 
         <!-- Description -->
         <div class="mt-4">
-          <label class="mb-1.5 block text-sm font-medium text-dark-1">Description</label>
+          <label class="mb-1.5 block text-sm font-medium text-white">Description</label>
           <textarea name="description" rows="4" placeholder="Describe the vehicle, ideal use cases, any special notes..."
-            class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none resize-none"><?= h($_POST['description'] ?? '') ?></textarea>
+            class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none resize-none"><?= h($_POST['description'] ?? '') ?></textarea>
         </div>
       </div>
 
       <!-- Amenities -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Amenities</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Amenities</h2>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <?php
           $amenities = [
@@ -274,7 +274,7 @@ require __DIR__ . '/../includes/admin_header.php';
           ];
           foreach ($amenities as $name => $label):
           ?>
-          <label class="flex cursor-pointer items-center gap-2 rounded border border-gray-100 px-3 py-2.5 hover:bg-gray-50">
+          <label class="flex cursor-pointer items-center gap-2 rounded border border-border px-3 py-2.5 hover:bg-dark-4">
             <input type="checkbox" name="<?= $name ?>" <?= isset($_POST[$name]) ? 'checked' : ($name === 'has_ac' ? 'checked' : '') ?>>
             <span class="text-sm"><?= $label ?></span>
           </label>
@@ -283,8 +283,8 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
 
       <!-- Extra Features -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Additional Features</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Additional Features</h2>
         <p class="mb-3 text-xs text-gray-400">Add custom feature tags (e.g. "Sunroof", "Leather Seats")</p>
         <template x-for="(feat, i) in features" :key="i">
           <div class="mb-2 flex items-center gap-2">
@@ -302,8 +302,8 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
 
       <!-- Images -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Photos</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Photos</h2>
         <p class="mb-3 text-xs text-gray-400">Upload up to 10 images. First image becomes the thumbnail. JPG/PNG/WebP, max 5MB each.</p>
         <input type="file" name="car_images[]" multiple accept="image/jpeg,image/png,image/webp"
           class="block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-1 hover:file:bg-blue-100">
@@ -315,11 +315,11 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="space-y-6">
 
       <!-- Pricing -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Pricing (KES)</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Pricing (KES)</h2>
         <div class="space-y-4">
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Price Per Day *</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Price Per Day *</label>
             <div class="relative">
               <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
               <input type="number" name="price_per_day" required min="0" step="100"
@@ -328,7 +328,7 @@ require __DIR__ . '/../includes/admin_header.php';
             </div>
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Airport Transfer Rate</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Airport Transfer Rate</label>
             <div class="relative">
               <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
               <input type="number" name="price_airport" min="0" step="100"
@@ -338,7 +338,7 @@ require __DIR__ . '/../includes/admin_header.php';
             </div>
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Wedding Package Rate</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Wedding Package Rate</label>
             <div class="relative">
               <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
               <input type="number" name="price_wedding" min="0" step="100"
@@ -351,8 +351,8 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
 
       <!-- Options -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Display Options</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Display Options</h2>
         <label class="flex cursor-pointer items-center gap-3">
           <input type="checkbox" name="is_featured" <?= isset($_POST['is_featured']) ? 'checked' : '' ?>>
           <div>
@@ -361,7 +361,7 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
         </label>
         <div class="mt-4">
-          <label class="mb-1.5 block text-sm font-medium text-dark-1">Sort Order</label>
+          <label class="mb-1.5 block text-sm font-medium text-white">Sort Order</label>
           <input type="number" name="sort_order" min="0"
             value="<?= h($_POST['sort_order'] ?? '0') ?>"
             class="border-border focus:border-dark-1 w-full rounded border px-3 py-2 text-sm outline-none">
@@ -370,13 +370,13 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
 
       <!-- Submit -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+      <div class="rounded bg-dark-3 border border-border p-6">
         <button type="submit"
           class="bg-blue-1 hover:bg-dark-1 w-full rounded px-6 py-3 text-sm font-medium text-white transition-colors">
           Add Car to Fleet
         </button>
         <a href="/admin/cars.php"
-          class="mt-3 block w-full rounded border border-gray-200 px-6 py-3 text-center text-sm text-gray-600 hover:bg-gray-50">
+          class="mt-3 block w-full rounded border border-gray-200 px-6 py-3 text-center text-sm text-light-1 hover:bg-dark-4">
           Cancel
         </a>
       </div>

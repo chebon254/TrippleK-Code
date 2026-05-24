@@ -57,11 +57,11 @@ require __DIR__ . '/../includes/admin_header.php';
   </div>
   <div class="flex gap-3">
     <a href="invoice.php?id=<?= $id ?>"
-      class="border-border inline-flex h-10 items-center gap-2 rounded border px-4 text-sm text-gray-600 transition hover:bg-gray-50">
+      class="border-border inline-flex h-10 items-center gap-2 rounded border px-4 text-sm text-light-1 transition hover:bg-dark-4">
       <i class="icon-download text-sm"></i> Invoice
     </a>
     <a href="<?= APP_URL ?>/invoice.php?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
-      class="border-border inline-flex h-10 items-center gap-2 rounded border px-4 text-sm text-gray-600 transition hover:bg-gray-50">
+      class="border-border inline-flex h-10 items-center gap-2 rounded border px-4 text-sm text-light-1 transition hover:bg-dark-4">
       <i class="icon-arrow-top-right text-sm"></i> Public Invoice
     </a>
   </div>
@@ -73,7 +73,7 @@ require __DIR__ . '/../includes/admin_header.php';
   <div class="lg:col-span-2 space-y-6">
 
     <!-- Customer -->
-    <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+    <div class="rounded bg-dark-3 border border-border p-6">
       <h2 class="mb-4 text-sm font-semibold text-dark-1">Customer Information</h2>
       <div class="grid gap-3 text-sm sm:grid-cols-2">
         <div><div class="text-xs text-gray-400">Full Name</div><div class="font-medium"><?= h($booking['full_name']) ?></div></div>
@@ -89,7 +89,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
 
     <!-- Booking -->
-    <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+    <div class="rounded bg-dark-3 border border-border p-6">
       <h2 class="mb-4 text-sm font-semibold text-dark-1">Booking Details</h2>
       <div class="grid gap-3 text-sm sm:grid-cols-2">
         <div>
@@ -125,7 +125,7 @@ require __DIR__ . '/../includes/admin_header.php';
         <div><div class="text-xs text-gray-400">Created</div><div><?= display_datetime($booking['created_at']) ?></div></div>
       </div>
       <?php if ($booking['special_requests']): ?>
-      <div class="mt-4 rounded-lg bg-gray-50 px-4 py-3 text-sm">
+      <div class="mt-4 rounded-lg bg-dark-4 px-4 py-3 text-sm">
         <div class="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Special Requests</div>
         <div class="text-gray-600"><?= nl2br(h($booking['special_requests'])) ?></div>
       </div>
@@ -133,7 +133,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
 
     <!-- Payments -->
-    <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+    <div class="rounded bg-dark-3 border border-border p-6">
       <h2 class="mb-4 text-sm font-semibold text-dark-1">Payment History</h2>
       <?php if (!$payments): ?>
       <p class="text-sm text-gray-400">No payment records yet.</p>
@@ -141,7 +141,7 @@ require __DIR__ . '/../includes/admin_header.php';
       <div class="overflow-x-auto">
         <table class="min-w-full text-sm">
           <thead>
-            <tr class="text-left text-xs uppercase tracking-wide text-gray-400 border-b border-gray-100">
+            <tr class="text-left text-xs uppercase tracking-wide text-gray-400 border-b border-border">
               <th class="pb-2 pr-4">Method</th>
               <th class="pb-2 pr-4">Amount</th>
               <th class="pb-2 pr-4">Gateway Ref</th>
@@ -154,7 +154,7 @@ require __DIR__ . '/../includes/admin_header.php';
             <tr>
               <td class="py-2.5 pr-4 font-medium"><?= h(ucwords(str_replace('_', ' ', $pay['payment_method']))) ?></td>
               <td class="py-2.5 pr-4"><?= format_kes($pay['amount']) ?></td>
-              <td class="py-2.5 pr-4 font-mono text-xs text-gray-500"><?= h($pay['gateway_ref'] ?? '—') ?></td>
+              <td class="py-2.5 pr-4 font-mono text-xs text-light-1"><?= h($pay['gateway_ref'] ?? '—') ?></td>
               <td class="py-2.5 pr-4">
                 <span class="inline-block rounded-full px-2 py-0.5 text-xs font-semibold <?= payment_status_class($pay['status']) ?>">
                   <?= ucfirst($pay['status']) ?>
@@ -175,7 +175,7 @@ require __DIR__ . '/../includes/admin_header.php';
   <div class="space-y-6">
 
     <!-- Current Status -->
-    <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+    <div class="rounded bg-dark-3 border border-border p-6">
       <h2 class="mb-3 text-sm font-semibold text-dark-1">Booking Status</h2>
       <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold <?= booking_status_class($booking['status']) ?>">
         <?= ucfirst($booking['status']) ?>
@@ -183,14 +183,14 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
 
     <!-- Update Status Form -->
-    <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+    <div class="rounded bg-dark-3 border border-border p-6">
       <h2 class="mb-4 text-sm font-semibold text-dark-1">Update Status</h2>
       <form method="post">
         <input type="hidden" name="update_status" value="1">
         <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
         <div class="mb-3">
           <label class="mb-1 block text-xs font-medium text-gray-500">New Status</label>
-          <select name="status" class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+          <select name="status" class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
             <?php foreach (['pending','confirmed','active','completed','cancelled'] as $s): ?>
             <option value="<?= $s ?>" <?= $booking['status'] === $s ? 'selected' : '' ?>><?= ucfirst($s) ?></option>
             <?php endforeach; ?>
@@ -209,7 +209,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
 
     <!-- Quick Links -->
-    <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608] text-sm">
+    <div class="rounded bg-dark-3 border border-border p-6 text-sm">
       <h2 class="mb-3 text-sm font-semibold text-dark-1">Quick Links</h2>
       <div class="space-y-2">
         <a href="<?= APP_URL ?>/invoice.php?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"

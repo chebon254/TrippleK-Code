@@ -60,7 +60,7 @@ require __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="mb-8">
-  <h1 class="text-dark-1 mb-2 text-3xl font-semibold">Settings</h1>
+  <h1 class="text-white mb-2 text-3xl font-semibold">Settings</h1>
   <p class="text-light-1">Configure your site, payments, and business details</p>
 </div>
 
@@ -71,8 +71,8 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="lg:col-span-2 space-y-6">
 
       <!-- General -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 border-b border-gray-100 pb-3 text-base font-medium text-dark-1">Company Information</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 border-b border-border pb-3 text-base font-medium text-white">Company Information</h2>
         <div class="grid gap-4 sm:grid-cols-2">
           <?php
           $general_fields = [
@@ -86,57 +86,57 @@ require __DIR__ . '/../includes/admin_header.php';
           foreach ($general_fields as [$key, $label, $type, $placeholder]):
           ?>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1"><?= $label ?></label>
+            <label class="mb-1.5 block text-sm font-medium text-white"><?= $label ?></label>
             <input type="<?= $type ?>" name="<?= $key ?>" value="<?= h($s[$key] ?? '') ?>"
               placeholder="<?= h($placeholder) ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <?php endforeach; ?>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Website URL</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Website URL</label>
             <input type="text" name="company_website" value="<?= h($s['company_website'] ?? '') ?>"
               placeholder="https://tripplek.co.ke"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div class="sm:col-span-2">
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Business Hours</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Business Hours</label>
             <input type="text" name="company_hours" value="<?= h($s['company_hours'] ?? '') ?>"
               placeholder="Mon–Sat 7am–8pm, Sun 8am–6pm"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div class="sm:col-span-2">
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Google Maps Embed URL</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Google Maps Embed URL</label>
             <input type="text" name="maps_embed_url" value="<?= h($s['maps_embed_url'] ?? '') ?>"
               placeholder="https://www.google.com/maps/embed?pb=..."
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
-            <p class="mt-1 text-xs text-gray-400">Paste the embed src URL from Google Maps → Share → Embed a map.</p>
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
+            <p class="mt-1 text-xs text-light-1">Paste the embed src URL from Google Maps → Share → Embed a map.</p>
           </div>
         </div>
       </div>
 
       <!-- Legal -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 border-b border-gray-100 pb-3 text-base font-medium text-dark-1">Legal & Compliance</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 border-b border-border pb-3 text-base font-medium text-white">Legal & Compliance</h2>
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">KRA PIN</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">KRA PIN</label>
             <input type="text" name="kra_pin" value="<?= h($s['kra_pin'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">TRA License Number</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">TRA License Number</label>
             <input type="text" name="tra_license" value="<?= h($s['tra_license'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Min Security Deposit (KES)</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Min Security Deposit (KES)</label>
             <input type="number" name="security_deposit_min" value="<?= h($s['security_deposit_min'] ?? '15000') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Max Security Deposit (KES)</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Max Security Deposit (KES)</label>
             <input type="number" name="security_deposit_max" value="<?= h($s['security_deposit_max'] ?? '50000') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
         </div>
       </div>
@@ -177,33 +177,33 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
 
       <!-- Invoice / Bank -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 border-b border-gray-100 pb-3 text-base font-medium text-dark-1">Invoice & Banking</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 border-b border-border pb-3 text-base font-medium text-white">Invoice & Banking</h2>
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Invoice Prefix</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Invoice Prefix</label>
             <input type="text" name="invoice_prefix" value="<?= h($s['invoice_prefix'] ?? 'TK') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Bank Name</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Bank Name</label>
             <input type="text" name="invoice_bank_name" value="<?= h($s['invoice_bank_name'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none" placeholder="e.g. Equity Bank">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none" placeholder="e.g. Equity Bank">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Bank Account Number</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Bank Account Number</label>
             <input type="text" name="invoice_bank_account" value="<?= h($s['invoice_bank_account'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Bank Branch</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Bank Branch</label>
             <input type="text" name="invoice_bank_branch" value="<?= h($s['invoice_bank_branch'] ?? '') ?>"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none" placeholder="e.g. Nairobi CBD">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none" placeholder="e.g. Nairobi CBD">
           </div>
           <div class="sm:col-span-2">
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Invoice Footer Text</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Invoice Footer Text</label>
             <textarea name="invoice_footer" rows="2"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none resize-none"><?= h($s['invoice_footer'] ?? '') ?></textarea>
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none resize-none"><?= h($s['invoice_footer'] ?? '') ?></textarea>
           </div>
         </div>
       </div>
@@ -213,7 +213,7 @@ require __DIR__ . '/../includes/admin_header.php';
     <!-- Sidebar -->
     <div class="space-y-6">
 
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+      <div class="rounded bg-dark-3 border border-border p-6">
         <button type="submit"
           class="bg-blue-1 hover:bg-dark-1 w-full rounded px-6 py-3 text-sm font-medium text-white transition-colors">
           Save Settings
@@ -221,23 +221,23 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
 
       <!-- Change Password -->
-      <div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
-        <h2 class="mb-4 text-base font-medium text-dark-1">Change Password</h2>
+      <div class="rounded bg-dark-3 border border-border p-6">
+        <h2 class="mb-4 text-base font-medium text-white">Change Password</h2>
         <form method="POST" action="/admin/settings.php">
           <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
           <div class="mb-3">
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">New Password</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">New Password</label>
             <input type="password" name="new_password" minlength="8"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none"
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none"
               placeholder="Min. 8 characters">
           </div>
           <div class="mb-4">
-            <label class="mb-1.5 block text-sm font-medium text-dark-1">Confirm Password</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Confirm Password</label>
             <input type="password" name="confirm_password"
-              class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none">
+              class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <button type="submit"
-            class="w-full rounded border border-gray-200 px-6 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+            class="w-full rounded border border-border px-6 py-2.5 text-sm text-light-1 hover:bg-dark-4 hover:text-white">
             Update Password
           </button>
         </form>

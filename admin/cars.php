@@ -64,7 +64,7 @@ require __DIR__ . '/../includes/admin_header.php';
 <!-- Page Header -->
 <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
   <div>
-    <h1 class="text-dark-1 mb-2 text-3xl font-semibold">Fleet Management</h1>
+    <h1 class="text-white mb-2 text-3xl font-semibold">Fleet Management</h1>
     <p class="text-light-1"><?= $total ?> vehicle<?= $total !== 1 ? 's' : '' ?> in fleet</p>
   </div>
   <a href="/admin/add-car.php"
@@ -74,20 +74,20 @@ require __DIR__ . '/../includes/admin_header.php';
 </div>
 
 <!-- Filters -->
-<form method="GET" class="mb-6 rounded bg-white p-4 shadow-[0_10px_30px_0_#05103608]">
+<form method="GET" class="mb-6 rounded bg-dark-3 border border-border p-4">
   <div class="flex flex-wrap gap-3">
     <div class="relative flex-1 min-w-[200px]">
       <input type="text" name="q" value="<?= h($search) ?>" placeholder="Search make, model, reg..."
-        class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-4 pl-10 text-sm outline-none focus:border-2">
+        class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 py-2.5 pr-4 pl-10 text-sm outline-none">
       <i class="icon-search text-light-1 absolute top-1/2 left-3 -translate-y-1/2 text-base"></i>
     </div>
-    <select name="category" class="border-border focus:border-dark-1 rounded border px-3 py-2.5 text-sm outline-none focus:border-2">
+    <select name="category" class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
       <option value="">All Categories</option>
       <?php foreach ($categories as $cat): ?>
       <option value="<?= h($cat['slug']) ?>" <?= $filter_cat === $cat['slug'] ? 'selected' : '' ?>><?= h($cat['name']) ?></option>
       <?php endforeach; ?>
     </select>
-    <select name="status" class="border-border focus:border-dark-1 rounded border px-3 py-2.5 text-sm outline-none focus:border-2">
+    <select name="status" class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
       <option value="">All Statuses</option>
       <?php foreach (['available'=>'Available','hired'=>'Hired','maintenance'=>'Maintenance','inactive'=>'Inactive'] as $v=>$l): ?>
       <option value="<?= $v ?>" <?= $filter_status === $v ? 'selected' : '' ?>><?= $l ?></option>
@@ -95,31 +95,31 @@ require __DIR__ . '/../includes/admin_header.php';
     </select>
     <button type="submit" class="bg-blue-1 hover:bg-dark-1 rounded px-5 py-2.5 text-sm font-medium text-white transition">Filter</button>
     <?php if ($search || $filter_cat || $filter_status): ?>
-    <a href="/admin/cars.php" class="border-border rounded border px-4 py-2.5 text-sm text-gray-500 transition hover:bg-gray-50">Clear</a>
+    <a href="/admin/cars.php" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">Clear</a>
     <?php endif; ?>
   </div>
 </form>
 
 <!-- Cars Table -->
-<div class="rounded bg-white p-6 shadow-[0_10px_30px_0_#05103608]">
+<div class="rounded bg-dark-3 border border-border p-6">
   <div class="overflow-x-auto">
     <table class="w-full border-collapse">
-      <thead class="bg-light-2">
+      <thead class="bg-dark-4">
         <tr>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Vehicle</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Category</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden lg:table-cell">Reg. No.</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Price/Day</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Status</th>
-          <th class="text-dark-1 px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Action</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Vehicle</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Category</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden lg:table-cell">Reg. No.</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Price/Day</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Status</th>
+          <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Action</th>
         </tr>
       </thead>
       <tbody class="divide-border divide-y divide-dashed">
         <?php if (empty($cars)): ?>
-        <tr><td colspan="6" class="px-4 py-12 text-center text-gray-400">No vehicles found.</td></tr>
+        <tr><td colspan="6" class="px-4 py-12 text-center text-light-1">No vehicles found.</td></tr>
         <?php else: ?>
         <?php foreach ($cars as $car): ?>
-        <tr class="transition hover:bg-gray-50">
+        <tr class="transition hover:bg-dark-4">
           <td class="px-4 py-4">
             <div class="flex items-center gap-3">
               <?php if ($car['thumbnail_path']): ?>
@@ -131,12 +131,12 @@ require __DIR__ . '/../includes/admin_header.php';
               </div>
               <?php endif; ?>
               <div>
-                <div class="text-dark-1 text-sm font-medium"><?= h($car['make'] . ' ' . $car['model']) ?></div>
+                <div class="text-white text-sm font-medium"><?= h($car['make'] . ' ' . $car['model']) ?></div>
                 <div class="text-light-1 text-xs"><?= h($car['year']) ?> · <?= ucfirst($car['transmission']) ?> · <?= $car['passenger_capacity'] ?> seats</div>
               </div>
             </div>
           </td>
-          <td class="px-4 py-4 text-sm text-gray-600 hidden md:table-cell whitespace-nowrap">
+          <td class="px-4 py-4 text-sm text-light-1 hidden md:table-cell whitespace-nowrap">
             <?= h($car['category_name']) ?>
           </td>
           <td class="px-4 py-4 font-mono text-xs text-gray-600 hidden lg:table-cell whitespace-nowrap">
@@ -195,11 +195,11 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="flex flex-wrap items-center justify-between gap-4">
       <?php if ($pager['has_prev']): ?>
       <a href="<?= $pager['prev_url'] ?>"
-        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-white text-xs font-medium duration-300 hover:text-white">
+        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-dark-3 text-xs font-medium duration-300 hover:text-white">
         <i class="icon-chevron-left"></i>
       </a>
       <?php else: ?>
-      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-white text-xs opacity-40">
+      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs opacity-40">
         <i class="icon-chevron-left"></i>
       </span>
       <?php endif; ?>
@@ -210,11 +210,11 @@ require __DIR__ . '/../includes/admin_header.php';
 
       <?php if ($pager['has_next']): ?>
       <a href="<?= $pager['next_url'] ?>"
-        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-white text-xs font-medium duration-300 hover:text-white">
+        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-dark-3 text-xs font-medium duration-300 hover:text-white">
         <i class="icon-chevron-right"></i>
       </a>
       <?php else: ?>
-      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-white text-xs opacity-40">
+      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs opacity-40">
         <i class="icon-chevron-right"></i>
       </span>
       <?php endif; ?>

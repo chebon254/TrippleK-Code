@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <!-- Card -->
-  <div class="rounded-xl bg-white p-8 shadow-lg">
+  <div class="rounded-xl bg-dark-3 border border-border p-8">
     <h1 class="mb-6 text-xl font-semibold text-dark-1">Sign In</h1>
 
     <?php if ($error): ?>
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
 
       <div class="mb-4">
-        <label for="email" class="mb-1.5 block text-sm font-medium text-dark-1">Email Address</label>
+        <label for="email" class="mb-1.5 block text-sm font-medium text-white">Email Address</label>
         <input type="email" id="email" name="email" required autocomplete="email"
           value="<?= h($_POST['email'] ?? '') ?>"
           class="border-border focus:border-blue-1 w-full rounded border px-4 py-3 text-sm outline-none focus:border-2"
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="mb-6" x-data="{ show: false }">
-        <label for="password" class="mb-1.5 block text-sm font-medium text-dark-1">Password</label>
+        <label for="password" class="mb-1.5 block text-sm font-medium text-white">Password</label>
         <div class="relative">
           <input :type="show ? 'text' : 'password'" id="password" name="password" required autocomplete="current-password"
             class="border-border focus:border-blue-1 w-full rounded border px-4 py-3 pr-12 text-sm outline-none focus:border-2"
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </button>
     </form>
 
-    <div class="mt-6 border-t border-gray-100 pt-4 text-center text-xs text-gray-400">
+    <div class="mt-6 border-t border-border pt-4 text-center text-xs text-gray-400">
       <a href="/index.php" class="hover:text-blue-1 hover:underline">&larr; Back to website</a>
     </div>
   </div>
