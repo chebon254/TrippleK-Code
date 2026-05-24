@@ -103,65 +103,24 @@ if ($step === 'payment' && $booking_ref) {
                   </div>
                 </div>
                 <button @click="payPaystack()"
-                  class="bg-blue-1 hover:bg-yellow-3 hover:text-dark-1 text-15 w-full rounded px-4 py-3.5 font-semibold text-white transition flex items-center justify-center gap-2"
+                  class="bg-blue-1 hover:bg-yellow-3 w-full rounded px-4 py-3.5 font-semibold text-dark-1 transition flex items-center justify-center gap-2 disabled:opacity-60"
                   :disabled="paystack.loading">
-                  <span x-show="!paystack.loading" class="flex items-center gap-2">
-                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-                    Pay <?= format_kes($booking['total_amount']) ?> Securely
-                  </span>
-                  <span x-show="paystack.loading" class="flex items-center gap-2">
-                    <span class="animate-spin h-4 w-4 rounded-full border-2 border-white border-t-transparent inline-block"></span>
-                    Redirecting to Paystack...
-                  </span>
+                  <template x-if="!paystack.loading">
+                    <span class="flex items-center gap-2">
+                      <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                      Pay <?= format_kes($booking['total_amount']) ?> Securely
+                    </span>
+                  </template>
+                  <template x-if="paystack.loading">
+                    <span class="flex items-center gap-2">
+                      <span class="animate-spin h-4 w-4 rounded-full border-2 border-dark-1 border-t-transparent inline-block"></span>
+                      Redirecting to Paystack...
+                    </span>
+                  </template>
                 </button>
                 <p class="mt-3 text-xs text-light-1 text-center">
                   Secured by <strong class="text-white">Paystack</strong> &mdash; 256-bit SSL encryption
                 </p>
-              </div>
-
-              <!-- Bank Transfer -->
-              <div class="border-border mb-4 rounded border bg-dark-3 p-5">
-                <div class="mb-4 flex items-center gap-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded bg-dark-4">
-                    <i class="icon-building text-white"></i>
-                  </div>
-                  <div>
-                    <div class="font-semibold text-white">Bank Transfer</div>
-                    <div class="text-15 text-light-1">Booking confirmed after payment proof received</div>
-                  </div>
-                </div>
-                <div x-show="!bank.shown">
-                  <button @click="bank.shown=true"
-                    class="border-border w-full rounded border px-4 py-3 text-sm text-white hover:bg-dark-4 transition">
-                    View Bank Details
-                  </button>
-                </div>
-                <div x-show="bank.shown" class="mt-3 rounded bg-dark-4 px-4 py-3 text-sm">
-                  <?php
-                  $bank_name    = get_setting('invoice_bank_name', '');
-                  $bank_account = get_setting('invoice_bank_account', '');
-                  $bank_branch  = get_setting('invoice_bank_branch', '');
-                  ?>
-                  <?php if ($bank_name): ?>
-                  <div class="mb-1"><span class="text-light-1">Bank:</span> <strong class="text-white"><?= h($bank_name) ?></strong></div>
-                  <?php endif; ?>
-                  <?php if ($bank_account): ?>
-                  <div class="mb-1"><span class="text-light-1">Account:</span> <strong class="font-mono text-white"><?= h($bank_account) ?></strong></div>
-                  <?php endif; ?>
-                  <?php if ($bank_branch): ?>
-                  <div class="mb-1"><span class="text-light-1">Branch:</span> <span class="text-white"><?= h($bank_branch) ?></span></div>
-                  <?php endif; ?>
-                  <div><span class="text-light-1">Reference:</span> <strong class="font-mono text-white"><?= h($booking['booking_ref']) ?></strong></div>
-                  <p class="text-15 text-light-1 mt-3">After transfer, WhatsApp us your receipt to confirm your booking.</p>
-                  <?php $wa = get_setting('company_whatsapp',''); if ($wa): ?>
-                  <a href="https://wa.me/<?= h(preg_replace('/[^0-9]/', '', $wa)) ?>?text=Hello%2C+I%27ve+completed+bank+transfer+for+booking+<?= urlencode($booking['booking_ref']) ?>"
-                    target="_blank"
-                    class="mt-3 flex items-center gap-2 text-sm font-medium text-white hover:text-blue-1 transition">
-                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
-                    Send Receipt on WhatsApp
-                  </a>
-                  <?php endif; ?>
-                </div>
               </div>
 
               <div x-show="error" class="mt-4 rounded border border-red-2/30 bg-red-1/10 px-4 py-3 text-sm text-red-2" x-text="error"></div>
@@ -181,7 +140,6 @@ if ($step === 'payment' && $booking_ref) {
       return {
         bookingRef, totalAmount,
         paystack: { loading: false },
-        bank:     { shown: false },
         error: '',
 
         async payPaystack() {
