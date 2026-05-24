@@ -63,19 +63,19 @@ $whatsapp     = get_setting('company_whatsapp', '');
 
       <!-- Logo + Desktop Nav -->
       <div class="flex items-center">
-        <a href="/index.php" class="mr-12 min-w-[140px]">
+        <a href="/" class="mr-12 min-w-[140px]">
           <img src="/assets/images/logo/tripplek-logo.jpeg" alt="<?= h($site_name) ?>" width="200" height="50" class="w-[200px] h-[50px] object-contain">
         </a>
         <nav class="hidden xl:flex">
           <ul class="text-white flex items-center gap-6">
             <li>
-              <a href="/index.php"
+              <a href="/"
                 class="py-8 <?= $current_page === 'index' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
                 Home
               </a>
             </li>
             <li>
-              <a href="/cars.php"
+              <a href="/cars"
                 class="py-8 <?= $current_page === 'cars' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
                 Car Hire
               </a>
@@ -86,19 +86,19 @@ $whatsapp     = get_setting('company_whatsapp', '');
                 <span :class="open?'rotate-180':''"><i class="icon-chevron-sm-down text-[8px]"></i></span>
               </button>
               <div x-cloak x-show="open" x-transition class="absolute top-full left-0 mt-0 w-52 rounded bg-dark-3 p-2.5 text-sm shadow-xl border border-border">
-                <a href="/index.php#airport-transfer" class="block rounded px-5 py-2 text-white/80 hover:text-blue-1 hover:bg-blue-1/10">Airport Transfer</a>
-                <a href="/index.php#chauffeur" class="block rounded px-5 py-2 text-white/80 hover:text-blue-1 hover:bg-blue-1/10">Chauffeur Service</a>
-                <a href="/index.php#wedding" class="block rounded px-5 py-2 text-white/80 hover:text-blue-1 hover:bg-blue-1/10">Wedding Packages</a>
+                <a href="/#airport-transfer" class="block rounded px-5 py-2 text-white/80 hover:text-blue-1 hover:bg-blue-1/10">Airport Transfer</a>
+                <a href="/#chauffeur" class="block rounded px-5 py-2 text-white/80 hover:text-blue-1 hover:bg-blue-1/10">Chauffeur Service</a>
+                <a href="/#wedding" class="block rounded px-5 py-2 text-white/80 hover:text-blue-1 hover:bg-blue-1/10">Wedding Packages</a>
               </div>
             </li>
             <li>
-              <a href="/about.php"
+              <a href="/about"
                 class="py-8 <?= $current_page === 'about' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
                 About
               </a>
             </li>
             <li>
-              <a href="/contact.php"
+              <a href="/contact"
                 class="py-8 <?= $current_page === 'contact' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
                 Contact
               </a>
@@ -109,7 +109,7 @@ $whatsapp     = get_setting('company_whatsapp', '');
 
       <!-- Right: CTA + Mobile Toggle -->
       <div class="flex items-center gap-4">
-        <a href="/cars.php"
+        <a href="/cars"
           class="hidden xl:inline-flex bg-blue-1 text-white items-center h-12 rounded px-8 text-sm font-medium whitespace-nowrap transition-colors hover:bg-yellow-3 hover:text-dark-1">
           Book Now
         </a>
@@ -139,16 +139,16 @@ $whatsapp     = get_setting('company_whatsapp', '');
         <button @click="mobileOpen=false"><i class="icon-close text-xl"></i></button>
       </div>
       <ul class="space-y-2 text-white">
-        <li><a href="/index.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='index'?'text-blue-1 bg-blue-1/5':'' ?>">Home</a></li>
-        <li><a href="/cars.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='cars'?'text-blue-1 bg-blue-1/5':'' ?>">Car Hire</a></li>
-        <li><a href="/index.php#airport-transfer" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Airport Transfer</a></li>
-        <li><a href="/index.php#chauffeur" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Chauffeur Service</a></li>
-        <li><a href="/index.php#wedding" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Wedding Packages</a></li>
-        <li><a href="/about.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='about'?'text-blue-1 bg-blue-1/5':'' ?>">About Us</a></li>
-        <li><a href="/contact.php" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='contact'?'text-blue-1 bg-blue-1/5':'' ?>">Contact</a></li>
+        <li><a href="/" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='index'?'text-blue-1 bg-blue-1/5':'' ?>">Home</a></li>
+        <li><a href="/cars" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='cars'?'text-blue-1 bg-blue-1/5':'' ?>">Car Hire</a></li>
+        <li><a href="/#airport-transfer" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Airport Transfer</a></li>
+        <li><a href="/#chauffeur" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Chauffeur Service</a></li>
+        <li><a href="/#wedding" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Wedding Packages</a></li>
+        <li><a href="/about" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='about'?'text-blue-1 bg-blue-1/5':'' ?>">About Us</a></li>
+        <li><a href="/contact" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='contact'?'text-blue-1 bg-blue-1/5':'' ?>">Contact</a></li>
       </ul>
       <div class="mt-6">
-        <a href="/cars.php" class="bg-blue-1 text-white block text-center rounded px-4 py-3 font-medium">Book a Car</a>
+        <a href="/cars" class="bg-blue-1 text-white block text-center rounded px-4 py-3 font-medium">Book a Car</a>
       </div>
     </nav>
   </div>

@@ -66,7 +66,7 @@ require __DIR__ . '/includes/header.php';
             if (this.dateFrom) p.date_from = this.dateFrom;
             if (this.dateTo)   p.date_to   = this.dateTo;
             if (this.passengers > 1) p.passengers = this.passengers;
-            window.location.href = '/cars.php?' + new URLSearchParams(p).toString();
+            window.location.href = '/cars?' + new URLSearchParams(p).toString();
           }
         }">
         <div class="flex w-full items-center max-lg:flex-col lg:gap-7.5" data-aos="fade-up" data-aos-delay="0">
@@ -199,7 +199,7 @@ require __DIR__ . '/includes/header.php';
                 : '/assets/src/images/cars/1.png';
             ?>
             <div class="swiper-slide transition-all duration-300">
-              <a href="/car.php?id=<?= (int)$car['id'] ?>" class="group block">
+              <a href="/car?id=<?= (int)$car['id'] ?>" class="group block">
                 <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
                   <img src="<?= h($thumb) ?>" alt="<?= h($car['make'] . ' ' . $car['model']) ?>"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -249,12 +249,12 @@ require __DIR__ . '/includes/header.php';
       </div>
       <?php else: ?>
       <div class="py-12 text-center">
-        <p class="text-light-1">No cars available yet. Check back soon or <a href="/contact.php" class="text-blue-1 underline">contact us</a>.</p>
+        <p class="text-light-1">No cars available yet. Check back soon or <a href="/contact" class="text-blue-1 underline">contact us</a>.</p>
       </div>
       <?php endif; ?>
 
       <div class="mt-10 text-center">
-        <a href="/cars.php"
+        <a href="/cars"
           class="text-blue-1 border-blue-1 hover:bg-blue-1 hover:text-white inline-flex h-12 items-center rounded border px-8 text-sm font-medium transition-colors">
           See All Cars
         </a>
@@ -272,13 +272,13 @@ require __DIR__ . '/includes/header.php';
       <div class="xs:grid-cols-2 grid gap-7.5 md:grid-cols-4">
         <?php
         $svcs = [
-          ['icon'=>'icon-car',      'id'=>'car-hire',         'title'=>'Car Hire',          'link'=>'/cars.php',
+          ['icon'=>'icon-car',      'id'=>'car-hire',         'title'=>'Car Hire',          'link'=>'/cars',
            'desc'=>'Self-drive saloons, SUVs and executive cars by the day. Flexible pickup across Nairobi.'],
-          ['icon'=>'icon-airplane', 'id'=>'airport-transfer', 'title'=>'Airport Transfer',  'link'=>'/cars.php?service=airport-transfer',
+          ['icon'=>'icon-airplane', 'id'=>'airport-transfer', 'title'=>'Airport Transfer',  'link'=>'/cars?service=airport-transfer',
            'desc'=>'Reliable pickup & drop-off at JKIA and Wilson Airport. Meet-and-greet available.'],
-          ['icon'=>'icon-shield',   'id'=>'chauffeur',         'title'=>'Chauffeur Service', 'link'=>'/cars.php?service=chauffeur',
+          ['icon'=>'icon-shield',   'id'=>'chauffeur',         'title'=>'Chauffeur Service', 'link'=>'/cars?service=chauffeur',
            'desc'=>'Professional drivers for corporate travel, VIP events and full-day engagements.'],
-          ['icon'=>'icon-heart',    'id'=>'wedding',           'title'=>'Wedding Packages',  'link'=>'/cars.php?service=wedding',
+          ['icon'=>'icon-heart',    'id'=>'wedding',           'title'=>'Wedding Packages',  'link'=>'/cars?service=wedding',
            'desc'=>'Make your big day unforgettable with our elegant executive fleet.'],
         ];
         foreach ($svcs as $i => $svc):
@@ -306,7 +306,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="xs:grid-cols-2 grid gap-7.5 md:grid-cols-4">
         <?php foreach ($categories as $i => $cat): ?>
-        <a href="/cars.php?category=<?= h($cat['slug']) ?>"
+        <a href="/cars?category=<?= h($cat['slug']) ?>"
           class="group relative overflow-hidden rounded-xl"
           data-aos="fade" data-aos-delay="<?= $i * 100 ?>">
           <div class="relative aspect-30/25 overflow-hidden rounded-xl bg-dark-1">
@@ -350,7 +350,7 @@ require __DIR__ . '/includes/header.php';
             <?php endforeach; ?>
           </ul>
           <div class="mt-8 flex flex-wrap gap-4">
-            <a href="/cars.php"
+            <a href="/cars"
               class="bg-blue-1 hover:bg-yellow-3 rounded px-6 py-3 text-sm font-medium text-white transition-colors">
               Book a Car
             </a>
@@ -381,7 +381,7 @@ require __DIR__ . '/includes/header.php';
       <div class="bg-blue-1 relative overflow-hidden rounded-2xl p-12 text-center text-white">
         <h2 class="mb-4 text-3xl font-semibold">Ready to Hit the Road?</h2>
         <p class="mb-8 text-lg text-white/80">Browse our full fleet and book online in minutes.</p>
-        <a href="/cars.php"
+        <a href="/cars"
           class="inline-block rounded bg-dark-1 px-8 py-3.5 text-sm font-semibold text-white hover:bg-dark-3 transition-colors border border-white/20">
           Browse All Cars
         </a>

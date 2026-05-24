@@ -1,21 +1,24 @@
-
 # ─── Block sensitive files ────────────────────────────────────────────────────
 <FilesMatch "^\.env(\..*)?$">
     Require all denied
 </FilesMatch>
 
-# ─── BEGIN WordPress
-# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
-# dynamically generated, and should only be modified via WordPress filters.
-# Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
+    RewriteEngine On
+    RewriteBase /
 
-# ─── END WordPress
+    # Pass real files and directories through unchanged
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Admin and API always keep .php — do not rewrite
+    RewriteRule ^(admin|api)(/.*)?$ - [L]
+
+    # Clean URLs: /about → /about.php  (any top-level slug with no extension)
+    RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+    RewriteRule ^([^/.]+)/?$ $1.php [L,QSA]
+
+    # Fallback: 404
+    RewriteRule ^ 404.php [L]
+</IfModule>

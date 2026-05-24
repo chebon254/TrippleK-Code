@@ -85,7 +85,7 @@ require __DIR__ . '/includes/header.php';
             your wedding day, we have the right car and the professional service to match.
           </p>
           <div class="mt-8 flex flex-wrap gap-4">
-            <a href="/cars.php"
+            <a href="/cars"
               class="bg-blue-1 hover:bg-dark-1 text-15 inline-flex h-15 items-center gap-2 rounded px-6 font-medium text-white transition">
               Browse Our Fleet
             </a>
@@ -179,7 +179,7 @@ require __DIR__ . '/includes/header.php';
           <h3 class="text-2xl font-semibold">Ready to Book?</h3>
           <p class="text-15 mt-2 text-white/80">Browse our fleet and book your car online in minutes. Instant confirmation on most vehicles.</p>
           <div class="mt-6 space-y-3">
-            <a href="/cars.php"
+            <a href="/cars"
               class="block w-full rounded bg-dark-1 py-3 text-center text-sm font-semibold text-blue-1 hover:bg-dark-3 border border-blue-1/30 transition">
               Browse Available Cars
             </a>

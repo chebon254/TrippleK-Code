@@ -40,26 +40,26 @@ $year           = date('Y');
               <div>
                 <h5 class="mb-6 text-base font-medium">Services</h5>
                 <ul class="space-y-2 text-white/90">
-                  <li><a href="/cars.php" class="hover:underline">Car Hire</a></li>
-                  <li><a href="/index.php#airport-transfer" class="hover:underline">Airport Transfer</a></li>
-                  <li><a href="/index.php#chauffeur" class="hover:underline">Chauffeur Service</a></li>
-                  <li><a href="/index.php#wedding" class="hover:underline">Wedding Packages</a></li>
+                  <li><a href="/cars" class="hover:underline">Car Hire</a></li>
+                  <li><a href="/#airport-transfer" class="hover:underline">Airport Transfer</a></li>
+                  <li><a href="/#chauffeur" class="hover:underline">Chauffeur Service</a></li>
+                  <li><a href="/#wedding" class="hover:underline">Wedding Packages</a></li>
                 </ul>
               </div>
 
               <div>
                 <h5 class="mb-6 text-base font-medium">Company</h5>
                 <ul class="space-y-2 text-white/90">
-                  <li><a href="/about.php" class="hover:underline">About Us</a></li>
-                  <li><a href="/contact.php" class="hover:underline">Contact</a></li>
-                  <li><a href="/terms.php" class="hover:underline">Terms & Conditions</a></li>
+                  <li><a href="/about" class="hover:underline">About Us</a></li>
+                  <li><a href="/contact" class="hover:underline">Contact</a></li>
+                  <li><a href="/terms" class="hover:underline">Terms & Conditions</a></li>
                 </ul>
               </div>
 
               <div>
                 <h5 class="mb-6 text-base font-medium">Quick Book</h5>
                 <p class="mb-4 text-sm text-white/70">Ready to hit the road? Browse our fleet and book online.</p>
-                <a href="/cars.php"
+                <a href="/cars"
                   class="inline-block bg-blue-1 text-white rounded px-6 py-3 text-sm font-medium hover:bg-yellow-3 hover:text-dark-1 transition-colors">
                   Browse Cars
                 </a>
@@ -80,8 +80,8 @@ $year           = date('Y');
                 &copy; <?= $year ?> <?= h($company_name) ?>. All rights reserved.
               </div>
               <div class="flex items-center gap-6 text-sm text-white/60">
-                <a href="/terms.php" class="hover:text-white hover:underline">Terms</a>
-                <a href="/contact.php" class="hover:text-white hover:underline">Contact</a>
+                <a href="/terms" class="hover:text-white hover:underline">Terms</a>
+                <a href="/contact" class="hover:text-white hover:underline">Contact</a>
               </div>
             </div>
           </div>

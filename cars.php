@@ -82,7 +82,7 @@ $cars = $cars_stmt->fetchAll();
 function page_url(array $extra = []): string {
     $params = array_merge($_GET, $extra);
     $params = array_filter($params, fn($v) => $v !== '' && $v !== null && $v !== '0');
-    return '/cars.php?' . http_build_query($params);
+    return '/cars?' . http_build_query($params);
 }
 
 require __DIR__ . '/includes/header.php';
@@ -98,7 +98,7 @@ require __DIR__ . '/includes/header.php';
           <div>
             <h1 class="text-30 fw-600 text-white">Car Hire in Kenya</h1>
             <div class="text-white/70 mt-2">
-              <a href="/index.php" class="hover:text-white">Home</a>
+              <a href="/" class="hover:text-white">Home</a>
               <span class="mx-2">/</span>
               <span>Car Hire</span>
             </div>
@@ -115,7 +115,7 @@ require __DIR__ . '/includes/header.php';
 
         <!-- ===== Sidebar ===== -->
         <aside class="lg:w-[300px]">
-          <form method="GET" action="/cars.php">
+          <form method="GET" action="/cars">
             <div class="divide-border space-y-7.5 divide-y *:not-last-of-type:pb-7.5">
 
               <!-- Search bar -->
@@ -269,7 +269,7 @@ require __DIR__ . '/includes/header.php';
           <?php if (empty($cars)): ?>
           <div class="py-20 text-center">
             <div class="text-light-1 text-lg">No cars match your criteria.</div>
-            <a href="/cars.php" class="text-blue-1 mt-4 inline-block hover:underline">Clear all filters</a>
+            <a href="/cars" class="text-blue-1 mt-4 inline-block hover:underline">Clear all filters</a>
           </div>
 
           <?php else: ?>
@@ -282,7 +282,7 @@ require __DIR__ . '/includes/header.php';
                 : '/assets/src/images/cars/1.png';
             ?>
             <div class="group">
-              <a href="/car.php?id=<?= (int)$car['id'] ?>" class="block">
+              <a href="/car?id=<?= (int)$car['id'] ?>" class="block">
                 <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
                   <img src="<?= h($thumb) ?>" alt="<?= h($car['make'] . ' ' . $car['model']) ?>"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"

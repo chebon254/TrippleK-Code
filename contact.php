@@ -72,7 +72,7 @@ require __DIR__ . '/includes/header.php';
             <i class="icon-check text-blue-1 text-5xl"></i>
             <h3 class="text-white text-2xl font-semibold">Message Sent!</h3>
             <p class="text-15 text-light-1">Thank you for reaching out. We'll get back to you shortly.</p>
-            <a href="/contact.php" class="text-15 text-blue-1 hover:underline">Send another message</a>
+            <a href="/contact" class="text-15 text-blue-1 hover:underline">Send another message</a>
           </div>
 
           <?php else: ?>

@@ -17,7 +17,7 @@ if ($payment_status === 'complete' && $booking_ref) {
 
     if ($booking && $booking['status'] === 'confirmed') {
         // Already confirmed (webhook beat us here)
-        redirect('/invoice.php?ref=' . urlencode($booking_ref));
+        redirect('/invoice?ref=' . urlencode($booking_ref));
     }
 
     // Verify the transaction with Paystack API before confirming
@@ -37,7 +37,7 @@ if ($payment_status === 'complete' && $booking_ref) {
                     if (!$existing->fetch()) {
                         paystack_confirm_booking($db, (int)$booking['id'], $booking_ref, $tx_data);
                     }
-                    redirect('/invoice.php?ref=' . urlencode($booking_ref));
+                    redirect('/invoice?ref=' . urlencode($booking_ref));
                 }
             }
         } catch (Throwable $e) {
@@ -52,7 +52,7 @@ if ($step === 'payment' && $booking_ref) {
     $booking = get_booking_by_ref($booking_ref);
     if (!$booking) {
         flash('error', 'Booking not found.');
-        redirect('/cars.php');
+        redirect('/cars');
     }
     $page_title = 'Complete Payment';
     $nav_white  = true;
@@ -128,7 +128,7 @@ if ($step === 'payment' && $booking_ref) {
             </div>
 
             <div class="mt-6 text-center">
-              <a href="/car.php?id=<?= h($booking['car_id'] ?? '') ?>" class="text-15 text-light-1 hover:text-blue-1">&larr; Back to car</a>
+              <a href="/car?id=<?= h($booking['car_id'] ?? '') ?>" class="text-15 text-light-1 hover:text-blue-1">&larr; Back to car</a>
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@ if ($step === 'payment' && $booking_ref) {
 
 $car_id = (int)($_GET['car_id'] ?? 0);
 if (!$car_id) {
-    redirect('/cars.php');
+    redirect('/cars');
 }
 
 $stmt = $db->prepare('
@@ -189,7 +189,7 @@ $car = $stmt->fetch();
 
 if (!$car) {
     flash('error', 'Car not available for booking.');
-    redirect('/cars.php');
+    redirect('/cars');
 }
 
 $services         = $db->query('SELECT id, slug, name FROM services WHERE is_active = 1 ORDER BY sort_order')->fetchAll();
@@ -304,9 +304,9 @@ require __DIR__ . '/includes/header.php';
       <div class="flex flex-wrap items-center justify-between gap-y-2">
         <h1 class="text-2xl font-semibold text-white">Book Your Car</h1>
         <div class="text-light-1 flex items-center gap-2 text-sm">
-          <a href="/index.php" class="hover:text-white">Home</a>
+          <a href="/" class="hover:text-white">Home</a>
           <span>/</span>
-          <a href="/cars.php" class="hover:text-white">Cars</a>
+          <a href="/cars" class="hover:text-white">Cars</a>
           <span>/</span>
           <span class="text-white"><?= h($car['make'] . ' ' . $car['model']) ?></span>
         </div>

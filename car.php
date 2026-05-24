@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/functions.php';
 $car_id = (int)($_GET['id'] ?? 0);
 if (!$car_id) {
     http_response_code(302);
-    header('Location: /cars.php');
+    header('Location: /cars');
     exit;
 }
 
@@ -22,7 +22,7 @@ $car = $stmt->fetch();
 
 if (!$car || $car['status'] === 'inactive') {
     http_response_code(302);
-    header('Location: /cars.php');
+    header('Location: /cars');
     exit;
 }
 
@@ -73,13 +73,13 @@ require __DIR__ . '/includes/header.php';
       <div class="container">
         <div class="flex flex-wrap items-center justify-between gap-y-2.5">
           <div class="text-light-1 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm">
-            <a href="/index.php" class="hover:text-blue-1">Home</a>
+            <a href="/" class="hover:text-blue-1">Home</a>
             <span>&gt;</span>
-            <a href="/cars.php" class="hover:text-blue-1">Car Hire</a>
+            <a href="/cars" class="hover:text-blue-1">Car Hire</a>
             <span>&gt;</span>
             <span class="text-white"><?= h($car['make'] . ' ' . $car['model']) ?></span>
           </div>
-          <a href="/cars.php?category=<?= h($car['category_slug']) ?>" class="text-light-1 text-sm hover:text-blue-1">
+          <a href="/cars?category=<?= h($car['category_slug']) ?>" class="text-light-1 text-sm hover:text-blue-1">
             Browse <?= h($car['category_name']) ?> Cars
           </a>
         </div>
@@ -271,7 +271,7 @@ require __DIR__ . '/includes/header.php';
 
               <?php if ($car['status'] === 'available'): ?>
               <!-- Booking Form -->
-              <form action="/booking.php" method="GET" class="space-y-5 pt-5">
+              <form action="/booking" method="GET" class="space-y-5 pt-5">
                 <input type="hidden" name="car_id" value="<?= (int)$car['id'] ?>">
 
                 <!-- Service type -->
@@ -336,7 +336,7 @@ require __DIR__ . '/includes/header.php';
               <?php else: ?>
               <div class="rounded bg-red-1/15 p-5 text-center text-sm text-red-2">
                 This vehicle is currently not available for booking.
-                <a href="/cars.php" class="mt-2 block font-medium text-blue-1 hover:underline">Browse other cars</a>
+                <a href="/cars" class="mt-2 block font-medium text-blue-1 hover:underline">Browse other cars</a>
               </div>
               <?php endif; ?>
 
@@ -374,7 +374,7 @@ require __DIR__ . '/includes/header.php';
             : '/assets/images/cars/1.png';
         ?>
         <div class="group">
-          <a href="/car.php?id=<?= (int)$sc['id'] ?>" class="block">
+          <a href="/car?id=<?= (int)$sc['id'] ?>" class="block">
             <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
               <img src="<?= h($sc_thumb) ?>" alt="<?= h($sc['make'] . ' ' . $sc['model']) ?>"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -407,7 +407,7 @@ require __DIR__ . '/includes/header.php';
         <?php endforeach; ?>
         <?php if (empty($similar_cars)): ?>
         <div class="col-span-4 text-center py-10 text-light-1">
-          <a href="/cars.php?category=<?= h($car['category_slug']) ?>" class="text-blue-1 hover:underline">
+          <a href="/cars?category=<?= h($car['category_slug']) ?>" class="text-blue-1 hover:underline">
             Browse all <?= h($car['category_name']) ?> cars &rarr;
           </a>
         </div>

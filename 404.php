@@ -31,11 +31,11 @@ require __DIR__ . '/includes/header.php';
             The page you're looking for isn't available. Try searching again or use the links below.
           </p>
           <div class="mt-10 flex flex-wrap gap-4">
-            <a href="/index.php"
+            <a href="/"
               class="bg-blue-1 hover:bg-dark-1 inline-flex h-15 items-center justify-center gap-2 rounded px-8 font-medium text-white transition">
               <i class="icon-home text-sm"></i> Back to Home
             </a>
-            <a href="/cars.php"
+            <a href="/cars"
               class="border-border hover:border-blue-1 text-15 inline-flex h-15 items-center gap-2 rounded border px-8 font-medium text-white transition">
               Browse Cars
             </a>
@@ -43,10 +43,10 @@ require __DIR__ . '/includes/header.php';
           <div class="mt-10">
             <p class="text-15 text-light-1 mb-3">Looking for something specific?</p>
             <div class="flex flex-wrap gap-2 text-sm">
-              <a href="/cars.php" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Car Hire</a>
-              <a href="/cars.php?service=airport-transfer" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Airport Transfer</a>
-              <a href="/cars.php?service=chauffeur" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Chauffeur</a>
-              <a href="/contact.php" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Contact Us</a>
+              <a href="/cars" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Car Hire</a>
+              <a href="/cars?service=airport-transfer" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Airport Transfer</a>
+              <a href="/cars?service=chauffeur" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Chauffeur</a>
+              <a href="/contact" class="rounded border border-border px-4 py-2 text-white hover:border-blue-1 hover:text-blue-1 transition">Contact Us</a>
             </div>
           </div>
         </div>

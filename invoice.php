@@ -8,14 +8,14 @@ $booking_ref = trim($_GET['ref'] ?? '');
 
 if (!$booking_ref) {
     flash('error', 'No booking reference provided.');
-    redirect('/cars.php');
+    redirect('/cars');
 }
 
 $booking = get_booking_by_ref($booking_ref);
 
 if (!$booking) {
     flash('error', 'Booking not found.');
-    redirect('/cars.php');
+    redirect('/cars');
 }
 
 // Settings
@@ -35,7 +35,7 @@ require __DIR__ . '/includes/header.php';
 
     <!-- Actions (hidden on print) -->
     <div class="mb-6 flex items-center justify-between print:hidden">
-      <a href="/cars.php" class="text-sm text-blue-1 hover:underline">&larr; Browse More Cars</a>
+      <a href="/cars" class="text-sm text-blue-1 hover:underline">&larr; Browse More Cars</a>
       <button onclick="window.print()"
         class="bg-blue-1 hover:bg-yellow-3 inline-flex h-11 items-center gap-2 rounded px-6 text-sm font-medium text-white transition shadow-sm">
         Print Invoice <i class="icon-download ml-1 text-base"></i>
@@ -51,7 +51,7 @@ require __DIR__ . '/includes/header.php';
     <?php elseif ($booking['status'] === 'pending'): ?>
     <div class="mb-6 flex items-center gap-3 rounded-lg bg-yellow-100 px-5 py-4 text-sm text-yellow-600 print:hidden">
       <svg class="h-5 w-5 flex-shrink-0 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-      <span>Payment pending. <a href="/booking.php?step=payment&ref=<?= urlencode($booking['booking_ref']) ?>" class="font-medium underline">Complete payment</a> to confirm your booking.</span>
+      <span>Payment pending. <a href="/booking?step=payment&ref=<?= urlencode($booking['booking_ref']) ?>" class="font-medium underline">Complete payment</a> to confirm your booking.</span>
     </div>
     <?php endif; ?>
 

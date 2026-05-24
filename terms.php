@@ -119,7 +119,7 @@ require __DIR__ . '/includes/header.php';
             <div class="mt-9">
               <h2 class="text-base font-medium">8. Contact</h2>
               <div class="text-white text-15 mt-2 leading-relaxed">
-                <p>For any privacy-related enquiries, please contact us via the details on our <a href="/contact.php" class="text-blue-1 hover:underline">Contact page</a>.</p>
+                <p>For any privacy-related enquiries, please contact us via the details on our <a href="/contact" class="text-blue-1 hover:underline">Contact page</a>.</p>
               </div>
             </div>
           </div>
