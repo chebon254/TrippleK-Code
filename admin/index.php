@@ -105,34 +105,33 @@ require __DIR__ . '/../includes/admin_header.php';
 </div>
 
 <!-- Recent Bookings + Revenue Summary -->
-<div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
   <!-- Recent Bookings Table -->
-  <div class="rounded bg-dark-3 border border-border p-6 xl:col-span-2">
+  <div class="rounded bg-dark-3 border border-border p-6 lg:col-span-2">
     <div class="mb-6 flex items-center justify-between">
       <h2 class="text-white text-xl font-semibold">Recent Bookings</h2>
       <a href="/admin/bookings.php" class="text-blue-1 text-sm font-medium hover:text-blue-700">View All</a>
     </div>
 
-    <div class="overflow-x-auto">
+    <div class="overflow-hidden">
       <table class="w-full">
         <thead class="bg-dark-4">
           <tr>
-            <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Ref</th>
-            <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Customer</th>
-            <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden md:table-cell">Vehicle</th>
-            <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap hidden lg:table-cell">Date</th>
-            <th class="text-white px-4 py-3 text-left text-sm font-semibold whitespace-nowrap">Status</th>
-            <th class="text-white px-4 py-3 text-right text-sm font-semibold whitespace-nowrap">Amount</th>
+            <th class="text-white px-4 py-3 text-left text-sm font-semibold">Ref</th>
+            <th class="text-white px-4 py-3 text-left text-sm font-semibold">Customer</th>
+            <th class="text-white px-4 py-3 text-left text-sm font-semibold hidden xl:table-cell">Vehicle</th>
+            <th class="text-white px-4 py-3 text-left text-sm font-semibold">Status</th>
+            <th class="text-white px-4 py-3 text-right text-sm font-semibold">Amount</th>
           </tr>
         </thead>
         <tbody class="divide-border divide-y divide-dashed">
           <?php if (empty($recent)): ?>
-          <tr><td colspan="6" class="px-4 py-10 text-center text-light-1">No bookings yet.</td></tr>
+          <tr><td colspan="5" class="px-4 py-10 text-center text-light-1">No bookings yet.</td></tr>
           <?php else: ?>
           <?php foreach ($recent as $b): ?>
           <tr class="transition hover:bg-dark-4">
-            <td class="px-4 py-4">
+            <td class="px-4 py-4 whitespace-nowrap">
               <a href="/admin/booking-view.php?id=<?= $b['id'] ?>"
                 class="text-blue-1 font-mono text-sm font-medium hover:underline">
                 <?= h($b['booking_ref']) ?>
@@ -142,18 +141,15 @@ require __DIR__ . '/../includes/admin_header.php';
               <div class="text-white text-sm font-medium"><?= h($b['full_name']) ?></div>
               <div class="text-light-1 text-xs"><?= h($b['phone']) ?></div>
             </td>
-            <td class="px-4 py-4 text-sm text-light-1 hidden md:table-cell whitespace-nowrap">
+            <td class="px-4 py-4 text-sm text-light-1 hidden xl:table-cell whitespace-nowrap">
               <?= h($b['make'] . ' ' . $b['model']) ?>
-            </td>
-            <td class="px-4 py-4 text-xs text-light-1 hidden lg:table-cell whitespace-nowrap">
-              <?= display_date($b['pickup_date']) ?>
             </td>
             <td class="px-4 py-4">
               <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium <?= booking_status_class($b['status']) ?>">
                 <?= ucfirst($b['status']) ?>
               </span>
             </td>
-            <td class="px-4 py-4 text-right text-sm font-medium text-white">
+            <td class="px-4 py-4 text-right text-sm font-medium text-white whitespace-nowrap">
               <?= format_kes($b['total_amount']) ?>
             </td>
           </tr>
@@ -173,11 +169,11 @@ require __DIR__ . '/../includes/admin_header.php';
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <span class="text-light-1 text-sm">This Month</span>
-          <span class="text-dark-1 font-semibold"><?= format_kes((float)$this_month) ?></span>
+          <span class="text-white font-semibold"><?= format_kes((float)$this_month) ?></span>
         </div>
         <div class="border-border border-t pt-4 flex items-center justify-between">
           <span class="text-light-1 text-sm">All Time</span>
-          <span class="text-dark-1 font-semibold"><?= format_kes((float)$total_revenue) ?></span>
+          <span class="text-white font-semibold"><?= format_kes((float)$total_revenue) ?></span>
         </div>
       </div>
     </div>

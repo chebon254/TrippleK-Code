@@ -52,7 +52,8 @@ try {
   <script>
     function dashboardPage(){
       return {
-        sidebarOpen: false,
+        // Desktop: sidebar open by default; Mobile: closed by default
+        sidebarOpen: window.innerWidth >= 1024,
         init(){}
       }
     }
@@ -75,12 +76,10 @@ try {
             <img src="/assets/images/logo/tripplek-logo.jpeg" alt="<?= h($site_name) ?>" width="200" height="48" class="w-[200px] h-[48px] object-contain">
           </a>
 
+          <!-- Sidebar toggle -->
           <button @click="sidebarOpen = !sidebarOpen"
-            class="rounded-lg p-2 text-white transition-colors hover:bg-dark-3 lg:hidden">
-            <i class="icon-menu-2 text-xl"></i>
-          </button>
-          <button @click="sidebarOpen = !sidebarOpen"
-            class="hidden rounded-lg p-2 text-white transition-colors hover:bg-dark-3 lg:block">
+            class="rounded-lg p-2 text-white transition-colors hover:bg-dark-3"
+            aria-label="Toggle sidebar">
             <i class="icon-menu-2 text-xl"></i>
           </button>
 
