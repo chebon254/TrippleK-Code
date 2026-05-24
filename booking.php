@@ -87,7 +87,7 @@ if ($step === 'payment' && $booking_ref) {
             </div>
 
             <!-- Payment Options -->
-            <div x-data="paymentForm(<?= json_encode($booking['booking_ref']) ?>, <?= (float)$booking['total_amount'] ?>)">
+            <div x-data="paymentForm('<?= h($booking['booking_ref']) ?>', <?= (float)$booking['total_amount'] ?>)">
 
               <h2 class="text-white mb-4 text-base font-semibold">Choose Payment Method</h2>
 
