@@ -50,7 +50,7 @@ require __DIR__ . '/../includes/admin_header.php';
 <!-- Stats Cards -->
 <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
 
-  <a href="/admin/bookings.php" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
+  <a href="/admin/bookings" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
     <div class="flex items-center justify-between">
       <div>
         <p class="mb-2 font-medium text-light-1">Total Bookings</p>
@@ -63,7 +63,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
   </a>
 
-  <a href="/admin/bookings.php?status=pending" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
+  <a href="/admin/bookings?status=pending" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
     <div class="flex items-center justify-between">
       <div>
         <p class="mb-2 font-medium text-light-1">Pending</p>
@@ -76,7 +76,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
   </a>
 
-  <a href="/admin/cars.php" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
+  <a href="/admin/cars" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
     <div class="flex items-center justify-between">
       <div>
         <p class="mb-2 font-medium text-light-1">Active Fleet</p>
@@ -89,7 +89,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </div>
   </a>
 
-  <a href="/admin/payments.php" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
+  <a href="/admin/payments" class="rounded bg-dark-3 border border-border p-6 transition hover:shadow-lg">
     <div class="flex items-center justify-between">
       <div>
         <p class="mb-2 font-medium text-light-1">Monthly Revenue</p>
@@ -111,7 +111,7 @@ require __DIR__ . '/../includes/admin_header.php';
   <div class="rounded bg-dark-3 border border-border p-6 lg:col-span-2">
     <div class="mb-6 flex items-center justify-between">
       <h2 class="text-white text-xl font-semibold">Recent Bookings</h2>
-      <a href="/admin/bookings.php" class="text-blue-1 text-sm font-medium hover:text-blue-700">View All</a>
+      <a href="/admin/bookings" class="text-blue-1 text-sm font-medium hover:text-blue-700">View All</a>
     </div>
 
     <div class="overflow-hidden">
@@ -132,7 +132,7 @@ require __DIR__ . '/../includes/admin_header.php';
           <?php foreach ($recent as $b): ?>
           <tr class="transition hover:bg-dark-4">
             <td class="px-4 py-4 whitespace-nowrap">
-              <a href="/admin/booking-view.php?id=<?= $b['id'] ?>"
+              <a href="/admin/booking-view?id=<?= $b['id'] ?>"
                 class="text-blue-1 font-mono text-sm font-medium hover:underline">
                 <?= h($b['booking_ref']) ?>
               </a>
@@ -182,22 +182,22 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="rounded bg-dark-3 border border-border p-6">
       <h2 class="text-white mb-5 text-xl font-semibold">Quick Actions</h2>
       <div class="space-y-2">
-        <a href="/admin/add-car.php"
+        <a href="/admin/add-car"
           class="text-white hover:bg-dark-4 flex items-center gap-3 rounded px-3 py-2.5 text-sm font-medium transition-colors hover:text-blue-1">
           <i class="icon-plus text-base text-light-1"></i> Add New Car
         </a>
-        <a href="/admin/bookings.php?status=pending"
+        <a href="/admin/bookings?status=pending"
           class="text-white hover:bg-dark-4 flex items-center gap-3 rounded px-3 py-2.5 text-sm font-medium transition-colors hover:text-blue-1">
           <i class="icon-clock text-base text-light-1"></i> Pending Bookings
           <?php if ($pending > 0): ?>
           <span class="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs font-semibold text-white"><?= $pending ?></span>
           <?php endif; ?>
         </a>
-        <a href="/admin/payments.php"
+        <a href="/admin/payments"
           class="text-white hover:bg-dark-4 flex items-center gap-3 rounded px-3 py-2.5 text-sm font-medium transition-colors hover:text-blue-1">
           <i class="icon-price-label text-base text-light-1"></i> View Payments
         </a>
-        <a href="/admin/settings.php"
+        <a href="/admin/settings"
           class="text-white hover:bg-dark-4 flex items-center gap-3 rounded px-3 py-2.5 text-sm font-medium transition-colors hover:text-blue-1">
           <i class="icon-shield text-base text-light-1"></i> Settings
         </a>

@@ -8,18 +8,18 @@ require_once __DIR__ . '/../includes/image_functions.php';
 require_admin_auth();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 if (!verify_csrf($_POST['csrf_token'] ?? '')) {
     flash('error', 'Invalid request.');
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 $car_id = (int)($_POST['car_id'] ?? 0);
 if (!$car_id) {
     flash('error', 'Invalid car ID.');
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 $db   = get_db();
@@ -29,7 +29,7 @@ $car = $stmt->fetch();
 
 if (!$car) {
     flash('error', 'Car not found.');
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 // Check for existing bookings
@@ -37,7 +37,7 @@ $bookings = $db->prepare("SELECT COUNT(*) FROM bookings WHERE car_id = ? AND sta
 $bookings->execute([$car_id]);
 if ((int)$bookings->fetchColumn() > 0) {
     flash('error', "Cannot delete {$car['make']} {$car['model']} — it has active bookings.");
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 // Delete images from disk
@@ -47,4 +47,4 @@ delete_car_images($car_id);
 $db->prepare('DELETE FROM cars WHERE id = ?')->execute([$car_id]);
 
 flash('success', "{$car['make']} {$car['model']} deleted successfully.");
-redirect('/admin/cars.php');
+redirect('/admin/cars');

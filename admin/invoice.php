@@ -17,12 +17,12 @@ if ($id) {
     $booking = get_booking_by_ref($ref);
 } else {
     flash('error', 'No booking specified.');
-    redirect('/admin/bookings.php');
+    redirect('/admin/bookings');
 }
 
 if (!$booking) {
     flash('error', 'Booking not found.');
-    redirect('/admin/bookings.php');
+    redirect('/admin/bookings');
 }
 
 $company_name    = get_setting('company_name',    'Tripple K Car Hire');
@@ -39,9 +39,9 @@ require __DIR__ . '/../includes/admin_header.php';
 ?>
 
 <div class="mb-6 flex items-center justify-between print:hidden">
-  <a href="booking-view.php?id=<?= $booking['id'] ?>" class="text-sm text-blue-1 hover:underline">&larr; Back to Booking</a>
+  <a href="/admin/booking-view?id=<?= $booking['id'] ?>" class="text-sm text-blue-1 hover:underline">&larr; Back to Booking</a>
   <div class="flex gap-3">
-    <a href="<?= APP_URL ?>/invoice.php?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
+    <a href="<?= APP_URL ?>/invoice?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
       class="inline-flex h-9 items-center gap-1.5 rounded border border-gray-200 px-4 text-sm text-light-1 hover:bg-dark-4 transition">
       Public Link
     </a>

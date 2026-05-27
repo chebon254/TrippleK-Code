@@ -97,7 +97,7 @@ require __DIR__ . '/../includes/admin_header.php';
   <?php
   $base_url = 'bookings.php?search=' . urlencode($search) . '&date_from=' . urlencode($date_from) . '&date_to=' . urlencode($date_to);
   ?>
-  <a href="bookings.php"
+  <a href="/admin/bookings"
     class="rounded-full px-4 py-1.5 text-sm font-medium transition
       <?= !$status_f ? 'bg-dark-1 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' ?>">
     All <span class="ml-1 opacity-70"><?= array_sum($stats) ?></span>
@@ -130,7 +130,7 @@ require __DIR__ . '/../includes/admin_header.php';
       Search
     </button>
     <?php if ($search || $date_from || $date_to): ?>
-    <a href="bookings.php<?= $status_f ? '?status=' . $status_f : '' ?>"
+    <a href="/admin/bookings<?= $status_f ? '?status=' . $status_f : '' ?>"
       class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">
       Clear
     </a>
@@ -164,7 +164,7 @@ require __DIR__ . '/../includes/admin_header.php';
         <?php foreach ($bookings as $b): ?>
         <tr class="transition hover:bg-dark-4">
           <td class="px-4 py-4 whitespace-nowrap">
-            <a href="booking-view.php?id=<?= $b['id'] ?>"
+            <a href="/admin/booking-view?id=<?= $b['id'] ?>"
               class="text-blue-1 font-mono text-sm font-medium hover:underline">
               <?= h($b['booking_ref']) ?>
             </a>
@@ -195,7 +195,7 @@ require __DIR__ . '/../includes/admin_header.php';
           </td>
           <td class="px-4 py-4 whitespace-nowrap">
             <div class="flex items-center gap-2">
-              <a href="booking-view.php?id=<?= $b['id'] ?>"
+              <a href="/admin/booking-view?id=<?= $b['id'] ?>"
                 class="bg-light-2 hover:bg-blue-1 group flex h-9 w-9 items-center justify-center rounded transition"
                 title="View">
                 <i class="icon-eye text-light-1 text-base group-hover:text-white"></i>

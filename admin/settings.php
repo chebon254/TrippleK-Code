@@ -12,24 +12,24 @@ $db         = get_db();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf($_POST['csrf_token'] ?? '')) {
         flash('error', 'Invalid request.');
-        redirect('/admin/settings.php');
+        redirect('/admin/settings');
     }
 
     // Handle admin password change separately
     if (!empty($_POST['new_password'])) {
         if ($_POST['new_password'] !== $_POST['confirm_password']) {
             flash('error', 'Passwords do not match.');
-            redirect('/admin/settings.php');
+            redirect('/admin/settings');
         }
         if (strlen($_POST['new_password']) < 8) {
             flash('error', 'Password must be at least 8 characters.');
-            redirect('/admin/settings.php');
+            redirect('/admin/settings');
         }
         $hash = password_hash($_POST['new_password'], PASSWORD_BCRYPT, ['cost' => 12]);
         $db->prepare('UPDATE admin SET password_hash = ? WHERE id = ?')
            ->execute([$hash, $_SESSION['admin_id']]);
         flash('success', 'Password changed successfully.');
-        redirect('/admin/settings.php');
+        redirect('/admin/settings');
     }
 
     // Save settings
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     flash('success', 'Settings saved successfully.');
-    redirect('/admin/settings.php');
+    redirect('/admin/settings');
 }
 
 // Load all settings
@@ -64,7 +64,7 @@ require __DIR__ . '/../includes/admin_header.php';
   <p class="text-light-1">Configure your site, payments, and business details</p>
 </div>
 
-<form method="POST" action="/admin/settings.php">
+<form method="POST" action="/admin/settings">
   <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
 
   <div class="grid gap-6 lg:grid-cols-3">
@@ -223,7 +223,7 @@ require __DIR__ . '/../includes/admin_header.php';
       <!-- Change Password -->
       <div class="rounded bg-dark-3 border border-border p-6">
         <h2 class="mb-4 text-base font-medium text-white">Change Password</h2>
-        <form method="POST" action="/admin/settings.php">
+        <form method="POST" action="/admin/settings">
           <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
           <div class="mb-3">
             <label class="mb-1.5 block text-sm font-medium text-white">New Password</label>

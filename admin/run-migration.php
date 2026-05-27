@@ -59,8 +59,8 @@ pre{background:#1a1a1a;color:#c8942a;padding:20px;border-radius:6px;line-height:
 <h2>Paystack DB Migration</h2>
 <pre><?= implode("\n", $log) ?></pre>
 <div class="done">
-  ✅ Done. <strong>Delete <code>/admin/run-migration.php</code> now.</strong><br>
-  Then go to <a href="/admin/settings.php">Admin → Settings</a> to enter your Paystack keys.
+  ✅ Done. <strong>Delete <code>/admin/run-migration</code> now.</strong><br>
+  Then go to <a href="/admin/settings">Admin → Settings</a> to enter your Paystack keys.
 </div>
 </body>
 </html>

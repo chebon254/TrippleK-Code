@@ -15,7 +15,7 @@ $errors     = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf($_POST['csrf_token'] ?? '')) {
         flash('error', 'Invalid request.');
-        redirect('/admin/categories.php');
+        redirect('/admin/categories');
     }
 
     $action = $_POST['action'] ?? '';
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$name) {
             flash('error', 'Category name is required.');
-            redirect('/admin/categories.php');
+            redirect('/admin/categories');
         }
         if (!$slug) $slug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $name));
 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $image_path = save_base64_image($_POST['cropped_image'], 'categories', 451, 375);
             } catch (RuntimeException $e) {
                 flash('error', 'Image error: ' . $e->getMessage());
-                redirect('/admin/categories.php');
+                redirect('/admin/categories');
             }
         }
 
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (Throwable $e) {
             flash('error', 'Failed to add category: ' . $e->getMessage());
         }
-        redirect('/admin/categories.php');
+        redirect('/admin/categories');
     }
 
     // Update category
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$id || !$name) {
             flash('error', 'Missing required fields.');
-            redirect('/admin/categories.php');
+            redirect('/admin/categories');
         }
 
         // New image?
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             } catch (RuntimeException $e) {
                 flash('error', 'Image error: ' . $e->getMessage());
-                redirect('/admin/categories.php');
+                redirect('/admin/categories');
             }
         }
 
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (Throwable $e) {
             flash('error', 'Failed to update: ' . $e->getMessage());
         }
-        redirect('/admin/categories.php');
+        redirect('/admin/categories');
     }
 
     // Delete category
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db->prepare('DELETE FROM car_categories WHERE id=?')->execute([$id]);
             flash('success', 'Category deleted.');
         }
-        redirect('/admin/categories.php');
+        redirect('/admin/categories');
     }
 }
 
@@ -182,7 +182,7 @@ require __DIR__ . '/../includes/admin_header.php';
         <td class="px-4 py-3 text-right">
           <button onclick="openEdit(<?= h(json_encode($cat)) ?>)"
             class="text-blue-1 hover:text-yellow-3 text-sm font-medium mr-3 transition-colors">Edit</button>
-          <form method="POST" action="/admin/categories.php" class="inline"
+          <form method="POST" action="/admin/categories" class="inline"
             onsubmit="return confirm('Delete this category?')">
             <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
             <input type="hidden" name="action" value="delete">
@@ -205,7 +205,7 @@ require __DIR__ . '/../includes/admin_header.php';
       <button onclick="document.getElementById('modal-add').classList.add('hidden')"
         class="text-light-1 hover:text-white"><i class="icon-close text-lg"></i></button>
     </div>
-    <form method="POST" action="/admin/categories.php" x-data="categoryImageCropper()">
+    <form method="POST" action="/admin/categories" x-data="categoryImageCropper()">
       <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
       <input type="hidden" name="action" value="add">
       <div class="p-6 space-y-4">
@@ -260,7 +260,7 @@ require __DIR__ . '/../includes/admin_header.php';
       <button onclick="document.getElementById('modal-edit').classList.add('hidden')"
         class="text-light-1 hover:text-white"><i class="icon-close text-lg"></i></button>
     </div>
-    <form method="POST" action="/admin/categories.php" x-data="categoryImageCropper()" id="edit-cat-form">
+    <form method="POST" action="/admin/categories" x-data="categoryImageCropper()" id="edit-cat-form">
       <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
       <input type="hidden" name="action" value="update">
       <input type="hidden" name="id" id="edit-cat-id">

@@ -53,7 +53,7 @@ $cars = $stmt->fetchAll();
 
 $categories = $db->query('SELECT slug, name FROM car_categories ORDER BY sort_order')->fetchAll();
 $pager      = paginate($total, $per_page, $page,
-    '/admin/cars.php?page=%d' .
+    '/admin/cars?page=%d' .
     ($filter_cat    ? "&category=$filter_cat"             : '') .
     ($filter_status ? "&status=$filter_status"            : '') .
     ($search        ? "&q=" . urlencode($search)          : ''));
@@ -67,7 +67,7 @@ require __DIR__ . '/../includes/admin_header.php';
     <h1 class="text-white mb-2 text-3xl font-semibold">Fleet Management</h1>
     <p class="text-light-1"><?= $total ?> vehicle<?= $total !== 1 ? 's' : '' ?> in fleet</p>
   </div>
-  <a href="/admin/add-car.php"
+  <a href="/admin/add-car"
     class="bg-blue-1 hover:bg-dark-1 inline-flex items-center gap-2 rounded px-5 py-2.5 text-sm font-medium text-white transition">
     <i class="icon-plus text-base"></i> Add Car
   </a>
@@ -95,7 +95,7 @@ require __DIR__ . '/../includes/admin_header.php';
     </select>
     <button type="submit" class="bg-blue-1 hover:bg-dark-1 rounded px-5 py-2.5 text-sm font-medium text-white transition">Filter</button>
     <?php if ($search || $filter_cat || $filter_status): ?>
-    <a href="/admin/cars.php" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">Clear</a>
+    <a href="/admin/cars" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">Clear</a>
     <?php endif; ?>
   </div>
 </form>
@@ -160,17 +160,17 @@ require __DIR__ . '/../includes/admin_header.php';
           </td>
           <td class="px-4 py-4 whitespace-nowrap">
             <div class="flex items-center gap-2.5">
-              <a href="/car.php?id=<?= $car['id'] ?>" target="_blank"
+              <a href="/car?id=<?= $car['id'] ?>" target="_blank"
                 class="bg-light-2 hover:bg-blue-1 group flex h-9 w-9 items-center justify-center rounded transition"
                 title="View public page">
                 <i class="icon-arrow-top-right text-light-1 text-base group-hover:text-white"></i>
               </a>
-              <a href="/admin/edit-car.php?id=<?= $car['id'] ?>"
+              <a href="/admin/edit-car?id=<?= $car['id'] ?>"
                 class="bg-light-2 hover:bg-blue-1 group flex h-9 w-9 items-center justify-center rounded transition"
                 title="Edit">
                 <i class="icon-edit text-light-1 text-base group-hover:text-white"></i>
               </a>
-              <form method="POST" action="/admin/delete-car.php" class="inline"
+              <form method="POST" action="/admin/delete-car" class="inline"
                 onsubmit="return confirm('Delete <?= h(addslashes($car['make'] . ' ' . $car['model'])) ?>? This cannot be undone.')">
                 <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
                 <input type="hidden" name="car_id" value="<?= $car['id'] ?>">

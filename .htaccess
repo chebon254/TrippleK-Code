@@ -12,10 +12,14 @@
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # Admin and API always keep .php — do not rewrite
-    RewriteRule ^(admin|api)(/.*)?$ - [L]
+    # API endpoints keep .php (Paystack webhooks, check-payment, etc.)
+    RewriteRule ^api/ - [L]
 
-    # Clean URLs: /about → /about.php  (any top-level slug with no extension)
+    # Clean URLs for admin: /admin/bookings → /admin/bookings.php
+    RewriteCond %{DOCUMENT_ROOT}/admin/$2.php -f
+    RewriteRule ^(admin)/([^/.]+)/?$ $1/$2.php [L,QSA]
+
+    # Clean URLs for frontend: /about → /about.php
     RewriteCond %{DOCUMENT_ROOT}/$1.php -f
     RewriteRule ^([^/.]+)/?$ $1.php [L,QSA]
 

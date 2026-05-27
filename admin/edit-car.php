@@ -12,7 +12,7 @@ $car_id = (int)($_GET['id'] ?? 0);
 
 if (!$car_id) {
     flash('error', 'Invalid car ID.');
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 $stmt = $db->prepare('SELECT * FROM cars WHERE id = ?');
@@ -20,7 +20,7 @@ $stmt->execute([$car_id]);
 $car = $stmt->fetch();
 if (!$car) {
     flash('error', 'Car not found.');
-    redirect('/admin/cars.php');
+    redirect('/admin/cars');
 }
 
 // Load images and features
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 flash('success', 'Car updated successfully.');
-                redirect('/admin/cars.php');
+                redirect('/admin/cars');
 
             } catch (PDOException $e) {
                 if ($e->getCode() === '23000') {
@@ -176,7 +176,7 @@ require __DIR__ . '/../includes/admin_header.php';
     <h1 class="text-white mb-2 text-3xl font-semibold">Edit Car</h1>
     <p class="text-light-1"><?= h($car['make'] . ' ' . $car['model'] . ' — ' . $car['registration_number']) ?></p>
   </div>
-  <a href="/admin/cars.php" class="rounded border border-gray-200 px-4 py-2 text-sm text-light-1 hover:bg-dark-4">&larr; Back</a>
+  <a href="/admin/cars" class="rounded border border-gray-200 px-4 py-2 text-sm text-light-1 hover:bg-dark-4">&larr; Back</a>
 </div>
 
 <?php if ($errors): ?>
@@ -187,7 +187,7 @@ require __DIR__ . '/../includes/admin_header.php';
 </div>
 <?php endif; ?>
 
-<form method="POST" action="/admin/edit-car.php?id=<?= $car_id ?>" enctype="multipart/form-data"
+<form method="POST" action="/admin/edit-car?id=<?= $car_id ?>" enctype="multipart/form-data"
   x-data="{ features: <?= json_encode(array_values($features)) ?> }">
   <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
 
@@ -355,7 +355,7 @@ require __DIR__ . '/../includes/admin_header.php';
           class="bg-blue-1 hover:bg-dark-1 w-full rounded px-6 py-3 text-sm font-medium text-white transition-colors">
           Save Changes
         </button>
-        <a href="/admin/cars.php"
+        <a href="/admin/cars"
           class="block w-full rounded border border-gray-200 px-6 py-3 text-center text-sm text-light-1 hover:bg-dark-4">
           Cancel
         </a>

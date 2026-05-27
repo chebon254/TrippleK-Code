@@ -120,7 +120,7 @@ require __DIR__ . '/../includes/admin_header.php';
       Filter
     </button>
     <?php if ($search || $method_f || $status_f): ?>
-    <a href="payments.php" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">
+    <a href="/admin/payments" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">
       Clear
     </a>
     <?php endif; ?>
@@ -152,7 +152,7 @@ require __DIR__ . '/../includes/admin_header.php';
         <?php foreach ($payments as $p): ?>
         <tr class="transition hover:bg-dark-4">
           <td class="px-4 py-4 whitespace-nowrap">
-            <a href="booking-view.php?id=<?= (int)$p['booking_id'] ?>"
+            <a href="/admin/booking-view?id=<?= (int)$p['booking_id'] ?>"
               class="text-blue-1 font-mono text-sm font-medium hover:underline">
               <?= h($p['booking_ref']) ?>
             </a>
@@ -194,7 +194,7 @@ require __DIR__ . '/../includes/admin_header.php';
             <?= $p['paid_at'] ? display_datetime($p['paid_at']) : display_datetime($p['created_at']) ?>
           </td>
           <td class="px-4 py-4 whitespace-nowrap">
-            <a href="booking-view.php?id=<?= (int)$p['booking_id'] ?>"
+            <a href="/admin/booking-view?id=<?= (int)$p['booking_id'] ?>"
               class="bg-light-2 hover:bg-blue-1 group flex h-9 w-9 items-center justify-center rounded transition"
               title="View booking">
               <i class="icon-eye text-light-1 text-base group-hover:text-white"></i>

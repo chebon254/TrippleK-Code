@@ -12,21 +12,21 @@ $id = (int)($_GET['id'] ?? 0);
 
 if (!$id) {
     flash('error', 'Invalid booking ID.');
-    redirect('/admin/bookings.php');
+    redirect('/admin/bookings');
 }
 
 $booking = get_booking_by_id($id);
 
 if (!$booking) {
     flash('error', 'Booking not found.');
-    redirect('/admin/bookings.php');
+    redirect('/admin/bookings');
 }
 
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     if (!verify_csrf($_POST['csrf_token'] ?? '')) {
         flash('error', 'Invalid CSRF token.');
-        redirect('/admin/booking-view.php?id=' . $id);
+        redirect('/admin/booking-view?id=' . $id);
     }
     $new_status  = trim($_POST['status']      ?? '');
     $admin_notes = trim($_POST['admin_notes'] ?? '');
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     } else {
         flash('error', 'Invalid status value.');
     }
-    redirect('/admin/booking-view.php?id=' . $id);
+    redirect('/admin/booking-view?id=' . $id);
 }
 
 // Fetch all payment records for this booking
@@ -50,17 +50,17 @@ require __DIR__ . '/../includes/admin_header.php';
 
 <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
   <div>
-    <a href="bookings.php" class="text-blue-1 mb-2 inline-flex items-center gap-1 text-sm hover:underline">
+    <a href="/admin/bookings" class="text-blue-1 mb-2 inline-flex items-center gap-1 text-sm hover:underline">
       <i class="icon-chevron-left text-xs"></i> All Bookings
     </a>
     <h1 class="text-dark-1 text-3xl font-semibold"><?= h($booking['booking_ref']) ?></h1>
   </div>
   <div class="flex gap-3">
-    <a href="invoice.php?id=<?= $id ?>"
+    <a href="/admin/invoice?id=<?= $id ?>"
       class="border-border inline-flex h-10 items-center gap-2 rounded border px-4 text-sm text-light-1 transition hover:bg-dark-4">
       <i class="icon-download text-sm"></i> Invoice
     </a>
-    <a href="<?= APP_URL ?>/invoice.php?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
+    <a href="<?= APP_URL ?>/invoice?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
       class="border-border inline-flex h-10 items-center gap-2 rounded border px-4 text-sm text-light-1 transition hover:bg-dark-4">
       <i class="icon-arrow-top-right text-sm"></i> Public Invoice
     </a>
@@ -212,11 +212,11 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="rounded bg-dark-3 border border-border p-6 text-sm">
       <h2 class="mb-3 text-sm font-semibold text-dark-1">Quick Links</h2>
       <div class="space-y-2">
-        <a href="<?= APP_URL ?>/invoice.php?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
+        <a href="<?= APP_URL ?>/invoice?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
           class="flex items-center gap-2 text-blue-1 hover:underline">
           <i class="icon-download text-sm"></i> View Public Invoice
         </a>
-        <a href="<?= APP_URL ?>/car.php?id=<?= (int)$booking['car_id'] ?>" target="_blank"
+        <a href="<?= APP_URL ?>/car?id=<?= (int)$booking['car_id'] ?>" target="_blank"
           class="flex items-center gap-2 text-blue-1 hover:underline">
           <i class="icon-car text-sm"></i> View Car
         </a>

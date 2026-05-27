@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 // Already logged in → redirect to dashboard
 if (is_logged_in()) {
-    redirect('/admin/index.php');
+    redirect('/admin/index');
 }
 
 $error = '';
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($email === '' || $password === '') {
             $error = 'Please enter your email and password.';
         } elseif (admin_login($email, $password)) {
-            redirect('/admin/index.php');
+            redirect('/admin/index');
         } else {
             $error = 'Invalid email or password.';
         }
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <?php endif; ?>
 
-    <form method="POST" action="/admin/login.php" novalidate>
+    <form method="POST" action="/admin/login" novalidate>
       <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
 
       <div class="mb-4">
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <div class="mt-6 border-t border-border pt-4 text-center text-xs text-gray-400">
-      <a href="/index.php" class="hover:text-blue-1 hover:underline">&larr; Back to website</a>
+      <a href="/" class="hover:text-blue-1 hover:underline">&larr; Back to website</a>
     </div>
   </div>
 

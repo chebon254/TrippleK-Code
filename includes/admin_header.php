@@ -73,7 +73,7 @@ try {
 
         <!-- Left: Logo + Toggle + Search -->
         <div class="flex items-center gap-6">
-          <a href="/admin/index.php" class="flex min-w-[140px] items-center">
+          <a href="/admin/index" class="flex min-w-[140px] items-center">
             <img src="/assets/images/logo/tripplek-logo.jpeg" alt="<?= h($site_name) ?>" width="200" height="48" class="w-[200px] h-[48px] object-contain">
           </a>
 
@@ -86,7 +86,7 @@ try {
 
           <!-- Search -->
           <div class="relative hidden md:block">
-            <form method="get" action="/admin/bookings.php">
+            <form method="get" action="/admin/bookings">
               <input type="search" name="search" placeholder="Search bookings..."
                 class="border-border focus:border-blue-1 w-64 rounded border bg-dark-3 text-white placeholder-light-1 py-2.5 pr-4 pl-12 outline-none focus:border-2">
               <i class="icon-search text-light-1 absolute top-1/2 left-4 -translate-y-1/2 text-lg"></i>
@@ -117,7 +117,7 @@ try {
               </div>
               <div class="max-h-72 overflow-y-auto">
                 <?php if ($_pending_count > 0): ?>
-                <a href="/admin/bookings.php?status=pending"
+                <a href="/admin/bookings?status=pending"
                   class="flex cursor-pointer items-start gap-3 border-b border-border p-4 hover:bg-dark-4">
                   <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-1/20">
                     <i class="icon-clock text-blue-1"></i>
@@ -132,7 +132,7 @@ try {
                 <?php endif; ?>
               </div>
               <div class="border-t border-border p-3">
-                <a href="/admin/bookings.php?status=pending"
+                <a href="/admin/bookings?status=pending"
                   class="text-blue-1 block w-full text-center text-sm font-medium hover:text-yellow-3">
                   View All Bookings
                 </a>
@@ -141,7 +141,7 @@ try {
           </div>
 
           <!-- View Site -->
-          <a href="/index.php" target="_blank"
+          <a href="/" target="_blank"
             class="hidden h-12 w-12 items-center justify-center rounded-full bg-dark-3 border border-border transition-colors hover:bg-dark-4 lg:flex"
             title="View Website">
             <i class="icon-arrow-top-right text-blue-1 text-xl"></i>
@@ -171,21 +171,21 @@ try {
                 <div class="text-light-1 text-xs"><?= h($_admin_email) ?></div>
               </div>
               <div class="py-2">
-                <a href="/admin/settings.php"
+                <a href="/admin/settings"
                   class="flex items-center gap-3 px-4 py-2 text-sm text-white hover:bg-dark-4">
                   <i class="icon-shield text-light-1"></i><span>Settings</span>
                 </a>
-                <a href="/admin/bookings.php"
+                <a href="/admin/bookings"
                   class="flex items-center gap-3 px-4 py-2 text-sm text-white hover:bg-dark-4">
                   <i class="icon-calendar text-light-1"></i><span>Bookings</span>
                 </a>
-                <a href="/admin/cars.php"
+                <a href="/admin/cars"
                   class="flex items-center gap-3 px-4 py-2 text-sm text-white hover:bg-dark-4">
                   <i class="icon-car text-light-1"></i><span>Fleet</span>
                 </a>
               </div>
               <div class="border-t border-border py-2">
-                <a href="/admin/logout.php"
+                <a href="/admin/logout"
                   class="flex items-center gap-3 px-4 py-2 text-sm text-red-400 hover:bg-dark-4">
                   <i class="icon-arrow-right"></i><span>Logout</span>
                 </a>
@@ -209,13 +209,13 @@ try {
 
         <?php
         $nav_items = [
-          ['href'=>'/admin/index.php',      'page'=>'index',      'icon'=>'/assets/images/dashboard/sidebar/compass.svg',  'label'=>'Dashboard'],
-          ['href'=>'/admin/bookings.php',   'page'=>'bookings',   'icon'=>'/assets/images/dashboard/sidebar/booking.svg',  'label'=>'Bookings',
+          ['href'=>'/admin/index',      'page'=>'index',      'icon'=>'/assets/images/dashboard/sidebar/compass.svg',  'label'=>'Dashboard'],
+          ['href'=>'/admin/bookings',   'page'=>'bookings',   'icon'=>'/assets/images/dashboard/sidebar/booking.svg',  'label'=>'Bookings',
            'badge' => $_pending_count ?: 0],
-          ['href'=>'/admin/cars.php',       'page'=>'cars',       'icon'=>'/assets/images/dashboard/sidebar/taxi.svg',     'label'=>'Fleet / Cars'],
-          ['href'=>'/admin/categories.php', 'page'=>'categories', 'icon'=>'/assets/images/dashboard/sidebar/map.svg',      'label'=>'Categories'],
-          ['href'=>'/admin/payments.php',   'page'=>'payments',   'icon'=>'/assets/images/dashboard/sidebar/bookmark.svg', 'label'=>'Payments'],
-          ['href'=>'/admin/settings.php',   'page'=>'settings',   'icon'=>'/assets/images/dashboard/sidebar/gear.svg',     'label'=>'Settings'],
+          ['href'=>'/admin/cars',       'page'=>'cars',       'icon'=>'/assets/images/dashboard/sidebar/taxi.svg',     'label'=>'Fleet / Cars'],
+          ['href'=>'/admin/categories', 'page'=>'categories', 'icon'=>'/assets/images/dashboard/sidebar/map.svg',      'label'=>'Categories'],
+          ['href'=>'/admin/payments',   'page'=>'payments',   'icon'=>'/assets/images/dashboard/sidebar/bookmark.svg', 'label'=>'Payments'],
+          ['href'=>'/admin/settings',   'page'=>'settings',   'icon'=>'/assets/images/dashboard/sidebar/gear.svg',     'label'=>'Settings'],
         ];
         foreach ($nav_items as $item):
           $active = ($admin_page === $item['page']);
@@ -234,12 +234,12 @@ try {
         <?php endforeach; ?>
 
         <div class="mt-4 border-t border-border pt-4">
-          <a href="/index.php" target="_blank"
+          <a href="/" target="_blank"
             class="flex items-center gap-4 rounded px-4 py-3 font-medium text-white transition-colors hover:bg-dark-3">
             <img src="/assets/images/dashboard/sidebar/map.svg" alt="View Site" class="h-5 w-5 opacity-80">
             <span>View Website</span>
           </a>
-          <a href="/admin/logout.php"
+          <a href="/admin/logout"
             class="flex items-center gap-4 rounded px-4 py-3 font-medium text-red-400 transition-colors hover:bg-dark-3">
             <img src="/assets/images/dashboard/sidebar/log-out.svg" alt="Logout" class="h-5 w-5 opacity-80">
             <span>Logout</span>

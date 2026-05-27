@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 flash('success', "Car {$_POST['make']} {$_POST['model']} added successfully.");
-                redirect('/admin/cars.php');
+                redirect('/admin/cars');
 
             } catch (PDOException $e) {
                 if ($e->getCode() === '23000') {
@@ -148,7 +148,7 @@ require __DIR__ . '/../includes/admin_header.php';
     <h1 class="text-white mb-2 text-3xl font-semibold">Add New Car</h1>
     <p class="text-light-1">Add a vehicle to the Tripple K fleet</p>
   </div>
-  <a href="/admin/cars.php" class="rounded border border-gray-200 px-4 py-2 text-sm text-light-1 hover:bg-dark-4">&larr; Back to Fleet</a>
+  <a href="/admin/cars" class="rounded border border-gray-200 px-4 py-2 text-sm text-light-1 hover:bg-dark-4">&larr; Back to Fleet</a>
 </div>
 
 <?php if ($errors): ?>
@@ -159,7 +159,7 @@ require __DIR__ . '/../includes/admin_header.php';
 </div>
 <?php endif; ?>
 
-<form method="POST" action="/admin/add-car.php" enctype="multipart/form-data" x-data="{ features: [''] }">
+<form method="POST" action="/admin/add-car" enctype="multipart/form-data" x-data="{ features: [''] }">
   <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
 
   <div class="grid gap-6 lg:grid-cols-3">
@@ -387,7 +387,7 @@ require __DIR__ . '/../includes/admin_header.php';
           class="bg-blue-1 hover:bg-dark-1 w-full rounded px-6 py-3 text-sm font-medium text-white transition-colors">
           Add Car to Fleet
         </button>
-        <a href="/admin/cars.php"
+        <a href="/admin/cars"
           class="mt-3 block w-full rounded border border-gray-200 px-6 py-3 text-center text-sm text-light-1 hover:bg-dark-4">
           Cancel
         </a>
