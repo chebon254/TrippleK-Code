@@ -95,14 +95,16 @@ require __DIR__ . '/includes/header.php';
             <div class="relative border-[#2a2a2a] max-lg:border-y max-lg:p-5 lg:border-x lg:px-7.5">
               <span class="text-15 text-white block font-medium">Pickup Date</span>
               <input type="date" x-model="dateFrom" :min="new Date().toISOString().slice(0,10)"
-                class="outline-none text-light-1 w-full" />
+                style="color-scheme:dark"
+                class="outline-none text-light-1 w-full bg-transparent" />
             </div>
 
             <!-- Return date -->
             <div class="relative max-lg:p-5">
               <span class="text-15 text-white block font-medium">Return Date</span>
               <input type="date" x-model="dateTo" :min="dateFrom || new Date().toISOString().slice(0,10)"
-                class="outline-none text-light-1 w-full" />
+                style="color-scheme:dark"
+                class="outline-none text-light-1 w-full bg-transparent" />
             </div>
           </div>
 
