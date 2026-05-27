@@ -136,8 +136,8 @@ require __DIR__ . '/includes/header.php';
 <main class="flex-grow bg-dark-1">
 
   <!-- Hero banner — pt-20 clears the fixed nav (h-20 = 80px), then adds breathing room -->
-  <section class="relative z-10 flex items-center justify-center bg-cover bg-center bg-no-repeat pt-20 pb-16 lg:pb-20"
-    style="min-height:260px; background-image:url(/assets/images/backgrounds/adolfo-felix-Yi9-QIObQ1o-unsplash.jpg)">
+  <section class="relative z-10 flex items-center justify-center bg-cover bg-center bg-no-repeat pt-32 pb-16 lg:pt-40 lg:pb-24"
+    style="min-height:320px; background-image:url(/assets/images/backgrounds/adolfo-felix-Yi9-QIObQ1o-unsplash.jpg)">
     <div class="absolute inset-0 -z-10 bg-dark-1/60"></div>
     <div class="container">
       <div class="text-center">
