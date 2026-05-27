@@ -179,8 +179,7 @@ require __DIR__ . '/includes/header.php';
         x-data="{
           type: '<?= h($_POST['customer_type'] ?? 'individual') ?>',
           step: 1,
-          submitting: false,
-          submit() { this.submitting = true; this.$el.submit(); }
+          submitting: false
         }">
 
         <!-- Honeypot -->
@@ -421,7 +420,7 @@ require __DIR__ . '/includes/header.php';
                 class="rounded border border-border px-6 py-3 text-sm text-light-1 hover:text-white transition-colors">
                 <i class="icon-arrow-left mr-1"></i> Back
               </button>
-              <button type="button" @click="submit()" :disabled="submitting"
+              <button type="submit" @click="submitting = true" :disabled="submitting"
                 class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
                 <svg x-show="submitting" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -576,7 +575,7 @@ require __DIR__ . '/includes/header.php';
                 class="rounded border border-border px-6 py-3 text-sm text-light-1 hover:text-white transition-colors">
                 <i class="icon-arrow-left mr-1"></i> Back
               </button>
-              <button type="button" @click="submit()" :disabled="submitting"
+              <button type="submit" @click="submitting = true" :disabled="submitting"
                 class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
                 <svg x-show="submitting" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
