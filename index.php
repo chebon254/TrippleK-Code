@@ -357,10 +357,12 @@ require __DIR__ . '/includes/header.php';
   <?php endif; ?>
 
   <!-- ===== Booking Requirements ===== -->
-  <section class="pt-20 md:pt-30">
+  <section class="pt-20 md:pt-30 pb-20 md:pb-30">
     <div class="container">
-      <div class="row y-gap-40 items-center xl:gap-20">
-        <div class="col-xl-5" data-aos="fade-right">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
+
+        <!-- Left: requirements -->
+        <div data-aos="fade-right">
           <h2 class="text-white mb-6 text-3xl font-semibold">Booking Requirements</h2>
           <ul class="space-y-4">
             <?php
@@ -383,7 +385,7 @@ require __DIR__ . '/includes/header.php';
           </ul>
           <div class="mt-8 flex flex-wrap gap-4">
             <a href="/cars"
-              class="bg-blue-1 hover:bg-yellow-3 rounded px-6 py-3 text-sm font-medium text-white transition-colors">
+              class="bg-blue-1 hover:bg-yellow-3 hover:text-dark-1 rounded px-6 py-3 text-sm font-medium text-white transition-colors">
               Book a Car
             </a>
             <?php if ($company_wa): ?>
@@ -396,27 +398,29 @@ require __DIR__ . '/includes/header.php';
             <?php endif; ?>
           </div>
         </div>
-        <div class="col-xl-6 col-offset-xl-1">
-          <div class="relative" data-aos="fade-left">
-            <img src="/assets/src/images/masthead/8/1.png" alt="Car rental Kenya"
-              class="rounded-2xl shadow-xl w-full object-cover"
-              onerror="this.style.display='none'">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ===== CTA Banner ===== -->
-  <section class="pt-20 md:pt-30 pb-20 md:pb-30">
-    <div class="container">
-      <div class="bg-blue-1 relative overflow-hidden rounded-2xl p-12 text-center text-white">
-        <h2 class="mb-4 text-3xl font-semibold">Ready to Hit the Road?</h2>
-        <p class="mb-8 text-lg text-white/80">Browse our full fleet and book online in minutes.</p>
-        <a href="/cars"
-          class="inline-block rounded bg-dark-1 px-8 py-3.5 text-sm font-semibold text-white hover:bg-dark-3 transition-colors border border-white/20">
-          Browse All Cars
-        </a>
+        <!-- Right: image from fleet or placeholder -->
+        <div data-aos="fade-left">
+          <?php
+          // Use first available car image for the requirements section
+          $req_img = !empty($slider_cars[0]['banner_path'])
+            ? UPLOAD_URL . ltrim($slider_cars[0]['banner_path'], '/')
+            : (!empty($slider_cars[0]['thumbnail_path'])
+                ? UPLOAD_URL . ltrim($slider_cars[0]['thumbnail_path'], '/')
+                : null);
+          ?>
+          <?php if ($req_img): ?>
+          <img src="<?= h($req_img) ?>" alt="<?= h(get_setting('company_name', 'Car rental Kenya')) ?>"
+            class="rounded-2xl shadow-xl w-full object-cover aspect-video">
+          <?php else: ?>
+          <div class="rounded-2xl bg-dark-3 border border-border aspect-video flex flex-col items-center justify-center gap-4">
+            <img src="/assets/images/logo/tripplek-logo.jpeg" alt="<?= h(get_setting('company_name','Tripple K')) ?>"
+              class="w-40 opacity-60 object-contain">
+            <p class="text-light-1 text-sm">Upload car photos to see them here</p>
+          </div>
+          <?php endif; ?>
+        </div>
+
       </div>
     </div>
   </section>
