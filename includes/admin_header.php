@@ -1,6 +1,13 @@
 <?php
 $site_name  = get_setting('company_name', APP_NAME);
 $admin_page = basename($_SERVER['PHP_SELF'], '.php');
+// Group sub-pages under their parent nav item
+$admin_page = match($admin_page) {
+    'customer-view', 'add-customer' => 'customers',
+    'add-car', 'edit-car', 'delete-car' => 'cars',
+    'booking-view' => 'bookings',
+    default => $admin_page,
+};
 $flash      = get_flash();
 
 // Fetch admin info
@@ -217,6 +224,7 @@ try {
           ['href'=>'/admin/cars',       'page'=>'cars',       'icon'=>'/assets/images/dashboard/sidebar/taxi.svg',     'label'=>'Fleet / Cars'],
           ['href'=>'/admin/categories', 'page'=>'categories', 'icon'=>'/assets/images/dashboard/sidebar/map.svg',      'label'=>'Categories'],
           ['href'=>'/admin/payments',   'page'=>'payments',   'icon'=>'/assets/images/dashboard/sidebar/bookmark.svg', 'label'=>'Payments'],
+          ['href'=>'/admin/customers',  'page'=>'customers',  'icon'=>'/assets/images/dashboard/sidebar/users.svg',    'label'=>'Customers'],
           ['href'=>'/admin/settings',   'page'=>'settings',   'icon'=>'/assets/images/dashboard/sidebar/gear.svg',     'label'=>'Settings'],
         ];
         foreach ($nav_items as $item):
