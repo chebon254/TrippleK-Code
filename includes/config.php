@@ -33,7 +33,8 @@ define('APP_NAME', 'Tripple K');
 // ─── Paths ───────────────────────────────────────────────────────────────────
 define('BASE_PATH',   dirname(__DIR__));
 define('UPLOAD_DIR',  BASE_PATH . '/uploads/');
-define('UPLOAD_URL',  APP_URL . '/uploads/');
+// Root-relative so uploads work on any host/port (local dev + production)
+define('UPLOAD_URL',  '/uploads/');
 
 // ─── Session ─────────────────────────────────────────────────────────────────
 define('SESSION_NAME', 'TRIPPLEK_ADMIN');
