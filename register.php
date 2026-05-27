@@ -136,9 +136,9 @@ require __DIR__ . '/includes/header.php';
 <main class="flex-grow bg-dark-1">
 
   <!-- Hero banner -->
-  <section class="relative flex items-center justify-center bg-cover bg-center py-16 lg:py-20"
-    style="background-image:url(/assets/images/cars/1.png)">
-    <div class="absolute inset-0 bg-dark-1/60"></div>
+  <section class="relative flex items-center justify-center bg-cover bg-center pt-36 pb-16 lg:pt-44 lg:pb-20"
+    style="background-image:url(/assets/images/backgrounds/adolfo-felix-Yi9-QIObQ1o-unsplash.jpg)">
+    <div class="absolute inset-0 bg-dark-1/65"></div>
     <div class="container relative text-center">
       <h1 class="text-3xl font-semibold text-white md:text-5xl">Customer Registration</h1>
       <p class="mt-3 text-light-1">Complete the form below to register with Tripple K Car Hire.</p>
