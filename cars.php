@@ -283,7 +283,7 @@ require __DIR__ . '/includes/header.php';
             ?>
             <div class="group">
               <a href="/car?id=<?= (int)$car['id'] ?>" class="block">
-                <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
+                <div class="relative mb-4 aspect-30/25 overflow-hidden rounded">
                   <img src="<?= h($thumb) ?>" alt="<?= h($car['make'] . ' ' . $car['model']) ?>"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     onerror="this.src='/assets/src/images/cars/1.png'">

@@ -17,9 +17,9 @@ $_admin_email = $_SESSION['admin_email'] ?? '';
 $_admin_name  = 'Admin';
 if ($_admin_id) {
     try {
-        $s = get_db()->prepare('SELECT name FROM admin WHERE id = ? LIMIT 1');
-        $s->execute([$_admin_id]);
-        $_admin_name = $s->fetchColumn() ?: 'Admin';
+        $_q = get_db()->prepare('SELECT name FROM admin WHERE id = ? LIMIT 1');
+        $_q->execute([$_admin_id]);
+        $_admin_name = $_q->fetchColumn() ?: 'Admin';
     } catch (Throwable) {}
 }
 

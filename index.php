@@ -95,7 +95,7 @@ require __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Dates -->
-            <div class="relative border-[#2a2a2a] max-lg:border-y max-lg:p-5 lg:border-x lg:px-7.5">
+            <div class="relative border-border max-lg:border-y max-lg:p-5 lg:border-x lg:px-7.5">
               <span class="text-15 text-white block font-medium">Pickup Date</span>
               <input type="date" x-model="dateFrom" :min="new Date().toISOString().slice(0,10)"
                 style="color-scheme:dark"
@@ -227,7 +227,7 @@ require __DIR__ . '/includes/header.php';
             ?>
             <div class="swiper-slide transition-all duration-300">
               <a href="/car?id=<?= (int)$car['id'] ?>" class="group block">
-                <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
+                <div class="relative mb-4 aspect-30/25 overflow-hidden rounded">
                   <img src="<?= h($thumb) ?>" alt="<?= h($car['make'] . ' ' . $car['model']) ?>"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     onerror="this.src='/assets/src/images/cars/1.png'">

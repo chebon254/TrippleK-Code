@@ -173,7 +173,7 @@ require __DIR__ . '/includes/header.php';
             </div>
           </div>
 
-          <div class="my-10 border-t border-[#2a2a2a]"></div>
+          <div class="my-10 border-t border-border"></div>
 
           <!-- Description -->
           <?php if ($car['description']): ?>
@@ -181,7 +181,7 @@ require __DIR__ . '/includes/header.php';
             <h3 class="text-2xl font-semibold">Overview</h3>
             <p class="mt-4 leading-relaxed text-white/70"><?= nl2br(h($car['description'])) ?></p>
           </div>
-          <div class="my-10 border-t border-[#2a2a2a]"></div>
+          <div class="my-10 border-t border-border"></div>
           <?php endif; ?>
 
           <!-- Specifications -->
@@ -202,7 +202,7 @@ require __DIR__ . '/includes/header.php';
             </div>
           </div>
 
-          <div class="my-10 border-t border-[#2a2a2a]"></div>
+          <div class="my-10 border-t border-border"></div>
 
           <!-- Amenities -->
           <div>
@@ -237,7 +237,7 @@ require __DIR__ . '/includes/header.php';
             </div>
           </div>
 
-          <div class="my-10 border-t border-[#2a2a2a]"></div>
+          <div class="my-10 border-t border-border"></div>
 
           <!-- Requirements -->
           <div>
@@ -375,7 +375,7 @@ require __DIR__ . '/includes/header.php';
         ?>
         <div class="group">
           <a href="/car?id=<?= (int)$sc['id'] ?>" class="block">
-            <div class="relative mb-4 aspect-30/25 overflow-hidden rounded border border-[#2a2a2a]">
+            <div class="relative mb-4 aspect-30/25 overflow-hidden rounded">
               <img src="<?= h($sc_thumb) ?>" alt="<?= h($sc['make'] . ' ' . $sc['model']) ?>"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 onerror="this.src='/assets/images/cars/1.png'">
