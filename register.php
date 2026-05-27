@@ -135,13 +135,15 @@ require __DIR__ . '/includes/header.php';
 
 <main class="flex-grow bg-dark-1">
 
-  <!-- Hero banner -->
-  <section class="relative flex items-center justify-center bg-cover bg-center pt-36 pb-16 lg:pt-44 lg:pb-20"
-    style="background-image:url(/assets/images/backgrounds/adolfo-felix-Yi9-QIObQ1o-unsplash.jpg)">
-    <div class="absolute inset-0 bg-dark-1/65"></div>
-    <div class="container relative text-center">
-      <h1 class="text-3xl font-semibold text-white md:text-5xl">Customer Registration</h1>
-      <p class="mt-3 text-light-1">Complete the form below to register with Tripple K Car Hire.</p>
+  <!-- Hero banner — pt-20 clears the fixed nav (h-20 = 80px), then adds breathing room -->
+  <section class="relative z-10 flex items-center justify-center bg-cover bg-center bg-no-repeat pt-20 pb-16 lg:pb-20"
+    style="min-height:260px; background-image:url(/assets/images/backgrounds/adolfo-felix-Yi9-QIObQ1o-unsplash.jpg)">
+    <div class="absolute inset-0 -z-10 bg-dark-1/60"></div>
+    <div class="container">
+      <div class="text-center">
+        <h1 class="text-3xl font-semibold text-white md:text-5xl">Customer Registration</h1>
+        <p class="mt-3 text-light-1">Complete the form below to register with Tripple K Car Hire.</p>
+      </div>
     </div>
   </section>
 
