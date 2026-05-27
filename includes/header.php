@@ -151,6 +151,7 @@ $whatsapp     = get_setting('company_whatsapp', '');
         <li><a href="/#wedding" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1">Wedding Packages</a></li>
         <li><a href="/about" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='about'?'text-blue-1 bg-blue-1/5':'' ?>">About Us</a></li>
         <li><a href="/contact" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='contact'?'text-blue-1 bg-blue-1/5':'' ?>">Contact</a></li>
+        <li><a href="/register" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='register'?'text-blue-1 bg-blue-1/5':'' ?>">Register</a></li>
       </ul>
       <div class="mt-6">
         <a href="/cars" class="bg-blue-1 text-white block text-center rounded px-4 py-3 font-medium">Book a Car</a>

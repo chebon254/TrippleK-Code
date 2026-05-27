@@ -71,6 +71,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     <lastmod><?= $today ?></lastmod>
   </url>
 
+  <url>
+    <loc><?= $base ?>/register</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <lastmod><?= $today ?></lastmod>
+  </url>
+
   <!-- ── Category filter pages ── -->
 <?php foreach ($categories as $cat): ?>
   <url>

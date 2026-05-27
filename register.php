@@ -486,18 +486,13 @@ require __DIR__ . '/includes/header.php';
 </main>
 
 <style>
-.pub-label {
-  @apply mb-1.5 block text-sm font-medium text-white;
-}
-.pub-input {
-  @apply w-full rounded border border-border bg-dark-4 text-white placeholder-light-1 px-4 py-3 text-sm outline-none focus:border-blue-1 transition-colors;
-}
-.pub-file {
-  @apply block w-full text-sm text-light-1 cursor-pointer
-    file:mr-4 file:rounded file:border-0 file:bg-dark-4 file:px-4 file:py-2.5
-    file:text-sm file:font-medium file:text-white hover:file:bg-dark-3
-    file:transition-colors file:cursor-pointer;
-}
+.pub-label{display:block;margin-bottom:.375rem;font-size:.875rem;font-weight:500;color:#fff}
+.pub-input{width:100%;border-radius:.375rem;border:1px solid #1a1a1a;background:#222;color:#fff;padding:.75rem 1rem;font-size:.875rem;outline:none;transition:border-color .2s}
+.pub-input::placeholder{color:#a89878}
+.pub-input:focus{border-color:#c8942a}
+.pub-file{display:block;width:100%;font-size:.875rem;color:#a89878;cursor:pointer}
+.pub-file::file-selector-button{margin-right:1rem;border-radius:.375rem;border:0;background:#222;padding:.625rem 1rem;font-size:.875rem;font-weight:500;color:#fff;cursor:pointer;transition:background .2s}
+.pub-file::file-selector-button:hover{background:#1a1a1a}
 </style>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
