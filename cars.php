@@ -129,7 +129,7 @@ require __DIR__ . '/includes/header.php';
                       <p class="text-15 text-white mb-1 block font-medium">Pick up date</p>
                       <input type="date" name="date_from" value="<?= h($f_date_from) ?>"
                         min="<?= date('Y-m-d') ?>"
-                        class="outline-none text-light-1 w-full" />
+                        class="outline-none text-white w-full bg-transparent" />
                     </div>
 
                     <!-- Return date -->
@@ -137,13 +137,13 @@ require __DIR__ . '/includes/header.php';
                       <p class="text-15 text-white mb-1 block font-medium">Return date</p>
                       <input type="date" name="date_to" value="<?= h($f_date_to) ?>"
                         min="<?= h($f_date_from ?: date('Y-m-d')) ?>"
-                        class="outline-none text-light-1 w-full" />
+                        class="outline-none text-white w-full bg-transparent" />
                     </div>
 
                     <!-- Passengers -->
                     <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
                       <p class="text-15 text-white mb-1 block font-medium">Passengers</p>
-                      <select name="passengers" class="outline-none text-light-1 w-full bg-transparent">
+                      <select name="passengers" class="outline-none text-white w-full bg-dark-1 cursor-pointer">
                         <option value="">Any</option>
                         <?php foreach ([1,2,3,4,5,6,7,8] as $p): ?>
                         <option value="<?= $p ?>" <?= $f_passengers == $p ? 'selected' : '' ?>><?= $p ?>+</option>

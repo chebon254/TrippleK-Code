@@ -449,7 +449,7 @@ require __DIR__ . '/includes/header.php';
                   <div>
                     <label class="mb-1.5 block text-sm font-medium text-white">Service</label>
                     <select x-model="form.service_slug"
-                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border bg-dark-3 text-white px-4 outline-none focus:border-2">
                       <?php foreach ($services as $svc): ?>
                       <option value="<?= h($svc['slug']) ?>"><?= h($svc['name']) ?></option>
                       <?php endforeach; ?>
@@ -458,7 +458,7 @@ require __DIR__ . '/includes/header.php';
                   <div>
                     <label class="mb-1.5 block text-sm font-medium text-white">Passengers</label>
                     <select x-model="form.num_passengers"
-                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border px-4 outline-none focus:border-2">
+                      class="border-border focus:border-blue-1 text-15 h-12 w-full rounded border bg-dark-3 text-white px-4 outline-none focus:border-2">
                       <?php for ($i = 1; $i <= $car['passenger_capacity']; $i++): ?>
                       <option value="<?= $i ?>"><?= $i ?> passenger<?= $i > 1 ? 's' : '' ?></option>
                       <?php endfor; ?>

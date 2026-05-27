@@ -14,7 +14,12 @@ $whatsapp     = get_setting('company_whatsapp', '');
   <meta name="description" content="<?= h($page_description ?? 'Affordable car hire, airport transfers, chauffeur and wedding packages in Kenya.') ?>">
   <link rel="icon" href="/assets/images/logo/favicon.jpeg">
   <link href="/assets/bundle.css" rel="stylesheet">
-  <style>[x-cloak]{display:none!important}</style>
+  <style>
+    [x-cloak]{display:none!important}
+    /* Dark-theme native form controls */
+    select,input[type="date"],input[type="time"]{color-scheme:dark}
+    select option{background:#111;color:#fff}
+  </style>
   <script>
     function dropdown(){return{open:false,toggle(){this.open=!this.open},close(){this.open=false}}}
     function megaMenu(){return{open:false,activeTab:'hotel',toggle(){this.open=!this.open},close(){this.open=false}}}

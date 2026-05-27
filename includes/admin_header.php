@@ -33,6 +33,8 @@ try {
   <link href="/assets/admin.css" rel="stylesheet">
   <style>
     [x-cloak]{display:none!important}
+    select,input[type="date"],input[type="time"]{color-scheme:dark}
+    select option{background:#222;color:#fff}
     @keyframes gtWrap{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
     @keyframes gtIcon{0%{transform:translateY(150%) scale(1)}50%{transform:translateY(0%) scale(1.2) rotate(20deg)}100%{transform:translateY(-150%) rotate(-20deg)}}
     .animate-gt-wrap{animation:gtWrap 1.8s ease infinite}

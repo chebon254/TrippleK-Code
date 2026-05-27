@@ -277,7 +277,7 @@ require __DIR__ . '/includes/header.php';
                 <!-- Service type -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
                   <p class="text-15 text-white mb-1 block font-medium">Service</p>
-                  <select name="service" class="outline-none text-light-1 w-full bg-transparent">
+                  <select name="service" class="outline-none text-white w-full bg-dark-1 cursor-pointer">
                     <?php foreach ($services as $svc): ?>
                     <option value="<?= h($svc['slug']) ?>"><?= h($svc['name']) ?></option>
                     <?php endforeach; ?>
