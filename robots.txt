@@ -1,0 +1,54 @@
+# robots.txt — Tripple K Car Hire & Transfers
+# Allow all crawlers (search engines + AI) on public pages
+# Block admin, API, and upload paths
+
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /includes/
+Disallow: /sql/
+Disallow: /setup
+Disallow: /seed
+Allow: /
+
+# Sitemap
+Sitemap: https://saddlebrown-coyote-537196.hostingersite.com/sitemap
+
+# ── AI / LLM crawlers — explicitly allowed ──────────────────────────────────
+
+# OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+# OpenAI (browsing)
+User-agent: ChatGPT-User
+Allow: /
+
+# Google AI (Gemini, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+# Common Crawl (used for many AI datasets)
+User-agent: CCBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
