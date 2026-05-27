@@ -87,9 +87,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $car_id,
                 ]);
 
-                // New images
+                // New cropped images (base64 from Cropper.js)
+                $sort = count($images);
+                $imgStmt = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)');
+
+                if (!empty($_POST['cropped_images'])) {
+                    foreach ($_POST['cropped_images'] as $b64) {
+                        if (empty($b64)) continue;
+                        try {
+                            $path = save_base64_image($b64, "cars/{$car_id}", 1500, 650);
+                            $imgStmt->execute([$car_id, $path, $sort++, 0]);
+                        } catch (RuntimeException $e) {
+                            $errors[] = 'Image error: ' . $e->getMessage();
+                        }
+                    }
+                }
+
+                // Fallback: regular file uploads
                 if (!empty($_FILES['car_images']['name'][0])) {
-                    $sort = count($images);
                     foreach ($_FILES['car_images']['name'] as $i => $name) {
                         if ($_FILES['car_images']['error'][$i] !== UPLOAD_ERR_OK) continue;
                         $file = [
@@ -100,8 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ];
                         try {
                             $paths = upload_car_image($car_id, $file);
-                            $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)')
-                               ->execute([$car_id, $paths['path'], $sort++, 0]);
+                            $imgStmt->execute([$car_id, $paths['path'], $sort++, 0]);
                         } catch (RuntimeException $e) {
                             $errors[] = 'Image error: ' . $e->getMessage();
                         }
@@ -283,12 +297,8 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
       <?php endif; ?>
 
-      <!-- Add More Images -->
-      <div class="rounded bg-dark-3 border border-border p-6">
-        <h2 class="mb-4 text-base font-medium text-white">Add More Photos</h2>
-        <input type="file" name="car_images[]" multiple accept="image/jpeg,image/png,image/webp"
-          class="block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-1 hover:file:bg-blue-100">
-      </div>
+      <!-- Add More Photos with Cropper -->
+      <?php include __DIR__ . '/../includes/car_image_uploader.php'; ?>
 
       <!-- Features -->
       <div class="rounded bg-dark-3 border border-border p-6">

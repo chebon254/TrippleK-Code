@@ -17,7 +17,7 @@
 })();
 
 // ─── Database ────────────────────────────────────────────────────────────────
-define('DB_HOST',    'localhost');
+define('DB_HOST',    'srv2026.hstgr.io');
 define('DB_PORT',    '3306');
 define('DB_NAME',    'u687796233_tripplek');
 define('DB_USER',    'u687796233_tripple');

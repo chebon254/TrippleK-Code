@@ -209,12 +209,13 @@ try {
 
         <?php
         $nav_items = [
-          ['href'=>'/admin/index.php',   'page'=>'index',    'icon'=>'/assets/images/dashboard/sidebar/compass.svg',  'label'=>'Dashboard'],
-          ['href'=>'/admin/bookings.php','page'=>'bookings', 'icon'=>'/assets/images/dashboard/sidebar/booking.svg',  'label'=>'Bookings',
+          ['href'=>'/admin/index.php',      'page'=>'index',      'icon'=>'/assets/images/dashboard/sidebar/compass.svg',  'label'=>'Dashboard'],
+          ['href'=>'/admin/bookings.php',   'page'=>'bookings',   'icon'=>'/assets/images/dashboard/sidebar/booking.svg',  'label'=>'Bookings',
            'badge' => $_pending_count ?: 0],
-          ['href'=>'/admin/cars.php',    'page'=>'cars',     'icon'=>'/assets/images/dashboard/sidebar/taxi.svg',     'label'=>'Fleet / Cars'],
-          ['href'=>'/admin/payments.php','page'=>'payments', 'icon'=>'/assets/images/dashboard/sidebar/bookmark.svg', 'label'=>'Payments'],
-          ['href'=>'/admin/settings.php','page'=>'settings', 'icon'=>'/assets/images/dashboard/sidebar/gear.svg',     'label'=>'Settings'],
+          ['href'=>'/admin/cars.php',       'page'=>'cars',       'icon'=>'/assets/images/dashboard/sidebar/taxi.svg',     'label'=>'Fleet / Cars'],
+          ['href'=>'/admin/categories.php', 'page'=>'categories', 'icon'=>'/assets/images/dashboard/sidebar/map.svg',      'label'=>'Categories'],
+          ['href'=>'/admin/payments.php',   'page'=>'payments',   'icon'=>'/assets/images/dashboard/sidebar/bookmark.svg', 'label'=>'Payments'],
+          ['href'=>'/admin/settings.php',   'page'=>'settings',   'icon'=>'/assets/images/dashboard/sidebar/gear.svg',     'label'=>'Settings'],
         ];
         foreach ($nav_items as $item):
           $active = ($admin_page === $item['page']);

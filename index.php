@@ -31,7 +31,19 @@ if (empty($featured_cars)) {
     ")->fetchAll();
 }
 
-$categories = $db->query('SELECT slug, name FROM car_categories ORDER BY sort_order')->fetchAll();
+// Slider: up to 5 cars with images for the hero banner
+$slider_cars = $db->query("
+    SELECT c.make, c.model, c.thumbnail_path, ci.file_path AS banner_path
+    FROM cars c
+    JOIN car_images ci ON ci.car_id = c.id AND ci.is_primary = 1
+    WHERE c.status = 'available' AND c.thumbnail_path IS NOT NULL
+    ORDER BY c.is_featured DESC, c.sort_order ASC, c.id DESC
+    LIMIT 5
+")->fetchAll();
+
+$categories = $db->query("
+    SELECT slug, name, image_path FROM car_categories ORDER BY sort_order
+")->fetchAll();
 $company_wa = get_setting('company_whatsapp', '');
 
 require __DIR__ . '/includes/header.php';
@@ -111,18 +123,28 @@ require __DIR__ . '/includes/header.php';
       <div class="absolute bottom-0 left-1/2 -z-10 h-1/2 w-dvw -translate-x-1/2 bg-dark-1"></div>
       <div class="swiper relative mx-auto max-w-[1500px]" x-ref="masthead" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper-wrapper">
-          <div class="swiper-slide overflow-hidden rounded-2xl">
-            <div class="relative aspect-150/65 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat max-md:py-40"
-              style="background-image: url(/assets/images/masthead/8/1.png)"></div>
-          </div>
-          <div class="swiper-slide overflow-hidden rounded-2xl">
-            <div class="relative aspect-150/65 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat max-md:py-40"
-              style="background-image: url(/assets/images/masthead/8/1.png)"></div>
-          </div>
-          <div class="swiper-slide overflow-hidden rounded-2xl">
-            <div class="relative aspect-150/65 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat max-md:py-40"
-              style="background-image: url(/assets/images/masthead/8/1.png)"></div>
-          </div>
+          <?php if (!empty($slider_cars)): ?>
+            <?php foreach ($slider_cars as $sc):
+              $slide_img = UPLOAD_URL . ltrim($sc['banner_path'] ?: $sc['thumbnail_path'], '/');
+            ?>
+            <div class="swiper-slide overflow-hidden rounded-2xl">
+              <div class="relative aspect-150/65 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat max-md:py-40"
+                style="background-image: url(<?= h($slide_img) ?>)">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-2xl"></div>
+                <div class="absolute bottom-6 left-8 text-white">
+                  <div class="text-lg font-semibold"><?= h($sc['make'] . ' ' . $sc['model']) ?></div>
+                </div>
+              </div>
+            </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <!-- Fallback: dark gradient placeholder slide -->
+            <div class="swiper-slide overflow-hidden rounded-2xl">
+              <div class="relative aspect-150/65 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-dark-3 to-dark-2 max-md:py-40 flex items-center justify-center">
+                <p class="text-light-1 text-sm">Add cars with photos to see them here</p>
+              </div>
+            </div>
+          <?php endif; ?>
         </div>
         <div>
           <button class="slider-prev absolute top-1/2 left-3 z-20 flex size-12.5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-blue-1 font-bold text-blue-1 duration-300 hover:bg-blue-1 hover:text-white">
@@ -147,7 +169,7 @@ require __DIR__ . '/includes/header.php';
         <div class="w-full px-4 sm:w-1/2 md:w-1/3 xl:w-1/4" data-aos="fade">
           <div class="mx-auto flex max-w-[300px] flex-col items-center text-center">
             <div class="flex items-center justify-center">
-              <img src="/assets/src/images/featureIcons/1/1.svg" alt="Best Price Guarantee" class="size-17.5">
+              <img src="/assets/images/featureIcons/1/1.svg" alt="Best Price Guarantee" class="size-17.5">
             </div>
             <div class="mt-8">
               <h4 class="text-white text-lg font-medium">Best Price Guarantee</h4>
@@ -158,7 +180,7 @@ require __DIR__ . '/includes/header.php';
         <div class="w-full px-4 sm:w-1/2 md:w-1/3 xl:w-1/4" data-aos="fade" data-aos-delay="100">
           <div class="mx-auto flex max-w-[300px] flex-col items-center text-center">
             <div class="flex items-center justify-center">
-              <img src="/assets/src/images/featureIcons/1/2.svg" alt="Easy Booking" class="size-17.5">
+              <img src="/assets/images/featureIcons/1/2.svg" alt="Easy Booking" class="size-17.5">
             </div>
             <div class="mt-8">
               <h4 class="text-white text-lg font-medium">Easy &amp; Quick Booking</h4>
@@ -169,7 +191,7 @@ require __DIR__ . '/includes/header.php';
         <div class="w-full px-4 sm:w-1/2 md:w-1/3 xl:w-1/4" data-aos="fade" data-aos-delay="200">
           <div class="mx-auto flex max-w-[300px] flex-col items-center text-center">
             <div class="flex items-center justify-center">
-              <img src="/assets/src/images/featureIcons/1/3.svg" alt="24/7 Support" class="size-17.5">
+              <img src="/assets/images/featureIcons/1/3.svg" alt="24/7 Support" class="size-17.5">
             </div>
             <div class="mt-8">
               <h4 class="text-white text-lg font-medium">Customer Care 24/7</h4>
@@ -305,16 +327,26 @@ require __DIR__ . '/includes/header.php';
         <h2 class="text-white text-3xl font-semibold">Browse by Category</h2>
       </div>
       <div class="xs:grid-cols-2 grid gap-7.5 md:grid-cols-4">
-        <?php foreach ($categories as $i => $cat): ?>
+        <?php foreach ($categories as $i => $cat):
+          $cat_img = !empty($cat['image_path'])
+            ? UPLOAD_URL . ltrim($cat['image_path'], '/')
+            : null;
+        ?>
         <a href="/cars?category=<?= h($cat['slug']) ?>"
           class="group relative overflow-hidden rounded-xl"
           data-aos="fade" data-aos-delay="<?= $i * 100 ?>">
-          <div class="relative aspect-30/25 overflow-hidden rounded-xl bg-dark-1">
-            <img src="/assets/src/images/cars/1.png" alt="<?= h($cat['name']) ?>"
-              class="h-full w-full object-cover opacity-50 transition-transform duration-300 group-hover:scale-105">
+          <div class="relative aspect-30/25 overflow-hidden rounded-xl bg-dark-3">
+            <?php if ($cat_img): ?>
+            <img src="<?= h($cat_img) ?>" alt="<?= h($cat['name']) ?>"
+              class="h-full w-full object-cover opacity-70 transition-transform duration-300 group-hover:scale-105 group-hover:opacity-90">
+            <?php else: ?>
+            <div class="h-full w-full bg-gradient-to-br from-dark-4 to-dark-2 flex items-center justify-center">
+              <i class="icon-car text-4xl text-blue-1/40"></i>
+            </div>
+            <?php endif; ?>
           </div>
-          <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-            <h4 class="text-lg font-semibold"><?= h($cat['name']) ?></h4>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-white bg-black/30 group-hover:bg-black/20 transition-colors rounded-xl">
+            <h4 class="text-lg font-semibold drop-shadow"><?= h($cat['name']) ?></h4>
             <div class="mt-1 text-sm text-white/80">Explore fleet &rarr;</div>
           </div>
         </a>

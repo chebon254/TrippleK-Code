@@ -70,10 +70,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 $car_id = (int)$db->lastInsertId();
 
-                // Handle image uploads
+                // Handle cropped images (base64 from Cropper.js UI)
+                $is_primary = true;
+                $sort       = 0;
+                $imgStmt    = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)');
+
+                if (!empty($_POST['cropped_images'])) {
+                    foreach ($_POST['cropped_images'] as $b64) {
+                        if (empty($b64)) continue;
+                        try {
+                            // Banner images: 1500×650 for hero slider
+                            $path = save_base64_image($b64, "cars/{$car_id}", 1500, 650);
+                            $imgStmt->execute([$car_id, $path, $sort++, $is_primary ? 1 : 0]);
+                            if ($is_primary) {
+                                $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')
+                                   ->execute([$path, $car_id]);
+                                $is_primary = false;
+                            }
+                        } catch (RuntimeException $e) {
+                            $errors[] = 'Image error: ' . $e->getMessage();
+                        }
+                    }
+                }
+
+                // Fallback: regular file uploads (drag-drop or multi-select)
                 if (!empty($_FILES['car_images']['name'][0])) {
-                    $is_primary = true;
-                    $sort       = 0;
                     foreach ($_FILES['car_images']['name'] as $i => $name) {
                         if ($_FILES['car_images']['error'][$i] !== UPLOAD_ERR_OK) continue;
                         $file = [
@@ -84,10 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ];
                         try {
                             $paths = upload_car_image($car_id, $file);
-                            $imgStmt = $db->prepare('
-                                INSERT INTO car_images (car_id, file_path, sort_order, is_primary)
-                                VALUES (?, ?, ?, ?)
-                            ');
                             $imgStmt->execute([$car_id, $paths['path'], $sort++, $is_primary ? 1 : 0]);
                             if ($is_primary) {
                                 $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')
@@ -95,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $is_primary = false;
                             }
                         } catch (RuntimeException $e) {
-                            $errors[] = "Image upload error: " . $e->getMessage();
+                            $errors[] = 'Image upload error: ' . $e->getMessage();
                         }
                     }
                 }
@@ -301,13 +318,8 @@ require __DIR__ . '/../includes/admin_header.php';
           class="mt-1 text-sm text-blue-1 hover:underline">+ Add Feature</button>
       </div>
 
-      <!-- Images -->
-      <div class="rounded bg-dark-3 border border-border p-6">
-        <h2 class="mb-4 text-base font-medium text-white">Photos</h2>
-        <p class="mb-3 text-xs text-gray-400">Upload up to 10 images. First image becomes the thumbnail. JPG/PNG/WebP, max 5MB each.</p>
-        <input type="file" name="car_images[]" multiple accept="image/jpeg,image/png,image/webp"
-          class="block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-1 hover:file:bg-blue-100">
-      </div>
+      <!-- Images with Cropper -->
+      <?php include __DIR__ . '/../includes/car_image_uploader.php'; ?>
 
     </div>
 

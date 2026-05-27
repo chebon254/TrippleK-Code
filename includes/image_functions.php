@@ -1,6 +1,50 @@
 <?php
 require_once __DIR__ . '/config.php';
 
+/**
+ * Save a base64-encoded data URL as a JPEG file.
+ * Returns the relative path inside UPLOAD_DIR, or throws on failure.
+ */
+function save_base64_image(string $data_url, string $subdir, int $out_w, int $out_h): string {
+    // Strip "data:image/...;base64," prefix
+    if (!preg_match('/^data:image\/(\w+);base64,/', $data_url, $m)) {
+        throw new RuntimeException('Invalid image data.');
+    }
+    $raw = base64_decode(substr($data_url, strpos($data_url, ',') + 1));
+    if (!$raw) throw new RuntimeException('Failed to decode image data.');
+
+    // Write to a temp file so we can use GD's getimagesize
+    $tmp = tempnam(sys_get_temp_dir(), 'crop_');
+    file_put_contents($tmp, $raw);
+
+    [$orig_w, $orig_h, $type] = getimagesize($tmp);
+    $src_img = match ($type) {
+        IMAGETYPE_JPEG => imagecreatefromjpeg($tmp),
+        IMAGETYPE_PNG  => imagecreatefrompng($tmp),
+        IMAGETYPE_WEBP => imagecreatefromwebp($tmp),
+        default        => throw new RuntimeException('Unsupported image format.'),
+    };
+    unlink($tmp);
+
+    // Resize to exact output dimensions
+    $canvas = imagecreatetruecolor($out_w, $out_h);
+    imagecopyresampled($canvas, $src_img, 0, 0, 0, 0, $out_w, $out_h, $orig_w, $orig_h);
+    imagedestroy($src_img);
+
+    $dir = UPLOAD_DIR . $subdir . '/';
+    if (!is_dir($dir)) mkdir($dir, 0755, true);
+
+    $filename = uniqid('img_', true) . '.jpg';
+    $dest     = $dir . $filename;
+    imagejpeg($canvas, $dest, 88);
+    imagedestroy($canvas);
+
+    return $subdir . '/' . $filename;
+}
+
+/**
+ * Upload a regular file (multi-upload fallback for gallery images).
+ */
 function upload_car_image(int $car_id, array $file): array {
     $car_dir = UPLOAD_DIR . "cars/{$car_id}/";
     if (!is_dir($car_dir)) {
@@ -14,25 +58,26 @@ function upload_car_image(int $car_id, array $file): array {
     if (!in_array($mime, $allowed, true)) {
         throw new RuntimeException('Invalid image type. Only JPG, PNG, WebP allowed.');
     }
-    if ($file['size'] > 5 * 1024 * 1024) {
-        throw new RuntimeException('Image too large. Maximum 5MB.');
+    if ($file['size'] > 8 * 1024 * 1024) {
+        throw new RuntimeException('Image too large. Maximum 8MB.');
     }
 
-    $ext      = match ($mime) {
+    $ext       = match ($mime) {
         'image/png'  => 'png',
         'image/webp' => 'webp',
         default      => 'jpg',
     };
     $filename  = uniqid('img_', true) . '.' . $ext;
     $dest_path = $car_dir . $filename;
-    $thumb_name = 'thumb_' . $filename;
-    $thumb_path = $car_dir . $thumb_name;
 
     if (!move_uploaded_file($file['tmp_name'], $dest_path)) {
         throw new RuntimeException('Failed to save image.');
     }
 
-    create_thumbnail($dest_path, $thumb_path, 400, 300);
+    // Create a 400×267 card thumbnail (3:2 ratio)
+    $thumb_name = 'thumb_' . $filename;
+    $thumb_path = $car_dir . $thumb_name;
+    create_thumbnail($dest_path, $thumb_path, 400, 267);
 
     return [
         'path'  => "cars/{$car_id}/{$filename}",
@@ -68,7 +113,6 @@ function create_thumbnail(string $src, string $dest, int $width, int $height): v
 
     $thumb = imagecreatetruecolor($width, $height);
 
-    // Preserve transparency for PNG
     if ($type === IMAGETYPE_PNG) {
         imagealphablending($thumb, false);
         imagesavealpha($thumb, true);
@@ -98,7 +142,6 @@ function delete_car_images(int $car_id): void {
 function delete_single_image(string $path): void {
     $full = UPLOAD_DIR . ltrim($path, '/');
     if (is_file($full)) unlink($full);
-    // also delete thumb
     $dir   = dirname($full);
     $file  = basename($full);
     $thumb = $dir . '/thumb_' . $file;
