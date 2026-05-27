@@ -137,7 +137,7 @@ require __DIR__ . '/includes/header.php';
 
   <!-- Hero banner -->
   <section class="relative flex items-center justify-center bg-cover bg-center py-16 lg:py-20"
-    style="background-image:url(/assets/images/cars/hero-bg.jpg)">
+    style="background-image:url(/assets/images/cars/1.png)">
     <div class="absolute inset-0 bg-dark-1/60"></div>
     <div class="container relative text-center">
       <h1 class="text-3xl font-semibold text-white md:text-5xl">Customer Registration</h1>
@@ -178,7 +178,9 @@ require __DIR__ . '/includes/header.php';
       <form method="POST" action="/register" enctype="multipart/form-data"
         x-data="{
           type: '<?= h($_POST['customer_type'] ?? 'individual') ?>',
-          step: 1
+          step: 1,
+          submitting: false,
+          submit() { this.submitting = true; this.$el.submit(); }
         }">
 
         <!-- Honeypot -->
@@ -218,7 +220,7 @@ require __DIR__ . '/includes/header.php';
                 <div>
                   <label class="pub-label">First Name *</label>
                   <input type="text" name="first_name" value="<?= h($_POST['first_name'] ?? '') ?>"
-                    class="pub-input" required>
+                    class="pub-input" :required="type==='individual'">
                 </div>
                 <div>
                   <label class="pub-label">Last Name</label>
@@ -419,9 +421,13 @@ require __DIR__ . '/includes/header.php';
                 class="rounded border border-border px-6 py-3 text-sm text-light-1 hover:text-white transition-colors">
                 <i class="icon-arrow-left mr-1"></i> Back
               </button>
-              <button type="submit"
-                class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors">
-                Submit Registration
+              <button type="button" @click="submit()" :disabled="submitting"
+                class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
+                <svg x-show="submitting" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                </svg>
+                <span x-text="submitting ? 'Submitting…' : 'Submit Registration'"></span>
               </button>
             </div>
           </div>
@@ -451,7 +457,7 @@ require __DIR__ . '/includes/header.php';
               <div>
                 <label class="pub-label">Organisation Name *</label>
                 <input type="text" name="corporate_name" value="<?= h($_POST['corporate_name'] ?? '') ?>"
-                  class="pub-input" required>
+                  class="pub-input" :required="type==='organization'">
               </div>
               <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
@@ -570,9 +576,13 @@ require __DIR__ . '/includes/header.php';
                 class="rounded border border-border px-6 py-3 text-sm text-light-1 hover:text-white transition-colors">
                 <i class="icon-arrow-left mr-1"></i> Back
               </button>
-              <button type="submit"
-                class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors">
-                Submit Registration
+              <button type="button" @click="submit()" :disabled="submitting"
+                class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
+                <svg x-show="submitting" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                </svg>
+                <span x-text="submitting ? 'Submitting…' : 'Submit Registration'"></span>
               </button>
             </div>
           </div>
