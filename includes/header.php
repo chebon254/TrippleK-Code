@@ -108,12 +108,22 @@ $whatsapp     = get_setting('company_whatsapp', '');
                 Contact
               </a>
             </li>
+            <li>
+              <a href="/register"
+                class="py-8 <?= $current_page === 'register' ? 'text-blue-1' : 'hover:text-blue-1' ?>">
+                Register
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
 
       <!-- Right: CTA + Mobile Toggle -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <a href="/register"
+          class="hidden xl:inline-flex items-center h-12 rounded border border-blue-1 text-blue-1 px-6 text-sm font-medium whitespace-nowrap transition-colors hover:bg-blue-1 hover:text-dark-1 <?= $current_page === 'register' ? 'bg-blue-1 text-dark-1' : '' ?>">
+          Register
+        </a>
         <a href="/cars"
           class="hidden xl:inline-flex bg-blue-1 text-white items-center h-12 rounded px-8 text-sm font-medium whitespace-nowrap transition-colors hover:bg-yellow-3 hover:text-dark-1">
           Book Now
@@ -153,8 +163,9 @@ $whatsapp     = get_setting('company_whatsapp', '');
         <li><a href="/contact" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='contact'?'text-blue-1 bg-blue-1/5':'' ?>">Contact</a></li>
         <li><a href="/register" class="block rounded px-4 py-3 font-medium hover:bg-blue-1/5 hover:text-blue-1 <?= $current_page==='register'?'text-blue-1 bg-blue-1/5':'' ?>">Register</a></li>
       </ul>
-      <div class="mt-6">
-        <a href="/cars" class="bg-blue-1 text-white block text-center rounded px-4 py-3 font-medium">Book a Car</a>
+      <div class="mt-6 space-y-3">
+        <a href="/cars" class="bg-blue-1 text-white block text-center rounded px-4 py-3 font-medium hover:bg-yellow-3 hover:text-dark-1 transition-colors">Book a Car</a>
+        <a href="/register" class="border border-blue-1 text-blue-1 block text-center rounded px-4 py-3 font-medium hover:bg-blue-1 hover:text-dark-1 transition-colors">Register as Customer</a>
       </div>
     </nav>
   </div>
