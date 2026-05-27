@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $db->prepare('INSERT INTO car_categories (slug, name, description, sort_order, image_path) VALUES (?,?,?,?,?)')
                ->execute([$slug, $name, $desc, $sort, $image_path]);
-            flash('success', "Category "{$name}" added.");
+            flash('success', "Category \"{$name}\" added.");
         } catch (Throwable $e) {
             flash('error', 'Failed to add category: ' . $e->getMessage());
         }
