@@ -53,7 +53,7 @@ require __DIR__ . '/../includes/admin_header.php';
     <a href="/admin/bookings" class="text-blue-1 mb-2 inline-flex items-center gap-1 text-sm hover:underline">
       <i class="icon-chevron-left text-xs"></i> All Bookings
     </a>
-    <h1 class="text-dark-1 text-3xl font-semibold"><?= h($booking['booking_ref']) ?></h1>
+    <h1 class="text-white text-3xl font-semibold"><?= h($booking['booking_ref']) ?></h1>
   </div>
   <div class="flex gap-3">
     <a href="/admin/invoice?id=<?= $id ?>"
@@ -74,74 +74,74 @@ require __DIR__ . '/../includes/admin_header.php';
 
     <!-- Customer -->
     <div class="rounded bg-dark-3 border border-border p-6">
-      <h2 class="mb-4 text-sm font-semibold text-dark-1">Customer Information</h2>
+      <h2 class="mb-4 text-sm font-semibold text-white">Customer Information</h2>
       <div class="grid gap-3 text-sm sm:grid-cols-2">
-        <div><div class="text-xs text-gray-400">Full Name</div><div class="font-medium"><?= h($booking['full_name']) ?></div></div>
-        <div><div class="text-xs text-gray-400">Phone</div><div class="font-medium"><?= h($booking['phone']) ?></div></div>
-        <div><div class="text-xs text-gray-400">Email</div><div class="font-medium"><?= h($booking['email']) ?></div></div>
+        <div><div class="text-xs text-light-1">Full Name</div><div class="font-medium text-white"><?= h($booking['full_name']) ?></div></div>
+        <div><div class="text-xs text-light-1">Phone</div><div class="font-medium text-white"><?= h($booking['phone']) ?></div></div>
+        <div><div class="text-xs text-light-1">Email</div><div class="font-medium text-white"><?= h($booking['email']) ?></div></div>
         <?php if ($booking['id_number']): ?>
-        <div><div class="text-xs text-gray-400">ID/Passport</div><div class="font-medium"><?= h($booking['id_number']) ?></div></div>
+        <div><div class="text-xs text-light-1">ID/Passport</div><div class="font-medium text-white"><?= h($booking['id_number']) ?></div></div>
         <?php endif; ?>
         <?php if ($booking['address']): ?>
-        <div class="sm:col-span-2"><div class="text-xs text-gray-400">Address</div><div><?= h($booking['address']) ?></div></div>
+        <div class="sm:col-span-2"><div class="text-xs text-light-1">Address</div><div class="text-white"><?= h($booking['address']) ?></div></div>
         <?php endif; ?>
       </div>
     </div>
 
     <!-- Booking -->
     <div class="rounded bg-dark-3 border border-border p-6">
-      <h2 class="mb-4 text-sm font-semibold text-dark-1">Booking Details</h2>
+      <h2 class="mb-4 text-sm font-semibold text-white">Booking Details</h2>
       <div class="grid gap-3 text-sm sm:grid-cols-2">
         <div>
-          <div class="text-xs text-gray-400">Vehicle</div>
-          <div class="font-medium"><?= h($booking['make'] . ' ' . $booking['model'] . ' (' . $booking['year'] . ')') ?></div>
-          <?php if ($booking['registration_number']): ?><div class="text-xs text-gray-400 font-mono"><?= h($booking['registration_number']) ?></div><?php endif; ?>
+          <div class="text-xs text-light-1">Vehicle</div>
+          <div class="font-medium text-white"><?= h($booking['make'] . ' ' . $booking['model'] . ' (' . $booking['year'] . ')') ?></div>
+          <?php if ($booking['registration_number']): ?><div class="text-xs text-light-1 font-mono"><?= h($booking['registration_number']) ?></div><?php endif; ?>
         </div>
-        <div><div class="text-xs text-gray-400">Category</div><div><?= h($booking['category_name']) ?></div></div>
-        <div><div class="text-xs text-gray-400">Service</div><div><?= h($booking['service_name']) ?></div></div>
+        <div><div class="text-xs text-light-1">Category</div><div class="text-white"><?= h($booking['category_name']) ?></div></div>
+        <div><div class="text-xs text-light-1">Service</div><div class="text-white"><?= h($booking['service_name']) ?></div></div>
         <div>
-          <div class="text-xs text-gray-400">Pickup Date &amp; Time</div>
-          <div><?= display_date($booking['pickup_date']) ?>
+          <div class="text-xs text-light-1">Pickup Date &amp; Time</div>
+          <div class="text-white"><?= display_date($booking['pickup_date']) ?>
           <?php if ($booking['pickup_time']): ?> at <?= h(substr($booking['pickup_time'],0,5)) ?><?php endif; ?>
           </div>
         </div>
         <?php if ($booking['return_date']): ?>
-        <div><div class="text-xs text-gray-400">Return Date</div><div><?= display_date($booking['return_date']) ?></div></div>
+        <div><div class="text-xs text-light-1">Return Date</div><div class="text-white"><?= display_date($booking['return_date']) ?></div></div>
         <?php endif; ?>
-        <div><div class="text-xs text-gray-400">Duration</div><div><?= (int)$booking['num_days'] ?> day<?= $booking['num_days'] > 1 ? 's' : '' ?></div></div>
+        <div><div class="text-xs text-light-1">Duration</div><div class="text-white"><?= (int)$booking['num_days'] ?> day<?= $booking['num_days'] > 1 ? 's' : '' ?></div></div>
         <?php if ($booking['pickup_location']): ?>
-        <div><div class="text-xs text-gray-400">Pickup Location</div><div><?= h($booking['pickup_location']) ?></div></div>
+        <div><div class="text-xs text-light-1">Pickup Location</div><div class="text-white"><?= h($booking['pickup_location']) ?></div></div>
         <?php endif; ?>
         <?php if ($booking['dropoff_location']): ?>
-        <div><div class="text-xs text-gray-400">Drop-off Location</div><div><?= h($booking['dropoff_location']) ?></div></div>
+        <div><div class="text-xs text-light-1">Drop-off Location</div><div class="text-white"><?= h($booking['dropoff_location']) ?></div></div>
         <?php endif; ?>
         <?php if ($booking['num_passengers']): ?>
-        <div><div class="text-xs text-gray-400">Passengers</div><div><?= (int)$booking['num_passengers'] ?></div></div>
+        <div><div class="text-xs text-light-1">Passengers</div><div class="text-white"><?= (int)$booking['num_passengers'] ?></div></div>
         <?php endif; ?>
         <?php if ($booking['flight_number']): ?>
-        <div><div class="text-xs text-gray-400">Flight Number</div><div><?= h($booking['flight_number']) ?></div></div>
+        <div><div class="text-xs text-light-1">Flight Number</div><div class="text-white"><?= h($booking['flight_number']) ?></div></div>
         <?php endif; ?>
-        <div><div class="text-xs text-gray-400">Total Amount</div><div class="font-bold text-dark-1 text-base"><?= format_kes($booking['total_amount']) ?></div></div>
-        <div><div class="text-xs text-gray-400">Created</div><div><?= display_datetime($booking['created_at']) ?></div></div>
+        <div><div class="text-xs text-light-1">Total Amount</div><div class="font-bold text-white text-base"><?= format_kes($booking['total_amount']) ?></div></div>
+        <div><div class="text-xs text-light-1">Created</div><div class="text-white"><?= display_datetime($booking['created_at']) ?></div></div>
       </div>
       <?php if ($booking['special_requests']): ?>
       <div class="mt-4 rounded-lg bg-dark-4 px-4 py-3 text-sm">
-        <div class="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Special Requests</div>
-        <div class="text-gray-600"><?= nl2br(h($booking['special_requests'])) ?></div>
+        <div class="mb-1 text-xs font-semibold uppercase tracking-wide text-light-1">Special Requests</div>
+        <div class="text-white"><?= nl2br(h($booking['special_requests'])) ?></div>
       </div>
       <?php endif; ?>
     </div>
 
     <!-- Payments -->
     <div class="rounded bg-dark-3 border border-border p-6">
-      <h2 class="mb-4 text-sm font-semibold text-dark-1">Payment History</h2>
+      <h2 class="mb-4 text-sm font-semibold text-white">Payment History</h2>
       <?php if (!$payments): ?>
-      <p class="text-sm text-gray-400">No payment records yet.</p>
+      <p class="text-sm text-light-1">No payment records yet.</p>
       <?php else: ?>
       <div class="overflow-x-auto">
         <table class="min-w-full text-sm">
           <thead>
-            <tr class="text-left text-xs uppercase tracking-wide text-gray-400 border-b border-border">
+            <tr class="text-left text-xs uppercase tracking-wide text-light-1 border-b border-border">
               <th class="pb-2 pr-4">Method</th>
               <th class="pb-2 pr-4">Amount</th>
               <th class="pb-2 pr-4">Gateway Ref</th>
@@ -152,15 +152,15 @@ require __DIR__ . '/../includes/admin_header.php';
           <tbody class="divide-border divide-y divide-dashed">
             <?php foreach ($payments as $pay): ?>
             <tr>
-              <td class="py-2.5 pr-4 font-medium"><?= h(ucwords(str_replace('_', ' ', $pay['payment_method']))) ?></td>
-              <td class="py-2.5 pr-4"><?= format_kes($pay['amount']) ?></td>
+              <td class="py-2.5 pr-4 font-medium text-white"><?= h(ucwords(str_replace('_', ' ', $pay['payment_method']))) ?></td>
+              <td class="py-2.5 pr-4 text-white"><?= format_kes($pay['amount']) ?></td>
               <td class="py-2.5 pr-4 font-mono text-xs text-light-1"><?= h($pay['gateway_ref'] ?? '—') ?></td>
               <td class="py-2.5 pr-4">
                 <span class="inline-block rounded-full px-2 py-0.5 text-xs font-semibold <?= payment_status_class($pay['status']) ?>">
                   <?= ucfirst($pay['status']) ?>
                 </span>
               </td>
-              <td class="py-2.5 text-gray-400"><?= $pay['paid_at'] ? display_datetime($pay['paid_at']) : display_datetime($pay['created_at']) ?></td>
+              <td class="py-2.5 text-light-1"><?= $pay['paid_at'] ? display_datetime($pay['paid_at']) : display_datetime($pay['created_at']) ?></td>
             </tr>
             <?php endforeach; ?>
           </tbody>
@@ -176,7 +176,7 @@ require __DIR__ . '/../includes/admin_header.php';
 
     <!-- Current Status -->
     <div class="rounded bg-dark-3 border border-border p-6">
-      <h2 class="mb-3 text-sm font-semibold text-dark-1">Booking Status</h2>
+      <h2 class="mb-3 text-sm font-semibold text-white">Booking Status</h2>
       <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold <?= booking_status_class($booking['status']) ?>">
         <?= ucfirst($booking['status']) ?>
       </span>
@@ -184,12 +184,12 @@ require __DIR__ . '/../includes/admin_header.php';
 
     <!-- Update Status Form -->
     <div class="rounded bg-dark-3 border border-border p-6">
-      <h2 class="mb-4 text-sm font-semibold text-dark-1">Update Status</h2>
+      <h2 class="mb-4 text-sm font-semibold text-white">Update Status</h2>
       <form method="post">
         <input type="hidden" name="update_status" value="1">
         <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
         <div class="mb-3">
-          <label class="mb-1 block text-xs font-medium text-gray-500">New Status</label>
+          <label class="mb-1 block text-xs font-medium text-light-1">New Status</label>
           <select name="status" class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
             <?php foreach (['pending','confirmed','active','completed','cancelled'] as $s): ?>
             <option value="<?= $s ?>" <?= $booking['status'] === $s ? 'selected' : '' ?>><?= ucfirst($s) ?></option>
@@ -197,9 +197,9 @@ require __DIR__ . '/../includes/admin_header.php';
           </select>
         </div>
         <div class="mb-4">
-          <label class="mb-1 block text-xs font-medium text-gray-500">Admin Notes</label>
+          <label class="mb-1 block text-xs font-medium text-light-1">Admin Notes</label>
           <textarea name="admin_notes" rows="4" placeholder="Internal notes..."
-            class="border-border focus:border-dark-1 w-full resize-none rounded border px-3 py-2 text-sm outline-none"><?= h($booking['admin_notes'] ?? '') ?></textarea>
+            class="border-border focus:border-blue-1 w-full resize-none rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2 text-sm outline-none"><?= h($booking['admin_notes'] ?? '') ?></textarea>
         </div>
         <button type="submit"
           class="bg-blue-1 hover:bg-dark-1 w-full rounded px-4 py-2.5 text-sm font-medium text-white transition">
@@ -210,7 +210,7 @@ require __DIR__ . '/../includes/admin_header.php';
 
     <!-- Quick Links -->
     <div class="rounded bg-dark-3 border border-border p-6 text-sm">
-      <h2 class="mb-3 text-sm font-semibold text-dark-1">Quick Links</h2>
+      <h2 class="mb-3 text-sm font-semibold text-white">Quick Links</h2>
       <div class="space-y-2">
         <a href="<?= APP_URL ?>/invoice?ref=<?= urlencode($booking['booking_ref']) ?>" target="_blank"
           class="flex items-center gap-2 text-blue-1 hover:underline">

@@ -95,17 +95,17 @@ require __DIR__ . '/../includes/admin_header.php';
 <!-- Status Filter Pills -->
 <div class="mb-6 flex flex-wrap gap-2">
   <?php
-  $base_url = 'bookings.php?search=' . urlencode($search) . '&date_from=' . urlencode($date_from) . '&date_to=' . urlencode($date_to);
+  $base_url = '/admin/bookings?search=' . urlencode($search) . '&date_from=' . urlencode($date_from) . '&date_to=' . urlencode($date_to);
   ?>
   <a href="/admin/bookings"
     class="rounded-full px-4 py-1.5 text-sm font-medium transition
-      <?= !$status_f ? 'bg-dark-1 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' ?>">
+      <?= !$status_f ? 'bg-blue-1/20 text-blue-1 border border-blue-1/30' : 'bg-dark-3 text-light-1 border border-border hover:bg-dark-4' ?>">
     All <span class="ml-1 opacity-70"><?= array_sum($stats) ?></span>
   </a>
   <?php foreach (['pending'=>'Pending','confirmed'=>'Confirmed','active'=>'Active','completed'=>'Completed','cancelled'=>'Cancelled'] as $s => $l): ?>
   <a href="<?= $base_url ?>&status=<?= $s ?>"
     class="rounded-full px-4 py-1.5 text-sm font-medium transition
-      <?= $status_f === $s ? booking_status_class($s) : 'bg-gray-100 text-gray-600 hover:bg-gray-200' ?>">
+      <?= $status_f === $s ? booking_status_class($s) : 'bg-dark-3 text-light-1 border border-border hover:bg-dark-4' ?>">
     <?= $l ?> <span class="ml-1 opacity-70"><?= $stats[$s] ?? 0 ?></span>
   </a>
   <?php endforeach; ?>
@@ -118,12 +118,14 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="relative flex-1 min-w-[200px]">
       <input type="text" name="search" value="<?= h($search) ?>"
         placeholder="Search ref, name, phone..."
-        class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 py-2.5 pr-4 pl-10 text-sm outline-none">
-      <i class="icon-search text-light-1 absolute top-1/2 left-3 -translate-y-1/2 text-base"></i>
+        class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 py-2.5 pr-4 pl-12 text-sm outline-none">
+      <i class="icon-search text-light-1 absolute top-1/2 left-4 -translate-y-1/2 text-base"></i>
     </div>
     <input type="date" name="date_from" value="<?= h($date_from) ?>"
+      style="color-scheme:dark"
       class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
     <input type="date" name="date_to" value="<?= h($date_to) ?>"
+      style="color-scheme:dark"
       class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
     <button type="submit"
       class="bg-blue-1 hover:bg-dark-1 rounded px-5 py-2.5 text-sm font-medium text-white transition">
@@ -176,7 +178,7 @@ require __DIR__ . '/../includes/admin_header.php';
           <td class="px-4 py-4 text-sm text-light-1 hidden md:table-cell whitespace-nowrap">
             <?= h($b['make'] . ' ' . $b['model']) ?>
           </td>
-          <td class="px-4 py-4 text-sm text-gray-500 hidden lg:table-cell whitespace-nowrap">
+          <td class="px-4 py-4 text-sm text-light-1 hidden lg:table-cell whitespace-nowrap">
             <?= h($b['service_name']) ?>
           </td>
           <td class="px-4 py-4 text-sm whitespace-nowrap">
@@ -185,7 +187,7 @@ require __DIR__ . '/../includes/admin_header.php';
           <td class="px-4 py-4 text-sm text-light-1 hidden md:table-cell">
             <?= (int)$b['num_days'] ?>
           </td>
-          <td class="px-4 py-4 text-right text-sm font-semibold text-dark-1 whitespace-nowrap">
+          <td class="px-4 py-4 text-right text-sm font-semibold text-white whitespace-nowrap">
             <?= format_kes($b['total_amount']) ?>
           </td>
           <td class="px-4 py-4 whitespace-nowrap">
