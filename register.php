@@ -295,7 +295,32 @@ require __DIR__ . '/includes/header.php';
               </div>
               <div>
                 <label class="pub-label">ID Front Photo <span class="text-light-1 font-normal">(JPG, PNG or PDF · max 10MB)</span></label>
-                <input type="file" name="id_front" accept="image/*,application/pdf" class="pub-file">
+                <div x-data="fileUpload()" class="relative">
+                  <input type="file" name="id_front" accept="image/*,application/pdf"
+                    x-ref="input" @change="pick($event)" class="hidden">
+                  <div @click="$refs.input.click()" @dragover.prevent @drop.prevent="drop($event)"
+                    class="upload-zone" :class="file ? 'has-file' : ''">
+                    <template x-if="!file">
+                      <div class="upload-placeholder">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+                        <span class="upload-hint">Click or drag & drop</span>
+                        <span class="upload-sub">JPG · PNG · PDF up to 10 MB</span>
+                      </div>
+                    </template>
+                    <template x-if="file && !isPdf">
+                      <img :src="preview" class="upload-img-preview">
+                    </template>
+                    <template x-if="file && isPdf">
+                      <div class="upload-pdf-preview">
+                        <svg class="upload-pdf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+                        <span class="upload-pdf-name" x-text="filename"></span>
+                        <span class="upload-pdf-size" x-text="filesize"></span>
+                      </div>
+                    </template>
+                  </div>
+                  <button type="button" x-show="file" @click.stop="clear($refs.input)"
+                    class="upload-clear" title="Remove">×</button>
+                </div>
               </div>
             </div>
 
@@ -335,14 +360,57 @@ require __DIR__ . '/includes/header.php';
               </div>
               <div>
                 <label class="pub-label">Licence Front Photo <span class="text-light-1 font-normal">(JPG, PNG or PDF · max 10MB)</span></label>
-                <input type="file" name="driver_license_front" accept="image/*,application/pdf" class="pub-file">
+                <div x-data="fileUpload()" class="relative">
+                  <input type="file" name="driver_license_front" accept="image/*,application/pdf"
+                    x-ref="input" @change="pick($event)" class="hidden">
+                  <div @click="$refs.input.click()" @dragover.prevent @drop.prevent="drop($event)"
+                    class="upload-zone" :class="file ? 'has-file' : ''">
+                    <template x-if="!file">
+                      <div class="upload-placeholder">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+                        <span class="upload-hint">Click or drag & drop</span>
+                        <span class="upload-sub">JPG · PNG · PDF up to 10 MB</span>
+                      </div>
+                    </template>
+                    <template x-if="file && !isPdf">
+                      <img :src="preview" class="upload-img-preview">
+                    </template>
+                    <template x-if="file && isPdf">
+                      <div class="upload-pdf-preview">
+                        <svg class="upload-pdf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+                        <span class="upload-pdf-name" x-text="filename"></span>
+                        <span class="upload-pdf-size" x-text="filesize"></span>
+                      </div>
+                    </template>
+                  </div>
+                  <button type="button" x-show="file" @click.stop="clear($refs.input)"
+                    class="upload-clear" title="Remove">×</button>
+                </div>
               </div>
 
               <hr class="border-border">
 
               <div>
                 <label class="pub-label">Profile Photo <span class="text-light-1 font-normal">(optional · JPG/PNG/WebP · max 10MB)</span></label>
-                <input type="file" name="photo" accept="image/*" class="pub-file">
+                <div x-data="fileUpload()" class="relative">
+                  <input type="file" name="photo" accept="image/*"
+                    x-ref="input" @change="pick($event)" class="hidden">
+                  <div @click="$refs.input.click()" @dragover.prevent @drop.prevent="drop($event)"
+                    class="upload-zone" :class="file ? 'has-file' : ''">
+                    <template x-if="!file">
+                      <div class="upload-placeholder">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+                        <span class="upload-hint">Click or drag & drop</span>
+                        <span class="upload-sub">JPG · PNG · WebP up to 10 MB</span>
+                      </div>
+                    </template>
+                    <template x-if="file && !isPdf">
+                      <img :src="preview" class="upload-img-preview">
+                    </template>
+                  </div>
+                  <button type="button" x-show="file" @click.stop="clear($refs.input)"
+                    class="upload-clear" title="Remove">×</button>
+                </div>
               </div>
             </div>
 
@@ -444,14 +512,56 @@ require __DIR__ . '/includes/header.php';
                 <label class="pub-label">
                   Certificate of Incorporation <span class="text-light-1 font-normal">(JPG, PNG or PDF · max 10MB)</span>
                 </label>
-                <input type="file" name="certificate_of_incorporation" accept="image/*,application/pdf"
-                  class="pub-file">
+                <div x-data="fileUpload()" class="relative">
+                  <input type="file" name="certificate_of_incorporation" accept="image/*,application/pdf"
+                    x-ref="input" @change="pick($event)" class="hidden">
+                  <div @click="$refs.input.click()" @dragover.prevent @drop.prevent="drop($event)"
+                    class="upload-zone" :class="file ? 'has-file' : ''">
+                    <template x-if="!file">
+                      <div class="upload-placeholder">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+                        <span class="upload-hint">Click or drag & drop</span>
+                        <span class="upload-sub">JPG · PNG · PDF up to 10 MB</span>
+                      </div>
+                    </template>
+                    <template x-if="file && !isPdf">
+                      <img :src="preview" class="upload-img-preview">
+                    </template>
+                    <template x-if="file && isPdf">
+                      <div class="upload-pdf-preview">
+                        <svg class="upload-pdf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+                        <span class="upload-pdf-name" x-text="filename"></span>
+                        <span class="upload-pdf-size" x-text="filesize"></span>
+                      </div>
+                    </template>
+                  </div>
+                  <button type="button" x-show="file" @click.stop="clear($refs.input)"
+                    class="upload-clear" title="Remove">×</button>
+                </div>
               </div>
               <div>
                 <label class="pub-label">
                   Organisation Logo <span class="text-light-1 font-normal">(optional · JPG/PNG/WebP · max 10MB)</span>
                 </label>
-                <input type="file" name="org_logo" accept="image/*" class="pub-file">
+                <div x-data="fileUpload()" class="relative">
+                  <input type="file" name="org_logo" accept="image/*"
+                    x-ref="input" @change="pick($event)" class="hidden">
+                  <div @click="$refs.input.click()" @dragover.prevent @drop.prevent="drop($event)"
+                    class="upload-zone" :class="file ? 'has-file' : ''">
+                    <template x-if="!file">
+                      <div class="upload-placeholder">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+                        <span class="upload-hint">Click or drag & drop</span>
+                        <span class="upload-sub">JPG · PNG · WebP up to 10 MB</span>
+                      </div>
+                    </template>
+                    <template x-if="file && !isPdf">
+                      <img :src="preview" class="upload-img-preview">
+                    </template>
+                  </div>
+                  <button type="button" x-show="file" @click.stop="clear($refs.input)"
+                    class="upload-clear" title="Remove">×</button>
+                </div>
               </div>
             </div>
 
@@ -486,13 +596,103 @@ require __DIR__ . '/includes/header.php';
 </main>
 
 <style>
+/* ── Form controls ── */
 .pub-label{display:block;margin-bottom:.375rem;font-size:.875rem;font-weight:500;color:#fff}
 .pub-input{width:100%;border-radius:.375rem;border:1px solid #1a1a1a;background:#222;color:#fff;padding:.75rem 1rem;font-size:.875rem;outline:none;transition:border-color .2s}
 .pub-input::placeholder{color:#a89878}
 .pub-input:focus{border-color:#c8942a}
-.pub-file{display:block;width:100%;font-size:.875rem;color:#a89878;cursor:pointer}
-.pub-file::file-selector-button{margin-right:1rem;border-radius:.375rem;border:0;background:#222;padding:.625rem 1rem;font-size:.875rem;font-weight:500;color:#fff;cursor:pointer;transition:background .2s}
-.pub-file::file-selector-button:hover{background:#1a1a1a}
+
+/* ── Upload zone ── */
+.upload-zone{
+  position:relative;border:2px dashed #2a2a2a;border-radius:.5rem;
+  background:#1a1a1a;cursor:pointer;transition:border-color .2s,background .2s;
+  min-height:140px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.upload-zone:hover,.upload-zone.has-file{border-color:#c8942a;border-style:solid}
+.upload-placeholder{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:2rem;text-align:center}
+.upload-icon{width:2rem;height:2rem;color:#a89878}
+.upload-hint{font-size:.875rem;color:#fff;font-weight:500}
+.upload-sub{font-size:.75rem;color:#a89878}
+
+/* Image preview fills the zone */
+.upload-img-preview{
+  width:100%;height:140px;object-fit:contain;display:block;border-radius:.375rem;
+  background:#111;padding:.5rem;
+}
+
+/* PDF preview card */
+.upload-pdf-preview{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  padding:1.5rem;text-align:center;width:100%;
+}
+.upload-pdf-icon{width:2.5rem;height:2.5rem;color:#ef4444;flex-shrink:0}
+.upload-pdf-name{font-size:.8rem;color:#fff;font-weight:500;word-break:break-all;max-width:100%}
+.upload-pdf-size{font-size:.7rem;color:#a89878}
+
+/* Clear button */
+.upload-clear{
+  position:absolute;top:.4rem;right:.4rem;
+  width:1.5rem;height:1.5rem;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid #444;
+  color:#fff;font-size:1rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .15s;z-index:10;
+}
+.upload-clear:hover{background:#ef4444;border-color:#ef4444}
 </style>
+
+<script>
+function fileUpload() {
+  return {
+    file: null,
+    preview: null,
+    isPdf: false,
+    filename: '',
+    filesize: '',
+
+    pick(e) {
+      const f = e.target.files[0];
+      if (f) this.load(f);
+    },
+
+    drop(e) {
+      const f = e.dataTransfer.files[0];
+      if (!f) return;
+      // Assign to the hidden input so it submits with the form
+      const dt = new DataTransfer();
+      dt.items.add(f);
+      this.$refs.input.files = dt.files;
+      this.load(f);
+    },
+
+    load(f) {
+      this.file = f;
+      this.filename = f.name;
+      const kb = f.size / 1024;
+      this.filesize = kb >= 1024
+        ? (kb / 1024).toFixed(1) + ' MB'
+        : Math.round(kb) + ' KB';
+      this.isPdf = f.type === 'application/pdf';
+
+      if (!this.isPdf) {
+        const reader = new FileReader();
+        reader.onload = e => { this.preview = e.target.result; };
+        reader.readAsDataURL(f);
+      } else {
+        this.preview = null;
+      }
+    },
+
+    clear(input) {
+      this.file = null;
+      this.preview = null;
+      this.isPdf = false;
+      this.filename = '';
+      this.filesize = '';
+      input.value = '';
+    }
+  }
+}
+</script>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
