@@ -32,11 +32,14 @@ if (empty($featured_cars)) {
 }
 
 // Slider: up to 5 cars with images for the hero banner
+// LEFT JOIN so cars with is_primary images appear first; falls back to thumbnail_path
 $slider_cars = $db->query("
-    SELECT c.make, c.model, c.thumbnail_path, ci.file_path AS banner_path
+    SELECT c.make, c.model, c.thumbnail_path,
+           COALESCE(ci.file_path, c.thumbnail_path) AS banner_path
     FROM cars c
-    JOIN car_images ci ON ci.car_id = c.id AND ci.is_primary = 1
-    WHERE c.status = 'available' AND c.thumbnail_path IS NOT NULL
+    LEFT JOIN car_images ci ON ci.car_id = c.id AND ci.is_primary = 1
+    WHERE c.status = 'available'
+      AND (ci.file_path IS NOT NULL OR c.thumbnail_path IS NOT NULL)
     ORDER BY c.is_featured DESC, c.sort_order ASC, c.id DESC
     LIMIT 5
 ")->fetchAll();
