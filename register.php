@@ -152,7 +152,7 @@ require __DIR__ . '/includes/header.php';
 
       <?php if ($success): ?>
       <!-- ── Success state ── -->
-      <div class="rounded bg-dark-3 border border-green-500/30 p-10 text-center">
+      <div class="rounded bg-dark-3 py-6 text-center">
         <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10 border border-green-500/30">
           <i class="icon-check text-green-400 text-3xl"></i>
         </div>
