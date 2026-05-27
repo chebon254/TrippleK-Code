@@ -96,8 +96,8 @@ require __DIR__ . '/../includes/admin_header.php';
     <div class="relative flex-1 min-w-[200px]">
       <input type="text" name="search" value="<?= h($search) ?>"
         placeholder="Booking ref, customer, receipt..."
-        class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 py-2.5 pr-4 pl-10 text-sm outline-none">
-      <i class="icon-search text-light-1 absolute top-1/2 left-3 -translate-y-1/2 text-base"></i>
+        class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 py-2.5 pr-4 pl-12 text-sm outline-none">
+      <i class="icon-search text-light-1 absolute top-1/2 left-4 -translate-y-1/2 text-base"></i>
     </div>
     <select name="method" class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
       <option value="">All Methods</option>
