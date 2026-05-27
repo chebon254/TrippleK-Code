@@ -85,7 +85,7 @@ require __DIR__ . '/../includes/admin_header.php';
   </div>
   <div class="rounded bg-dark-3 px-6 py-4 shadow-[0_10px_30px_0_#05103608] text-right">
     <div class="text-light-1 text-xs mb-1">Total Collected</div>
-    <div class="text-dark-1 text-xl font-bold"><?= format_kes($totals['total']) ?></div>
+    <div class="text-white text-xl font-bold"><?= format_kes($totals['total']) ?></div>
     <div class="text-light-1 text-xs mt-1"><?= number_format($totals['cnt']) ?> successful payments</div>
   </div>
 </div>
@@ -161,7 +161,7 @@ require __DIR__ . '/../includes/admin_header.php';
             <div class="text-white text-sm font-medium"><?= h($p['full_name']) ?></div>
             <div class="text-light-1 text-xs"><?= h($p['phone']) ?></div>
           </td>
-          <td class="px-4 py-4 text-sm font-medium text-dark-1 hidden md:table-cell whitespace-nowrap">
+          <td class="px-4 py-4 text-sm font-medium text-white hidden md:table-cell whitespace-nowrap">
             <?php
             echo match($p['payment_method']) {
                 'card'          => '💳 Card',
@@ -173,7 +173,7 @@ require __DIR__ . '/../includes/admin_header.php';
             };
             ?>
           </td>
-          <td class="px-4 py-4 text-right text-sm font-semibold text-dark-1 whitespace-nowrap">
+          <td class="px-4 py-4 text-right text-sm font-semibold text-white whitespace-nowrap">
             <?= format_kes($p['amount']) ?>
           </td>
           <td class="px-4 py-4 hidden lg:table-cell whitespace-nowrap">
