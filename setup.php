@@ -59,7 +59,7 @@ try {
   <strong>Success!</strong> Executed <?= $executed ?> SQL statements.<br>
   Database tables and seed data are ready.<br><br>
   <strong>Default admin credentials:</strong><br>
-  Email: <code>admin@tripplek.co.ke</code><br>
+  Email: <code>admin@trippleklogistics.com</code><br>
   Password: <code>Admin@1234</code><br><br>
   <a href="/admin/login.php">Go to Admin Login &rarr;</a><br>
   <a href="/index.php">Go to Homepage &rarr;</a>

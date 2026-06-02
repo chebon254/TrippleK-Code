@@ -80,7 +80,7 @@ require __DIR__ . '/../includes/admin_header.php';
             ['company_tagline', 'Tagline',         'text',  'Your road, our wheels'],
             ['company_phone',   'Primary Phone',   'text',  '+254 700 000 000'],
             ['company_whatsapp','WhatsApp Number', 'text',  '+254700000000'],
-            ['company_email',   'Email Address',   'email', 'info@tripplek.co.ke'],
+            ['company_email',   'Email Address',   'email', 'info@trippleklogistics.com'],
             ['company_address', 'Physical Address','text',  'Nairobi, Kenya'],
           ];
           foreach ($general_fields as [$key, $label, $type, $placeholder]):
@@ -95,7 +95,7 @@ require __DIR__ . '/../includes/admin_header.php';
           <div>
             <label class="mb-1.5 block text-sm font-medium text-white">Website URL</label>
             <input type="text" name="company_website" value="<?= h($s['company_website'] ?? '') ?>"
-              placeholder="https://tripplek.co.ke"
+              placeholder="https://trippleklogistics.com"
               class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div class="sm:col-span-2">

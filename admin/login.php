@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="email" id="email" name="email" required autocomplete="email"
           value="<?= h($_POST['email'] ?? '') ?>"
           class="border-border focus:border-blue-1 w-full rounded border px-4 py-3 text-sm outline-none focus:border-2"
-          placeholder="admin@tripplek.co.ke">
+          placeholder="admin@trippleklogistics.com">
       </div>
 
       <div class="mb-6" x-data="{ show: false }">

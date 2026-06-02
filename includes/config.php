@@ -26,7 +26,7 @@ define('DB_SOCKET',  '');                               // empty = use host+port
 define('DB_CHARSET', 'utf8mb4');
 
 // ─── Application ─────────────────────────────────────────────────────────────
-define('APP_URL',  'https://saddlebrown-coyote-537196.hostingersite.com');  // → https://tripplek.co.ke on final deploy
+define('APP_URL',  'https://trippleklogistics.com');
 define('APP_ENV',  'production');
 define('APP_NAME', 'Tripple K');
 

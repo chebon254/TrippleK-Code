@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $to      = $company_email;
             $subj    = '[Tripple K] ' . ($subject ?: 'Website Enquiry') . ' from ' . $name;
             $body    = "Name: {$name}\nEmail: {$email}\n\nMessage:\n{$message}";
-            $headers = "From: noreply@tripplek.co.ke\r\nReply-To: {$email}";
+            $headers = "From: noreply@trippleklogistics.com\r\nReply-To: {$email}";
             mail($to, $subj, $body, $headers);
         }
         $success = true;
