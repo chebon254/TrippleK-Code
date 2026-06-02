@@ -328,12 +328,12 @@ require __DIR__ . '/../includes/admin_header.php';
 
       <!-- Pricing -->
       <div class="rounded bg-dark-3 border border-border p-6">
-        <h2 class="mb-4 text-base font-medium text-white">Pricing (KES)</h2>
+        <h2 class="mb-4 text-base font-medium text-white">Pricing (USD)</h2>
         <div class="space-y-4">
           <div>
             <label class="mb-1.5 block text-sm font-medium text-white">Price Per Day *</label>
             <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">USD</span>
               <input type="number" name="price_per_day" required min="0" step="100"
                 value="<?= h($_POST['price_per_day'] ?? '') ?>"
                 class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-3 pl-12 text-sm outline-none">
@@ -342,7 +342,7 @@ require __DIR__ . '/../includes/admin_header.php';
           <div>
             <label class="mb-1.5 block text-sm font-medium text-white">Airport Transfer Rate</label>
             <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">USD</span>
               <input type="number" name="price_airport" min="0" step="100"
                 value="<?= h($_POST['price_airport'] ?? '') ?>"
                 class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-3 pl-12 text-sm outline-none"
@@ -352,7 +352,7 @@ require __DIR__ . '/../includes/admin_header.php';
           <div>
             <label class="mb-1.5 block text-sm font-medium text-white">Wedding Package Rate</label>
             <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">USD</span>
               <input type="number" name="price_wedding" min="0" step="100"
                 value="<?= h($_POST['price_wedding'] ?? '') ?>"
                 class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-3 pl-12 text-sm outline-none"

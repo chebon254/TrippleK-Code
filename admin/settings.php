@@ -129,12 +129,12 @@ require __DIR__ . '/../includes/admin_header.php';
               class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-white">Min Security Deposit (KES)</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Min Security Deposit (USD)</label>
             <input type="number" name="security_deposit_min" value="<?= h($s['security_deposit_min'] ?? '15000') ?>"
               class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-white">Max Security Deposit (KES)</label>
+            <label class="mb-1.5 block text-sm font-medium text-white">Max Security Deposit (USD)</label>
             <input type="number" name="security_deposit_max" value="<?= h($s['security_deposit_max'] ?? '50000') ?>"
               class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>

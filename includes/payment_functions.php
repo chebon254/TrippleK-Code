@@ -27,12 +27,12 @@ function paystack_secret_key(): string {
  * On success: $result['data']['authorization_url'] and $result['data']['reference'].
  */
 function paystack_initialize_transaction(array $booking, array $customer): array {
-    $amount_kobo = (int) round((float)$booking['total_amount'] * 100); // KES → kobo/cents
+    $amount_cents = (int) round((float)$booking['total_amount'] * 100); // USD → cents
 
     $payload = [
         'email'        => $customer['email'],
-        'amount'       => $amount_kobo,
-        'currency'     => 'KES',
+        'amount'       => $amount_cents,
+        'currency'     => 'USD',
         'reference'    => $booking['booking_ref'],
         'callback_url' => APP_URL . '/booking.php?payment=complete&ref=' . urlencode($booking['booking_ref']),
         'channels'     => ['card', 'mobile_money', 'bank'],

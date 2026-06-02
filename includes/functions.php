@@ -10,7 +10,7 @@ function h(string $s): string {
 // ─── Currency ────────────────────────────────────────────────────────────────
 
 function format_kes(float $amount): string {
-    return 'KES ' . number_format($amount, 2);
+    return '$ ' . number_format($amount, 2);
 }
 
 // ─── Date helpers ────────────────────────────────────────────────────────────

@@ -162,7 +162,7 @@ require __DIR__ . '/includes/header.php';
             $requirements = [
               'Valid National ID or Passport',
               "Valid driver's licence (for self-drive hires)",
-              'Security deposit: KES 15,000 – 50,000 depending on vehicle',
+              'Security deposit: $150 – $500 depending on vehicle',
               'Minimum age: 23 years',
               'At least 2 years of driving experience',
             ];

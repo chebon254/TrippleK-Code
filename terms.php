@@ -50,10 +50,10 @@ require __DIR__ . '/includes/header.php';
             $terms_sections = [
               ['1. Rental Agreement', "By completing a booking with {$company_name}, you agree to be bound by these terms and conditions. A binding contract is formed when you receive a booking confirmation from us."],
               ['2. Driver Requirements', "All drivers must be at least 23 years of age and hold a valid driving licence. Foreign nationals must hold an International Driving Permit in addition to their national licence. A minimum of 2 years driving experience is required."],
-              ['3. Security Deposit', "A refundable security deposit of KES 15,000 to KES 50,000 (depending on vehicle category) is required at the time of vehicle collection. The deposit is refunded within 7 business days of vehicle return, subject to no damage or outstanding charges."],
-              ['4. Payment Terms', "Full payment is required before vehicle collection unless otherwise agreed in writing. We accept M-Pesa (Lipa Na M-Pesa), Airtel Money, Visa/Mastercard via Flutterwave, and bank transfers. All prices are in Kenya Shillings (KES) and are inclusive of VAT where applicable."],
-              ['5. Vehicle Use', "Vehicles must not be driven outside Kenya without prior written consent. The vehicle must not be used to carry more passengers than its rated capacity, for racing or off-road activities, or for any illegal purpose. Smoking is strictly prohibited in all vehicles."],
-              ['6. Fuel Policy', "Vehicles are provided with a full tank of fuel and must be returned with a full tank. If returned with less fuel, the cost of refuelling plus a KES 500 service charge will be deducted from the security deposit."],
+              ['3. Security Deposit', "A refundable security deposit of $150 to $500 (depending on vehicle category) is required at the time of vehicle collection. The deposit is refunded within 7 business days of vehicle return, subject to no damage or outstanding charges."],
+              ['4. Payment Terms', "Full payment is required before vehicle collection unless otherwise agreed in writing. We accept Visa/Mastercard and bank transfers. All prices are in US Dollars (USD)."],
+              ['5. Vehicle Use', "Vehicles must not be driven outside the agreed territory without prior written consent. The vehicle must not be used to carry more passengers than its rated capacity, for racing or off-road activities, or for any illegal purpose. Smoking is strictly prohibited in all vehicles."],
+              ['6. Fuel Policy', "Vehicles are provided with a full tank of fuel and must be returned with a full tank. If returned with less fuel, the cost of refuelling plus a $5 service charge will be deducted from the security deposit."],
               ['7. Damage &amp; Insurance', "The renter is liable for any damage to the vehicle during the rental period. Our vehicles carry comprehensive insurance, but the renter remains responsible for the excess/deductible amount. Any damage must be reported to us immediately."],
               ['8. Late Returns', "Late returns of more than 2 hours will be charged at the daily rate prorated per hour. Continued use without authorisation will be treated as vehicle theft and reported to the police."],
               ['9. Governing Law', "These terms are governed by the laws of Kenya. Any disputes shall be subject to the exclusive jurisdiction of the courts of Kenya."],
@@ -72,7 +72,7 @@ require __DIR__ . '/includes/header.php';
             <div class="mt-9">
               <h2 class="text-base font-medium">5. Cancellations &amp; Refunds</h2>
               <ul class="text-white text-15 mt-2 space-y-2 leading-relaxed list-disc pl-5">
-                <li>More than 48 hours before pickup: full refund minus a KES 500 processing fee.</li>
+                <li>More than 48 hours before pickup: full refund minus a $5 processing fee.</li>
                 <li>24–48 hours before pickup: 50% refund.</li>
                 <li>Less than 24 hours before pickup: no refund.</li>
                 <li>No-shows: no refund.</li>

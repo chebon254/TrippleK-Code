@@ -319,13 +319,13 @@ require __DIR__ . '/../includes/admin_header.php';
     <!-- Sidebar -->
     <div class="space-y-6">
       <div class="rounded bg-dark-3 border border-border p-6">
-        <h2 class="mb-4 text-base font-medium text-white">Pricing (KES)</h2>
+        <h2 class="mb-4 text-base font-medium text-white">Pricing (USD)</h2>
         <div class="space-y-4">
           <?php foreach (['price_per_day'=>'Price Per Day *','price_airport'=>'Airport Transfer','price_wedding'=>'Wedding Package'] as $n=>$l): ?>
           <div>
             <label class="mb-1.5 block text-sm font-medium text-white"><?= $l ?></label>
             <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">KES</span>
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">USD</span>
               <input type="number" name="<?= $n ?>" min="0" step="100"
                 value="<?= h((string)($car[$n] ?? '')) ?>"
                 class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-3 pl-12 text-sm outline-none"

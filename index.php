@@ -375,7 +375,7 @@ require __DIR__ . '/includes/header.php';
               'Original National ID or Valid Passport',
               'Valid Driving License (min. 2 years experience)',
               'Entry Visa — for foreign nationals',
-              'Security Deposit: KES ' . number_format((float)get_setting('security_deposit_min','15000'))
+              'Security Deposit: $ ' . number_format((float)get_setting('security_deposit_min','15000'))
                 . ' – ' . number_format((float)get_setting('security_deposit_max','50000')),
             ];
             foreach ($reqs as $r):

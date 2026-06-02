@@ -205,7 +205,7 @@ require __DIR__ . '/includes/header.php';
                     ? number_format($booking['total_amount'] / $booking['num_days'], 2)
                     : number_format($booking['total_amount'], 2);
                   ?>
-                  KES <?= $rate ?>
+                  $ <?= $rate ?>
                 </td>
                 <td class="px-4 py-3 text-right"><?= format_kes($booking['total_amount']) ?></td>
               </tr>

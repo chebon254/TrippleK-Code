@@ -40,7 +40,7 @@ define('UPLOAD_URL',  '/uploads/');
 define('SESSION_NAME', 'TRIPPLEK_ADMIN');
 
 // ─── Currency ────────────────────────────────────────────────────────────────
-define('CURRENCY', 'KES');
+define('CURRENCY', 'USD');
 
 // ─── PHP settings ────────────────────────────────────────────────────────────
 if (APP_ENV === 'development') {

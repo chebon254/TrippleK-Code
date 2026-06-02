@@ -215,10 +215,10 @@ require __DIR__ . '/includes/header.php';
               <!-- Price Range -->
               <div class="pb-6"
                 x-data="rangeSlider({ min: 0, max: <?= $max_price_db ?>, startLower: <?= (int)($f_min_price ?: 0) ?>, startUpper: <?= (int)($f_max_price ?: $max_price_db) ?>, step: 500 })">
-                <h5 class="text-white mb-3 text-lg font-medium">Price / Day (KES)</h5>
+                <h5 class="text-white mb-3 text-lg font-medium">Price / Day (USD)</h5>
                 <div class="text-white mb-5 flex justify-between text-base">
-                  <span>KES <span x-text="lower.toLocaleString()"></span></span>
-                  <span>KES <span x-text="upper.toLocaleString()"></span></span>
+                  <span>$ <span x-text="lower.toLocaleString()"></span></span>
+                  <span>$ <span x-text="upper.toLocaleString()"></span></span>
                 </div>
                 <div x-ref="slider" class="price-slider px-1"></div>
                 <input type="hidden" name="min_price" x-bind:value="lower">

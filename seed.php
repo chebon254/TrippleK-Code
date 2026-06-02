@@ -167,13 +167,15 @@ $log[] = "✓ Cars seeded ({$inserted})";
 
 // ── 5. Settings defaults ───────────────────────────────────────────────────
 $defaults = [
-    ['company_name',    'Tripple K Car Hire'],
-    ['company_phone',   '+254 700 000 000'],
-    ['company_email',   'info@trippleklogistics.com'],
-    ['company_whatsapp','+254700000000'],
-    ['company_address', 'Nairobi, Kenya'],
-    ['company_website', 'https://trippleklogistics.com'],
-    ['maps_embed_url',  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63820.78675869162!2d36.798130034814456!3d-1.2950571305451974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi!5e0!3m2!1sen!2ske!4v1778769785399!5m2!1sen!2ske'],
+    ['company_name',         'Tripple K Car Hire'],
+    ['company_phone',        '+254 700 000 000'],
+    ['company_email',        'info@trippleklogistics.com'],
+    ['company_whatsapp',     '+254700000000'],
+    ['company_address',      'Nairobi, Kenya'],
+    ['company_website',      'https://trippleklogistics.com'],
+    ['maps_embed_url',       ''],
+    ['security_deposit_min', '150'],
+    ['security_deposit_max', '500'],
 ];
 $set_stmt = $db->prepare("INSERT IGNORE INTO settings (setting_key, setting_val) VALUES (?,?)");
 foreach ($defaults as $s) {

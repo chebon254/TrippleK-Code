@@ -247,7 +247,7 @@ require __DIR__ . '/includes/header.php';
               <li class="flex items-start gap-2"><i class="icon-check text-green-500 mt-0.5"></i> Valid Driving License (min. 2 years experience)</li>
               <li class="flex items-start gap-2"><i class="icon-check text-green-500 mt-0.5"></i> Entry Visa — for foreign nationals</li>
               <li class="flex items-start gap-2"><i class="icon-check text-green-500 mt-0.5"></i>
-                Security Deposit: KES <?= number_format((float)$deposit_min) ?> – KES <?= number_format((float)$deposit_max) ?>
+                Security Deposit: $ <?= number_format((float)$deposit_min) ?> – $ <?= number_format((float)$deposit_max) ?>
               </li>
             </ul>
           </div>

@@ -144,7 +144,7 @@ require __DIR__ . '/../includes/admin_header.php';
             </td>
             <td class="px-4 py-3"><?= (int)$booking['num_days'] ?></td>
             <td class="px-4 py-3 text-right">
-              KES <?= number_format($booking['num_days'] > 0 ? $booking['total_amount'] / $booking['num_days'] : $booking['total_amount'], 2) ?>
+              $ <?= number_format($booking['num_days'] > 0 ? $booking['total_amount'] / $booking['num_days'] : $booking['total_amount'], 2) ?>
             </td>
             <td class="px-4 py-3 text-right"><?= format_kes($booking['total_amount']) ?></td>
           </tr>
