@@ -326,7 +326,7 @@ require __DIR__ . '/../includes/admin_header.php';
             <label class="mb-1.5 block text-sm font-medium text-white"><?= $l ?></label>
             <div class="relative">
               <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">USD</span>
-              <input type="number" name="<?= $n ?>" min="0" step="100"
+              <input type="number" name="<?= $n ?>" min="0" step="1"
                 value="<?= h((string)($car[$n] ?? '')) ?>"
                 class="border-border focus:border-dark-1 w-full rounded border py-2.5 pr-3 pl-12 text-sm outline-none"
                 <?= str_contains($l,'*')?'required':'' ?>>
