@@ -43,9 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Invalid request.';
     } else {
         // Update car record
-        $fields = ['category_id' => 'Category', 'make' => 'Make', 'model' => 'Model',
-                   'year' => 'Year', 'registration_number' => 'Registration Number',
-                   'price_per_day' => 'Price Per Day'];
+        $fields = ['category_id' => 'Category', 'make' => 'Make',
+                   'year' => 'Year', 'price_per_day' => 'Price Per Day'];
         foreach ($fields as $field => $label) {
             if (empty(trim($_POST[$field] ?? ''))) $errors[] = "{$label} is required.";
         }
@@ -64,9 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upd->execute([
                     (int)$_POST['category_id'],
                     trim($_POST['make']),
-                    trim($_POST['model']),
+                    !empty(trim($_POST['model'] ?? '')) ? trim($_POST['model']) : null,
                     (int)$_POST['year'],
-                    strtoupper(trim($_POST['registration_number'])),
+                    !empty(trim($_POST['registration_number'] ?? '')) ? strtoupper(trim($_POST['registration_number'])) : null,
                     trim($_POST['color'] ?? 'White'),
                     $_POST['transmission'] ?? 'automatic',
                     $_POST['fuel_type'] ?? 'petrol',
@@ -87,31 +86,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $car_id,
                 ]);
 
-                // New cropped images (base64 from Cropper.js)
-                $sort = count($images);
                 $imgStmt = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)');
+                $sort    = count($images);
 
-                if (!empty($_POST['cropped_images'])) {
-                    foreach ($_POST['cropped_images'] as $b64) {
-                        if (empty($b64)) continue;
-                        try {
-                            $path = save_base64_image($b64, "cars/{$car_id}", 1500, 650);
-                            $imgStmt->execute([$car_id, $path, $sort++, 0]);
-                        } catch (RuntimeException $e) {
-                            $errors[] = 'Image error: ' . $e->getMessage();
-                        }
+                // Hero carousel image (cropped 1500×650) — becomes primary
+                if (!empty($_POST['cropped_hero'])) {
+                    try {
+                        $path = save_base64_image($_POST['cropped_hero'], "cars/{$car_id}", 1500, 650);
+                        $imgStmt->execute([$car_id, $path, 0, 1]);
+                        $db->prepare('UPDATE car_images SET is_primary=0 WHERE car_id=? AND file_path!=?')->execute([$car_id, $path]);
+                    } catch (RuntimeException $e) {
+                        $errors[] = 'Carousel image error: ' . $e->getMessage();
                     }
                 }
 
-                // Fallback: regular file uploads
-                if (!empty($_FILES['car_images']['name'][0])) {
-                    foreach ($_FILES['car_images']['name'] as $i => $name) {
-                        if ($_FILES['car_images']['error'][$i] !== UPLOAD_ERR_OK) continue;
+                // Gallery images (any dimensions)
+                if (!empty($_FILES['gallery_images']['name'][0])) {
+                    foreach ($_FILES['gallery_images']['name'] as $i => $name) {
+                        if ($_FILES['gallery_images']['error'][$i] !== UPLOAD_ERR_OK) continue;
                         $file = [
-                            'name'     => $_FILES['car_images']['name'][$i],
-                            'tmp_name' => $_FILES['car_images']['tmp_name'][$i],
-                            'size'     => $_FILES['car_images']['size'][$i],
-                            'error'    => $_FILES['car_images']['error'][$i],
+                            'name'     => $_FILES['gallery_images']['name'][$i],
+                            'tmp_name' => $_FILES['gallery_images']['tmp_name'][$i],
+                            'size'     => $_FILES['gallery_images']['size'][$i],
+                            'error'    => $_FILES['gallery_images']['error'][$i],
                         ];
                         try {
                             $paths = upload_car_image($car_id, $file);
@@ -220,9 +217,9 @@ require __DIR__ . '/../includes/admin_header.php';
           <?php
           $text_fields = [
             ['make','Make *','text','e.g. Toyota'],
-            ['model','Model *','text','e.g. Land Cruiser V8'],
+            ['model','Model','text','e.g. Land Cruiser V8'],
             ['year','Year *','number',''],
-            ['registration_number','Registration Number *','text','e.g. KDA 123X'],
+            ['registration_number','Registration Number','text','e.g. KDA 123X'],
             ['color','Color','text','e.g. Pearl White'],
             ['engine_cc','Engine CC','number','e.g. 2500'],
             ['passenger_capacity','Passenger Capacity','number',''],
@@ -297,7 +294,8 @@ require __DIR__ . '/../includes/admin_header.php';
       </div>
       <?php endif; ?>
 
-      <!-- Add More Photos with Cropper -->
+      <!-- Add More Photos -->
+      <script>window._carFeatured = <?= $car['is_featured'] ? 'true' : 'false' ?>;</script>
       <?php include __DIR__ . '/../includes/car_image_uploader.php'; ?>
 
       <!-- Features -->
@@ -339,7 +337,8 @@ require __DIR__ . '/../includes/admin_header.php';
       <div class="rounded bg-dark-3 border border-border p-6">
         <h2 class="mb-4 text-base font-medium text-white">Options</h2>
         <label class="flex cursor-pointer items-center gap-3 mb-4">
-          <input type="checkbox" name="is_featured" <?= $car['is_featured'] ? 'checked' : '' ?>>
+          <input type="checkbox" name="is_featured" <?= $car['is_featured'] ? 'checked' : '' ?>
+            @change="$dispatch('featured-toggle', { checked: $event.target.checked })">
           <div>
             <div class="text-sm font-medium">Feature on Homepage</div>
             <div class="text-xs text-gray-400">Show in homepage carousel</div>

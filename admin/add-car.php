@@ -20,12 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Validate required fields
         $fields = [
-            'category_id'         => 'Category',
-            'make'                => 'Make',
-            'model'               => 'Model',
-            'year'                => 'Year',
-            'registration_number' => 'Registration Number',
-            'price_per_day'       => 'Price Per Day',
+            'category_id'  => 'Category',
+            'make'         => 'Make',
+            'year'         => 'Year',
+            'price_per_day'=> 'Price Per Day',
         ];
         foreach ($fields as $field => $label) {
             if (empty(trim($_POST[$field] ?? ''))) {
@@ -47,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([
                     (int)$_POST['category_id'],
                     trim($_POST['make']),
-                    trim($_POST['model']),
+                    !empty(trim($_POST['model'] ?? '')) ? trim($_POST['model']) : null,
                     (int)$_POST['year'],
-                    strtoupper(trim($_POST['registration_number'])),
+                    !empty(trim($_POST['registration_number'] ?? '')) ? strtoupper(trim($_POST['registration_number'])) : null,
                     trim($_POST['color'] ?? 'White'),
                     $_POST['transmission'] ?? 'automatic',
                     $_POST['fuel_type']    ?? 'petrol',
@@ -70,46 +68,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 $car_id = (int)$db->lastInsertId();
 
-                // Handle cropped images (base64 from Cropper.js UI)
-                $is_primary = true;
-                $sort       = 0;
                 $imgStmt    = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)');
+                $sort       = 0;
+                $hasPrimary = false;
 
-                if (!empty($_POST['cropped_images'])) {
-                    foreach ($_POST['cropped_images'] as $b64) {
-                        if (empty($b64)) continue;
-                        try {
-                            // Banner images: 1500×650 for hero slider
-                            $path = save_base64_image($b64, "cars/{$car_id}", 1500, 650);
-                            $imgStmt->execute([$car_id, $path, $sort++, $is_primary ? 1 : 0]);
-                            if ($is_primary) {
-                                $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')
-                                   ->execute([$path, $car_id]);
-                                $is_primary = false;
-                            }
-                        } catch (RuntimeException $e) {
-                            $errors[] = 'Image error: ' . $e->getMessage();
-                        }
+                // Hero carousel image (cropped 1500×650)
+                if (!empty($_POST['cropped_hero'])) {
+                    try {
+                        $path = save_base64_image($_POST['cropped_hero'], "cars/{$car_id}", 1500, 650);
+                        $imgStmt->execute([$car_id, $path, $sort++, 1]);
+                        $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')->execute([$path, $car_id]);
+                        $hasPrimary = true;
+                    } catch (RuntimeException $e) {
+                        $errors[] = 'Carousel image error: ' . $e->getMessage();
                     }
                 }
 
-                // Fallback: regular file uploads (drag-drop or multi-select)
-                if (!empty($_FILES['car_images']['name'][0])) {
-                    foreach ($_FILES['car_images']['name'] as $i => $name) {
-                        if ($_FILES['car_images']['error'][$i] !== UPLOAD_ERR_OK) continue;
+                // Gallery images (any dimensions)
+                if (!empty($_FILES['gallery_images']['name'][0])) {
+                    foreach ($_FILES['gallery_images']['name'] as $i => $name) {
+                        if ($_FILES['gallery_images']['error'][$i] !== UPLOAD_ERR_OK) continue;
                         $file = [
-                            'name'     => $_FILES['car_images']['name'][$i],
-                            'tmp_name' => $_FILES['car_images']['tmp_name'][$i],
-                            'size'     => $_FILES['car_images']['size'][$i],
-                            'error'    => $_FILES['car_images']['error'][$i],
+                            'name'     => $_FILES['gallery_images']['name'][$i],
+                            'tmp_name' => $_FILES['gallery_images']['tmp_name'][$i],
+                            'size'     => $_FILES['gallery_images']['size'][$i],
+                            'error'    => $_FILES['gallery_images']['error'][$i],
                         ];
+                        $isPrimary = !$hasPrimary && $sort === 0;
                         try {
                             $paths = upload_car_image($car_id, $file);
-                            $imgStmt->execute([$car_id, $paths['path'], $sort++, $is_primary ? 1 : 0]);
-                            if ($is_primary) {
-                                $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')
-                                   ->execute([$paths['path'], $car_id]);
-                                $is_primary = false;
+                            $imgStmt->execute([$car_id, $paths['path'], $sort++, $isPrimary ? 1 : 0]);
+                            if ($isPrimary) {
+                                $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')->execute([$paths['path'], $car_id]);
+                                $hasPrimary = true;
                             }
                         } catch (RuntimeException $e) {
                             $errors[] = 'Image upload error: ' . $e->getMessage();
@@ -202,8 +193,8 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-white">Model *</label>
-            <input type="text" name="model" required placeholder="e.g. Land Cruiser V8"
+            <label class="mb-1.5 block text-sm font-medium text-white">Model</label>
+            <input type="text" name="model" placeholder="e.g. Land Cruiser V8"
               value="<?= h($_POST['model'] ?? '') ?>"
               class="border-border focus:border-blue-1 w-full rounded border bg-dark-4 text-white placeholder-light-1 px-3 py-2.5 text-sm outline-none">
           </div>
@@ -216,8 +207,8 @@ require __DIR__ . '/../includes/admin_header.php';
           </div>
 
           <div>
-            <label class="mb-1.5 block text-sm font-medium text-white">Registration Number *</label>
-            <input type="text" name="registration_number" required placeholder="e.g. KDA 123X"
+            <label class="mb-1.5 block text-sm font-medium text-white">Registration Number</label>
+            <input type="text" name="registration_number" placeholder="e.g. KDA 123X"
               value="<?= h($_POST['registration_number'] ?? '') ?>"
               class="border-border focus:border-dark-1 w-full rounded border px-3 py-2.5 text-sm outline-none uppercase"
               style="text-transform:uppercase">
@@ -318,7 +309,8 @@ require __DIR__ . '/../includes/admin_header.php';
           class="mt-1 text-sm text-blue-1 hover:underline">+ Add Feature</button>
       </div>
 
-      <!-- Images with Cropper -->
+      <!-- Images -->
+      <script>window._carFeatured = <?= isset($_POST['is_featured']) ? 'true' : 'false' ?>;</script>
       <?php include __DIR__ . '/../includes/car_image_uploader.php'; ?>
 
     </div>
@@ -366,7 +358,8 @@ require __DIR__ . '/../includes/admin_header.php';
       <div class="rounded bg-dark-3 border border-border p-6">
         <h2 class="mb-4 text-base font-medium text-white">Display Options</h2>
         <label class="flex cursor-pointer items-center gap-3">
-          <input type="checkbox" name="is_featured" <?= isset($_POST['is_featured']) ? 'checked' : '' ?>>
+          <input type="checkbox" name="is_featured" <?= isset($_POST['is_featured']) ? 'checked' : '' ?>
+            @change="$dispatch('featured-toggle', { checked: $event.target.checked })">
           <div>
             <div class="text-sm font-medium">Feature on Homepage</div>
             <div class="text-xs text-gray-400">Show in homepage carousel</div>
