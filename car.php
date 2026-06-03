@@ -48,11 +48,35 @@ if (empty($gallery)) {
     $gallery[] = $primary_url;
 }
 
-$page_title       = h($car['make'] . ' ' . $car['model']) . ' — Car Hire Kenya';
-$page_description = 'Hire a ' . $car['make'] . ' ' . $car['model'] . ' in Kenya from ' . format_kes($car['price_per_day']) . ' per day.';
+$_car_name        = trim($car['make'] . ' ' . $car['model']);
+$page_title       = $_car_name . ' Car Hire in Nairobi, Kenya';
+$page_description = 'Hire a ' . $car['year'] . ' ' . $_car_name . ' in Kenya from ' . format_kes($car['price_per_day']) . '/day. '
+    . $car['passenger_capacity'] . ' seats, ' . $car['transmission'] . ', ' . $car['fuel_type'] . '. '
+    . 'Airport transfers & wedding packages available. Book online now.';
+$page_canonical   = APP_URL . '/car?id=' . $car_id;
+$page_og_image    = $car['thumbnail_path'] ? UPLOAD_URL . ltrim($car['thumbnail_path'], '/') : (APP_URL . '/assets/images/logo/tripplek-logo.jpeg');
 
 $deposit_min = get_setting('security_deposit_min', '15000');
 $deposit_max = get_setting('security_deposit_max', '50000');
+
+// Vehicle / Product schema for this car listing
+$page_schema = json_encode([
+    '@context' => 'https://schema.org',
+    '@type'    => 'Product',
+    'name'     => $_car_name . ' — Car Hire Kenya',
+    'description' => $page_description,
+    'image'    => $page_og_image,
+    'brand'    => ['@type' => 'Brand', 'name' => $car['make']],
+    'offers'   => [
+        '@type'           => 'Offer',
+        'priceCurrency'   => 'USD',
+        'price'           => (string)$car['price_per_day'],
+        'priceValidUntil' => date('Y-12-31'),
+        'availability'    => $car['status'] === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        'url'             => $page_canonical,
+        'seller'          => ['@type' => 'Organization', 'name' => get_setting('company_name', APP_NAME)],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
 $gallery_json = json_encode(array_values($gallery));
 $active_json  = json_encode($gallery[0] ?? '');

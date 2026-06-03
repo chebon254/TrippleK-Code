@@ -35,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_title  = 'Contact Us';
+$page_title   = 'Contact Us | Car Hire Nairobi, Kenya';
+$page_description = 'Contact Tripple K Car Hire in Nairobi, Kenya. Book a self-drive car, airport transfer, chauffeur or wedding package. Reach us by phone, WhatsApp or email.';
 $current_page = 'contact';
 $nav_white   = true;
 require __DIR__ . '/includes/header.php';

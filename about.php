@@ -11,7 +11,8 @@ $db = get_db();
 $fleet_count   = (int)$db->query("SELECT COUNT(*) FROM cars WHERE status != 'inactive'")->fetchColumn();
 $booking_count = (int)$db->query("SELECT COUNT(*) FROM bookings WHERE status IN ('confirmed','active','completed')")->fetchColumn();
 
-$page_title   = 'About Us';
+$page_title   = 'About Us | Trusted Car Hire & Transport in Nairobi, Kenya';
+$page_description = 'Tripple K Car Hire is a trusted vehicle rental and transport company in Nairobi, Kenya. Self-drive car hire, airport transfers, chauffeur services & wedding packages.';
 $current_page = 'about';
 require __DIR__ . '/includes/header.php';
 ?>

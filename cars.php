@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$page_title       = 'Browse Cars';
-$page_description = 'Filter and browse our full fleet of hire cars in Kenya — sedans, SUVs, executive and more.';
+$page_title       = 'Hire a Car in Kenya | Browse Our Full Fleet';
+$page_description = 'Browse our full fleet of hire cars in Kenya — saloons, SUVs/4x4s, executive vehicles & minibuses. Filter by category, passengers & daily rate. Book online in minutes.';
 
 $db = get_db();
 

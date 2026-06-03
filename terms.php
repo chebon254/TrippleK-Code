@@ -6,7 +6,8 @@ require_once __DIR__ . '/includes/functions.php';
 $company_name  = get_setting('company_name', 'Tripple K Car Hire');
 $company_email = get_setting('company_email', '');
 
-$page_title   = 'Terms & Conditions';
+$page_title   = 'Terms & Conditions | Tripple K Car Hire Kenya';
+$page_description = 'Rental terms and conditions for Tripple K Car Hire Kenya — driver requirements, security deposit, payment terms, fuel policy, cancellations & privacy policy.';
 $current_page = 'terms';
 require __DIR__ . '/includes/header.php';
 ?>

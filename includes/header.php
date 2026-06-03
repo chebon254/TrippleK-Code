@@ -1,8 +1,38 @@
 <?php
-// Determine current page for active nav highlighting
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 $site_name    = get_setting('company_name', APP_NAME);
 $whatsapp     = get_setting('company_whatsapp', '');
+
+// ── SEO helpers ──────────────────────────────────────────────────────────────
+$_req_path      = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+$_canonical     = $page_canonical ?? (rtrim(APP_URL, '/') . $_req_path);
+$_seo_desc      = $page_description ?? 'Affordable car hire, airport transfers, chauffeur and wedding packages in Nairobi, Kenya.';
+$_seo_image     = $page_og_image ?? (APP_URL . '/assets/images/logo/tripplek-logo.jpeg');
+$_raw_title     = $page_title ?? $site_name;
+
+// LocalBusiness JSON-LD (appears on every public page)
+$_ld = [
+    '@context'    => 'https://schema.org',
+    '@type'       => ['LocalBusiness', 'AutoRental'],
+    'name'        => $site_name,
+    'url'         => APP_URL,
+    'logo'        => APP_URL . '/assets/images/logo/tripplek-logo.jpeg',
+    'image'       => APP_URL . '/assets/images/logo/tripplek-logo.jpeg',
+    'description' => 'Trusted car hire, airport transfers, chauffeur and wedding packages in Nairobi, Kenya.',
+    'telephone'   => get_setting('company_phone', ''),
+    'email'       => get_setting('company_email', ''),
+    'address'     => [
+        '@type'           => 'PostalAddress',
+        'streetAddress'   => get_setting('company_address', 'Nairobi, Kenya'),
+        'addressLocality' => 'Nairobi',
+        'addressCountry'  => 'KE',
+    ],
+    'geo'         => ['@type' => 'GeoCoordinates', 'latitude' => '-1.2921', 'longitude' => '36.8219'],
+    'areaServed'  => ['@type' => 'Country', 'name' => 'Kenya'],
+    'priceRange'  => '$$',
+    'openingHours'=> 'Mo-Su 07:00-20:00',
+    'sameAs'      => [get_setting('company_website', APP_URL)],
+];
 ?>
 <!doctype html>
 <html lang="en">
@@ -10,8 +40,27 @@ $whatsapp     = get_setting('company_whatsapp', '');
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title><?= h($page_title ?? $site_name) ?> | <?= h($site_name) ?></title>
-  <meta name="description" content="<?= h($page_description ?? 'Affordable car hire, airport transfers, chauffeur and wedding packages in Kenya.') ?>">
+  <title><?= h($_raw_title) ?> | <?= h($site_name) ?></title>
+  <meta name="description" content="<?= h($_seo_desc) ?>">
+  <link rel="canonical" href="<?= h($_canonical) ?>">
+  <!-- Open Graph (WhatsApp / Facebook / LinkedIn) -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="<?= h($site_name) ?>">
+  <meta property="og:title"       content="<?= h($_raw_title) ?>">
+  <meta property="og:description" content="<?= h($_seo_desc) ?>">
+  <meta property="og:url"         content="<?= h($_canonical) ?>">
+  <meta property="og:image"       content="<?= h($_seo_image) ?>">
+  <meta property="og:locale"      content="en_KE">
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="<?= h($_raw_title) ?>">
+  <meta name="twitter:description" content="<?= h($_seo_desc) ?>">
+  <meta name="twitter:image"       content="<?= h($_seo_image) ?>">
+  <!-- Structured Data -->
+  <script type="application/ld+json"><?= json_encode($_ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
+  <?php if (!empty($page_schema)): ?>
+  <script type="application/ld+json"><?= $page_schema ?></script>
+  <?php endif; ?>
   <link rel="icon" href="/assets/images/logo/favicon.jpeg">
   <link href="/assets/bundle.css" rel="stylesheet">
   <style>

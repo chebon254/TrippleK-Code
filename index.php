@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$page_title       = get_setting('company_name', APP_NAME);
-$page_description = get_setting('company_tagline', 'Affordable car hire, airport transfers, chauffeur and wedding packages in Kenya.');
+$page_title       = 'Car Hire Nairobi Kenya | Affordable Self-Drive, Airport Transfers & Chauffeur';
+$page_description = 'Book affordable car hire in Nairobi, Kenya. Self-drive rentals, airport transfers, executive chauffeur & wedding packages. SUVs, sedans & 4x4s available. Book online now.';
 
 $db = get_db();
 

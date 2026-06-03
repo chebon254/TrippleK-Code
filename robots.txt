@@ -13,7 +13,7 @@ Disallow: /seed
 Allow: /
 
 # Sitemap
-Sitemap: https://saddlebrown-coyote-537196.hostingersite.com/sitemap
+Sitemap: https://trippleklogistics.com/sitemap
 
 # ── AI / LLM crawlers — explicitly allowed ──────────────────────────────────
 
@@ -51,4 +51,40 @@ Allow: /
 
 # Cohere
 User-agent: cohere-ai
+Allow: /
+
+# OpenAI SearchBot
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic (direct)
+User-agent: anthropic-ai
+Allow: /
+
+# ByteDance / TikTok AI
+User-agent: Bytespider
+Allow: /
+
+# DuckDuckGo AI
+User-agent: DuckAssistBot
+Allow: /
+
+# You.com AI search
+User-agent: YouBot
+Allow: /
+
+# Amazon Alexa / Amazonbot
+User-agent: Amazonbot
+Allow: /
+
+# Diffbot (AI-powered structured data)
+User-agent: Diffbot
+Allow: /
+
+# Mistral AI
+User-agent: MistralBot
+Allow: /
+
+# AI2 / Allen Institute
+User-agent: AI2Bot
 Allow: /
