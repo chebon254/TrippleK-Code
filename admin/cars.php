@@ -191,33 +191,59 @@ require __DIR__ . '/../includes/admin_header.php';
 
   <!-- Pagination -->
   <?php if ($pager['total_pages'] > 1): ?>
-  <div class="border-border mt-8 border-t pt-6">
+  <div class="border-border mt-6 border-t pt-5">
     <div class="flex flex-wrap items-center justify-between gap-4">
-      <?php if ($pager['has_prev']): ?>
-      <a href="<?= $pager['prev_url'] ?>"
-        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-dark-3 text-xs font-medium duration-300 hover:text-white">
-        <i class="icon-chevron-left"></i>
-      </a>
-      <?php else: ?>
-      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs opacity-40">
-        <i class="icon-chevron-left"></i>
-      </span>
-      <?php endif; ?>
 
+      <!-- showing X–Y of N -->
       <p class="text-light-1 text-sm">
-        <?= $offset + 1 ?>–<?= min($offset + $per_page, $total) ?> of <?= number_format($total) ?>
+        Showing <?= number_format($offset + 1) ?>–<?= number_format(min($offset + $per_page, $total)) ?>
+        of <?= number_format($total) ?> vehicles
       </p>
 
-      <?php if ($pager['has_next']): ?>
-      <a href="<?= $pager['next_url'] ?>"
-        class="text-light-1 hover:bg-blue-1 border-border hover:border-blue-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-dark-3 text-xs font-medium duration-300 hover:text-white">
-        <i class="icon-chevron-right"></i>
-      </a>
-      <?php else: ?>
-      <span class="text-light-1 border-border flex h-10 w-10 items-center justify-center rounded-full border bg-dark-3 text-xs opacity-40">
-        <i class="icon-chevron-right"></i>
-      </span>
-      <?php endif; ?>
+      <!-- page buttons -->
+      <div class="flex items-center gap-1">
+
+        <!-- prev -->
+        <?php if ($pager['has_prev']): ?>
+        <a href="<?= $pager['prev_url'] ?>"
+          class="border-border hover:bg-blue-1 hover:border-blue-1 flex h-9 w-9 items-center justify-center rounded border bg-dark-4 text-white transition hover:text-white">
+          <i class="icon-chevron-left text-sm"></i>
+        </a>
+        <?php else: ?>
+        <span class="border-border flex h-9 w-9 items-center justify-center rounded border bg-dark-4 text-light-1 opacity-40 cursor-not-allowed">
+          <i class="icon-chevron-left text-sm"></i>
+        </span>
+        <?php endif; ?>
+
+        <!-- numbered pages -->
+        <?php foreach ($pager['pages'] as $p): ?>
+          <?php if ($p === null): ?>
+          <span class="text-light-1 flex h-9 w-9 items-center justify-center text-sm">…</span>
+          <?php elseif ($p === $pager['current_page']): ?>
+          <span class="bg-blue-1 flex h-9 w-9 items-center justify-center rounded text-sm font-semibold text-white">
+            <?= $p ?>
+          </span>
+          <?php else: ?>
+          <a href="<?= sprintf($pager['url_pattern'], $p) ?>"
+            class="border-border hover:bg-blue-1 hover:border-blue-1 flex h-9 w-9 items-center justify-center rounded border bg-dark-4 text-sm text-white transition hover:text-white">
+            <?= $p ?>
+          </a>
+          <?php endif; ?>
+        <?php endforeach; ?>
+
+        <!-- next -->
+        <?php if ($pager['has_next']): ?>
+        <a href="<?= $pager['next_url'] ?>"
+          class="border-border hover:bg-blue-1 hover:border-blue-1 flex h-9 w-9 items-center justify-center rounded border bg-dark-4 text-white transition hover:text-white">
+          <i class="icon-chevron-right text-sm"></i>
+        </a>
+        <?php else: ?>
+        <span class="border-border flex h-9 w-9 items-center justify-center rounded border bg-dark-4 text-light-1 opacity-40 cursor-not-allowed">
+          <i class="icon-chevron-right text-sm"></i>
+        </span>
+        <?php endif; ?>
+
+      </div>
     </div>
   </div>
   <?php endif; ?>

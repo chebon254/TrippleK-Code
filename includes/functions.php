@@ -141,7 +141,25 @@ function payment_status_class(string $status): string {
 // ─── Pagination helper ───────────────────────────────────────────────────────
 
 function paginate(int $total, int $perPage, int $currentPage, string $urlPattern): array {
-    $totalPages = (int) ceil($total / $perPage);
+    $totalPages = max(1, (int) ceil($total / $perPage));
+    $currentPage = max(1, min($currentPage, $totalPages));
+
+    // Build window of page numbers: always show first, last, and up to 2 around current
+    $pages = [];
+    for ($i = 1; $i <= $totalPages; $i++) {
+        if ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 2) {
+            $pages[] = $i;
+        }
+    }
+    // Insert null (ellipsis) for gaps
+    $with_gaps = [];
+    $prev = null;
+    foreach ($pages as $p) {
+        if ($prev !== null && $p - $prev > 1) $with_gaps[] = null;
+        $with_gaps[] = $p;
+        $prev = $p;
+    }
+
     return [
         'total'        => $total,
         'per_page'     => $perPage,
@@ -151,5 +169,7 @@ function paginate(int $total, int $perPage, int $currentPage, string $urlPattern
         'has_next'     => $currentPage < $totalPages,
         'prev_url'     => $currentPage > 1 ? sprintf($urlPattern, $currentPage - 1) : null,
         'next_url'     => $currentPage < $totalPages ? sprintf($urlPattern, $currentPage + 1) : null,
+        'pages'        => $with_gaps,   // array of int|null (null = ellipsis)
+        'url_pattern'  => $urlPattern,
     ];
 }
