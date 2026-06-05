@@ -27,7 +27,7 @@ define('DB_CHARSET', 'utf8mb4');
 
 // ─── Application ─────────────────────────────────────────────────────────────
 define('APP_URL',  'https://trippleklogistics.com');
-define('APP_ENV',  'production');
+define('APP_ENV',  $_ENV['APP_ENV'] ?? 'production');
 define('APP_NAME', 'Tripple K');
 
 // ─── Paths ───────────────────────────────────────────────────────────────────

@@ -3,8 +3,8 @@ require_once __DIR__ . '/db.php';
 
 // ─── Output escaping ─────────────────────────────────────────────────────────
 
-function h(string $s): string {
-    return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+function h(?string $s): string {
+    return htmlspecialchars($s ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 // ─── Currency ────────────────────────────────────────────────────────────────
