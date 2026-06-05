@@ -301,11 +301,14 @@ require __DIR__ . '/includes/header.php';
                 <!-- Service type -->
                 <div class="border-border w-full rounded border px-5 py-2.5">
                   <p class="text-15 text-white mb-1 block font-medium">Service</p>
-                  <select name="service" class="outline-none text-white w-full bg-dark-1 cursor-pointer">
-                    <?php foreach ($services as $svc): ?>
-                    <option value="<?= h($svc['slug']) ?>"><?= h($svc['name']) ?></option>
-                    <?php endforeach; ?>
-                  </select>
+                  <div class="relative">
+                    <select name="service" class="outline-none border-0 text-white w-full bg-transparent cursor-pointer appearance-none pr-6">
+                      <?php foreach ($services as $svc): ?>
+                      <option value="<?= h($svc['slug']) ?>" class="bg-dark-1"><?= h($svc['name']) ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <i class="icon-chevron-down text-light-1 pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-xs"></i>
+                  </div>
                 </div>
 
                 <!-- Pickup location -->

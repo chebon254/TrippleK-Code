@@ -125,30 +125,34 @@ require __DIR__ . '/includes/header.php';
                   <div class="grid w-full gap-5">
 
                     <!-- Pickup date -->
-                    <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
-                      <p class="text-15 text-white mb-1 block font-medium">Pick up date</p>
+                    <div class="relative w-full">
+                      <p class="text-15 text-light-1 mb-1 block text-xs uppercase tracking-wide">Pick up date</p>
                       <input type="date" name="date_from" value="<?= h($f_date_from) ?>"
                         min="<?= date('Y-m-d') ?>"
-                        class="outline-none text-white w-full bg-transparent" />
+                        class="outline-none text-white w-full bg-transparent border-b border-border pb-1.5" />
                     </div>
 
                     <!-- Return date -->
-                    <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
-                      <p class="text-15 text-white mb-1 block font-medium">Return date</p>
+                    <div class="relative w-full">
+                      <p class="text-15 text-light-1 mb-1 block text-xs uppercase tracking-wide">Return date</p>
                       <input type="date" name="date_to" value="<?= h($f_date_to) ?>"
                         min="<?= h($f_date_from ?: date('Y-m-d')) ?>"
-                        class="outline-none text-white w-full bg-transparent" />
+                        class="outline-none text-white w-full bg-transparent border-b border-border pb-1.5" />
                     </div>
 
                     <!-- Passengers -->
-                    <div class="border-border relative w-full rounded border px-5 py-2.5 text-left">
-                      <p class="text-15 text-white mb-1 block font-medium">Passengers</p>
-                      <select name="passengers" class="outline-none text-white w-full bg-dark-1 cursor-pointer">
-                        <option value="">Any</option>
-                        <?php foreach ([1,2,3,4,5,6,7,8] as $p): ?>
-                        <option value="<?= $p ?>" <?= $f_passengers == $p ? 'selected' : '' ?>><?= $p ?>+</option>
-                        <?php endforeach; ?>
-                      </select>
+                    <div class="relative w-full">
+                      <p class="text-15 text-light-1 mb-1 block text-xs uppercase tracking-wide">Passengers</p>
+                      <div class="relative">
+                        <select name="passengers"
+                          class="outline-none border-0 border-b border-border text-white w-full bg-transparent cursor-pointer appearance-none pb-1.5 pr-6">
+                          <option value="" class="bg-dark-1">Any</option>
+                          <?php foreach ([1,2,3,4,5,6,7,8] as $p): ?>
+                          <option value="<?= $p ?>" class="bg-dark-1" <?= $f_passengers == $p ? 'selected' : '' ?>><?= $p ?>+</option>
+                          <?php endforeach; ?>
+                        </select>
+                        <i class="icon-chevron-down text-light-1 pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-xs"></i>
+                      </div>
                     </div>
                   </div>
 

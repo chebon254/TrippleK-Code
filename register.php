@@ -610,7 +610,7 @@ require __DIR__ . '/includes/header.php';
 <style>
 /* ── Form controls ── */
 .pub-label{display:block;margin-bottom:.375rem;font-size:.875rem;font-weight:500;color:#fff}
-.pub-input{width:100%;border-radius:.375rem;border:1px solid #1a1a1a;background:#222;color:#fff;padding:.75rem 1rem;font-size:.875rem;outline:none;transition:border-color .2s}
+.pub-input{width:100%;border-radius:.375rem;border:1px solid #1a1a1a;background:#222;color:#fff;padding:.75rem 1rem;font-size:.875rem;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
 .pub-input::placeholder{color:#a89878}
 .pub-input:focus{border-color:#c8942a}
 
