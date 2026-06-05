@@ -14,8 +14,10 @@ $filter_cat    = $_GET['category'] ?? '';
 $filter_status = $_GET['status']   ?? '';
 $search        = trim($_GET['q']   ?? '');
 $page          = max(1, (int)($_GET['page'] ?? 1));
-$per_page      = 15;
-$offset        = ($page - 1) * $per_page;
+$per_page_raw  = $_GET['per_page'] ?? '15';
+$show_all      = ($per_page_raw === 'all');
+$per_page      = $show_all ? PHP_INT_MAX : max(1, (int)$per_page_raw);
+$offset        = ($page - 1) * ($show_all ? 0 : $per_page);
 
 $where  = ['1=1'];
 $params = [];
@@ -46,17 +48,22 @@ $stmt = $db->prepare("
     JOIN car_categories cat ON c.category_id = cat.id
     WHERE $where_sql
     ORDER BY c.sort_order ASC, c.id DESC
-    LIMIT $per_page OFFSET $offset
+    LIMIT " . ($show_all ? 9999 : $per_page) . " OFFSET $offset
 ");
 $stmt->execute($params);
 $cars = $stmt->fetchAll();
 
 $categories = $db->query('SELECT slug, name FROM car_categories ORDER BY sort_order')->fetchAll();
-$pager      = paginate($total, $per_page, $page,
-    '/admin/cars?page=%d' .
-    ($filter_cat    ? "&category=$filter_cat"             : '') .
-    ($filter_status ? "&status=$filter_status"            : '') .
-    ($search        ? "&q=" . urlencode($search)          : ''));
+$pp_qs  = $show_all ? '&per_page=all' : ($per_page_raw !== '15' ? "&per_page={$per_page_raw}" : '');
+$pager  = $show_all
+    ? ['total'=>$total,'per_page'=>$total,'current_page'=>1,'total_pages'=>1,
+       'has_prev'=>false,'has_next'=>false,'prev_url'=>null,'next_url'=>null,'pages'=>[1],'url_pattern'=>'']
+    : paginate($total, $per_page, $page,
+        '/admin/cars?page=%d' .
+        ($filter_cat    ? "&category=$filter_cat"         : '') .
+        ($filter_status ? "&status=$filter_status"        : '') .
+        ($search        ? "&q=" . urlencode($search)      : '') .
+        $pp_qs);
 
 require __DIR__ . '/../includes/admin_header.php';
 ?>
@@ -93,8 +100,14 @@ require __DIR__ . '/../includes/admin_header.php';
       <option value="<?= $v ?>" <?= $filter_status === $v ? 'selected' : '' ?>><?= $l ?></option>
       <?php endforeach; ?>
     </select>
+    <select name="per_page" onchange="this.form.submit()"
+      class="border-border focus:border-blue-1 rounded border bg-dark-4 text-white px-3 py-2.5 text-sm outline-none">
+      <?php foreach (['15'=>'15 / page','30'=>'30 / page','50'=>'50 / page','all'=>'All'] as $v=>$l): ?>
+      <option value="<?= $v ?>" <?= $per_page_raw === $v ? 'selected' : '' ?>><?= $l ?></option>
+      <?php endforeach; ?>
+    </select>
     <button type="submit" class="bg-blue-1 hover:bg-dark-1 rounded px-5 py-2.5 text-sm font-medium text-white transition">Filter</button>
-    <?php if ($search || $filter_cat || $filter_status): ?>
+    <?php if ($search || $filter_cat || $filter_status || $per_page_raw !== '15'): ?>
     <a href="/admin/cars" class="border-border rounded border px-4 py-2.5 text-sm text-light-1 transition hover:bg-dark-4">Clear</a>
     <?php endif; ?>
   </div>
@@ -102,6 +115,45 @@ require __DIR__ . '/../includes/admin_header.php';
 
 <!-- Cars Table -->
 <div class="rounded bg-dark-3 border border-border p-6">
+
+  <!-- Top bar: count + page navigation -->
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <p class="text-light-1 text-sm">
+      <?php if ($show_all || $total <= $per_page): ?>
+        Showing all <?= number_format($total) ?> vehicles
+      <?php else: ?>
+        Showing <?= number_format($offset + 1) ?>–<?= number_format(min($offset + $per_page, $total)) ?>
+        of <?= number_format($total) ?> vehicles
+      <?php endif; ?>
+    </p>
+    <?php if ($pager['total_pages'] > 1): ?>
+    <div class="flex items-center gap-1">
+      <?php if ($pager['has_prev']): ?>
+      <a href="<?= $pager['prev_url'] ?>"
+        class="border-border hover:bg-blue-1 hover:border-blue-1 flex h-8 w-8 items-center justify-center rounded border bg-dark-4 text-white transition">
+        <i class="icon-chevron-left text-xs"></i>
+      </a>
+      <?php endif; ?>
+      <?php foreach ($pager['pages'] as $p): ?>
+        <?php if ($p === null): ?>
+        <span class="text-light-1 px-1 text-sm">…</span>
+        <?php elseif ($p === $pager['current_page']): ?>
+        <span class="bg-blue-1 flex h-8 w-8 items-center justify-center rounded text-xs font-bold text-white"><?= $p ?></span>
+        <?php else: ?>
+        <a href="<?= sprintf($pager['url_pattern'], $p) ?>"
+          class="border-border hover:bg-blue-1 hover:border-blue-1 flex h-8 w-8 items-center justify-center rounded border bg-dark-4 text-xs text-white transition"><?= $p ?></a>
+        <?php endif; ?>
+      <?php endforeach; ?>
+      <?php if ($pager['has_next']): ?>
+      <a href="<?= $pager['next_url'] ?>"
+        class="border-border hover:bg-blue-1 hover:border-blue-1 flex h-8 w-8 items-center justify-center rounded border bg-dark-4 text-white transition">
+        <i class="icon-chevron-right text-xs"></i>
+      </a>
+      <?php endif; ?>
+    </div>
+    <?php endif; ?>
+  </div>
+
   <div class="overflow-x-auto">
     <table class="w-full border-collapse">
       <thead class="bg-dark-4">
