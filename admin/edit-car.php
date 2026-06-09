@@ -119,19 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
-                // Delete selected images
-                if (!empty($_POST['delete_images'])) {
-                    foreach ($_POST['delete_images'] as $img_id) {
-                        $del_stmt = $db->prepare('SELECT file_path FROM car_images WHERE id=? AND car_id=?');
-                        $del_stmt->execute([(int)$img_id, $car_id]);
-                        $img = $del_stmt->fetch();
-                        if ($img) {
-                            delete_single_image($img['file_path']);
-                            $db->prepare('DELETE FROM car_images WHERE id=?')->execute([(int)$img_id]);
-                        }
-                    }
-                }
-
                 // Update thumbnail to first remaining image
                 $first_img = $db->prepare('SELECT file_path FROM car_images WHERE car_id=? ORDER BY sort_order LIMIT 1');
                 $first_img->execute([$car_id]);
@@ -277,21 +264,59 @@ require __DIR__ . '/../includes/admin_header.php';
 
       <!-- Current Images -->
       <?php if (!empty($images)): ?>
-      <div class="rounded bg-dark-3 border border-border p-6">
+      <div class="rounded bg-dark-3 border border-border p-6" id="photos-panel">
         <h2 class="mb-4 text-base font-medium text-white">Current Photos</h2>
-        <p class="mb-3 text-xs text-gray-400">Check images to delete them.</p>
-        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4" id="photos-grid">
           <?php foreach ($images as $img): ?>
-          <div class="relative rounded overflow-hidden">
+          <div class="relative rounded overflow-hidden group" id="img-<?= $img['id'] ?>">
             <img src="<?= h(UPLOAD_URL . $img['file_path']) ?>" alt="" class="h-24 w-full object-cover">
-            <label class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
-              <input type="checkbox" name="delete_images[]" value="<?= $img['id'] ?>" class="h-4 w-4">
-              <span class="ml-1 text-xs text-white">Delete</span>
-            </label>
+            <button type="button"
+              class="absolute top-1 right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-red-600 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-700"
+              onclick="deleteCarImage(<?= $img['id'] ?>, this)"
+              title="Delete photo">
+              <i class="icon-close text-xs"></i>
+            </button>
+            <?php if ($img['is_primary']): ?>
+            <span class="absolute bottom-1 left-1 rounded bg-blue-1/80 px-1.5 py-0.5 text-[10px] text-white">Primary</span>
+            <?php endif; ?>
           </div>
           <?php endforeach; ?>
         </div>
       </div>
+      <script>
+      async function deleteCarImage(imgId, btn) {
+        if (!confirm('Delete this photo permanently?')) return;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="icon-loading animate-spin text-xs"></i>';
+        const fd = new FormData();
+        fd.append('img_id', imgId);
+        fd.append('car_id', <?= $car_id ?>);
+        fd.append('csrf_token', '<?= h(csrf_token()) ?>');
+        try {
+          const res  = await fetch('/admin/delete-image.php', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (data.success) {
+            const el = document.getElementById('img-' + imgId);
+            el.style.transition = 'opacity 0.2s';
+            el.style.opacity    = '0';
+            setTimeout(() => {
+              el.remove();
+              if (!document.querySelector('#photos-grid [id^="img-"]')) {
+                document.getElementById('photos-panel').remove();
+              }
+            }, 200);
+          } else {
+            alert(data.error || 'Delete failed.');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="icon-close text-xs"></i>';
+          }
+        } catch {
+          alert('Network error. Please try again.');
+          btn.disabled = false;
+          btn.innerHTML = '<i class="icon-close text-xs"></i>';
+        }
+      }
+      </script>
       <?php endif; ?>
 
       <!-- Add More Photos -->
