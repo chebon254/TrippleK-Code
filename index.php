@@ -136,8 +136,8 @@ require __DIR__ . '/includes/header.php';
               <div class="relative aspect-150/65 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat max-md:py-40"
                 style="background-image: url(<?= h($slide_img) ?>)">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-2xl"></div>
-                <div class="absolute bottom-6 left-8 text-white">
-                  <div class="text-lg font-semibold"><?= h($sc['make'] . ' ' . $sc['model']) ?></div>
+                <div class="absolute bottom-6 left-10 text-white" style="text-shadow:0 1px 4px rgba(0,0,0,.7)">
+                  <div class="text-lg font-semibold tracking-wide"><?= h($sc['make'] . ' ' . $sc['model']) ?></div>
                 </div>
               </div>
             </div>
