@@ -172,7 +172,7 @@ require __DIR__ . '/../includes/admin_header.php';
 <?php endif; ?>
 
 <form method="POST" action="/admin/edit-car?id=<?= $car_id ?>" enctype="multipart/form-data"
-  x-data="{ features: <?= json_encode(array_values($features)) ?> }">
+  x-data="{ features: <?= htmlspecialchars(json_encode(array_values($features)), ENT_QUOTES, 'UTF-8') ?> }">
   <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
 
   <div class="grid gap-6 lg:grid-cols-3">

@@ -126,8 +126,8 @@ function carImageUploader() {
       Array.from(e.target.files).forEach(file => {
         this.gallery.push({ uid: ++this._uid, preview: URL.createObjectURL(file), file });
       });
+      e.target.value = '';  // clear before _syncInput — clearing after wipes the DataTransfer files
       this._syncInput();
-      e.target.value = '';
     },
 
     removeGallery(i) {
