@@ -26,7 +26,7 @@ if (!$car || $car['status'] === 'inactive') {
     exit;
 }
 
-$images_stmt = $db->prepare('SELECT file_path, alt_text, is_primary FROM car_images WHERE car_id = ? ORDER BY sort_order, id');
+$images_stmt = $db->prepare('SELECT file_path, alt_text, is_primary, is_hero FROM car_images WHERE car_id = ? ORDER BY sort_order, id');
 $images_stmt->execute([$car_id]);
 $car_images = $images_stmt->fetchAll();
 
@@ -36,10 +36,16 @@ $car_features = $feats_stmt->fetchAll();
 
 $services = $db->query('SELECT id, slug, name FROM services WHERE is_active = 1 ORDER BY sort_order')->fetchAll();
 
-// Build gallery URLs
-$gallery = [];
+// Build gallery URLs — hero (carousel) images are excluded from the thumbnail strip
+$gallery      = [];   // shown as clickable thumbnails + main viewer
+$hero_url     = null; // 1500×650 hero image, initial active view only
 foreach ($car_images as $img) {
-    $gallery[] = UPLOAD_URL . ltrim($img['file_path'], '/');
+    $url = UPLOAD_URL . ltrim($img['file_path'], '/');
+    if ($img['is_hero']) {
+        $hero_url = $url;
+    } else {
+        $gallery[] = $url;
+    }
 }
 $primary_url = $car['thumbnail_path']
     ? UPLOAD_URL . ltrim($car['thumbnail_path'], '/')
@@ -79,7 +85,7 @@ $page_schema = json_encode([
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
 $gallery_json = json_encode(array_values($gallery));
-$active_json  = json_encode($gallery[0] ?? '');
+$active_json  = json_encode($hero_url ?? $gallery[0] ?? '');
 
 $nav_white = true;
 require __DIR__ . '/includes/header.php';

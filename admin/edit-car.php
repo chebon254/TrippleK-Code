@@ -86,14 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $car_id,
                 ]);
 
-                $imgStmt = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)');
+                $imgStmt = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary, is_hero) VALUES (?,?,?,?,?)');
                 $sort    = count($images);
 
                 // Hero carousel image (cropped 1500×650) — becomes primary
                 if (!empty($_POST['cropped_hero'])) {
                     try {
                         $path = save_base64_image($_POST['cropped_hero'], "cars/{$car_id}", 1500, 650);
-                        $imgStmt->execute([$car_id, $path, 0, 1]);
+                        $imgStmt->execute([$car_id, $path, 0, 1, 1]);
                         $db->prepare('UPDATE car_images SET is_primary=0 WHERE car_id=? AND file_path!=?')->execute([$car_id, $path]);
                     } catch (RuntimeException $e) {
                         $errors[] = 'Carousel image error: ' . $e->getMessage();
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ];
                         try {
                             $paths = upload_car_image($car_id, $file);
-                            $imgStmt->execute([$car_id, $paths['path'], $sort++, 0]);
+                            $imgStmt->execute([$car_id, $paths['path'], $sort++, 0, 0]);
                         } catch (RuntimeException $e) {
                             $errors[] = 'Image error: ' . $e->getMessage();
                         }

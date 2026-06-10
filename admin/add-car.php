@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 $car_id = (int)$db->lastInsertId();
 
-                $imgStmt    = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary) VALUES (?,?,?,?)');
+                $imgStmt    = $db->prepare('INSERT INTO car_images (car_id, file_path, sort_order, is_primary, is_hero) VALUES (?,?,?,?,?)');
                 $sort       = 0;
                 $hasPrimary = false;
 
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!empty($_POST['cropped_hero'])) {
                     try {
                         $path = save_base64_image($_POST['cropped_hero'], "cars/{$car_id}", 1500, 650);
-                        $imgStmt->execute([$car_id, $path, $sort++, 1]);
+                        $imgStmt->execute([$car_id, $path, $sort++, 1, 1]);
                         $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')->execute([$path, $car_id]);
                         $hasPrimary = true;
                     } catch (RuntimeException $e) {
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $isPrimary = !$hasPrimary && $sort === 0;
                         try {
                             $paths = upload_car_image($car_id, $file);
-                            $imgStmt->execute([$car_id, $paths['path'], $sort++, $isPrimary ? 1 : 0]);
+                            $imgStmt->execute([$car_id, $paths['path'], $sort++, $isPrimary ? 1 : 0, 0]);
                             if ($isPrimary) {
                                 $db->prepare('UPDATE cars SET thumbnail_path = ? WHERE id = ?')->execute([$paths['path'], $car_id]);
                                 $hasPrimary = true;
