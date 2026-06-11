@@ -3,7 +3,10 @@
 
   <!-- Header row -->
   <div class="mb-2 flex items-center justify-between">
-    <p class="text-sm font-semibold text-white">Terms &amp; Conditions <span class="text-red-400">*</span></p>
+    <p class="text-sm font-semibold text-white">
+      Terms &amp; Conditions <span class="text-red-400">*</span>
+      <a href="/terms" target="_blank" style="font-size:.7rem;font-weight:400;color:#c8942a;margin-left:.4rem;text-decoration:underline">View full page &#8599;</a>
+    </p>
     <span x-show="!termsRead"
       style="display:inline-block;font-size:.7rem;color:#f59e0b;white-space:nowrap">
       &#9660; Scroll to read &amp; accept
