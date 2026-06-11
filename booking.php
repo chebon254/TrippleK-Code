@@ -257,6 +257,7 @@ require __DIR__ . '/includes/header.php';
       formError:   '',
       submitError: '',
       submitting:  false,
+      termsRead:   false,
 
       nextStep() {
         this.formError = '';
@@ -567,6 +568,9 @@ require __DIR__ . '/includes/header.php';
                 class="mb-4 rounded border border-red-2/30 bg-red-1/10 px-4 py-3 text-sm text-red-2"
                 x-text="submitError"></div>
 
+              <!-- Terms & Conditions -->
+              <?php require __DIR__ . '/includes/terms_scroll.php'; ?>
+
               <!-- Actions -->
               <div class="flex flex-wrap items-center justify-between gap-4">
                 <button @click="step = 1; formError = ''"
@@ -575,8 +579,9 @@ require __DIR__ . '/includes/header.php';
                   Edit Details
                 </button>
                 <button @click="submitBooking()"
-                  class="bg-blue-1 hover:bg-dark-1 text-15 inline-flex h-12 cursor-pointer items-center gap-3 rounded px-8 font-medium text-white transition"
-                  :disabled="submitting">
+                  class="bg-blue-1 text-15 inline-flex h-12 items-center gap-3 rounded px-8 font-medium text-white transition"
+                  :class="(submitting || !termsRead) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-dark-1 cursor-pointer'"
+                  :disabled="submitting || !termsRead">
                   <span x-show="!submitting">Confirm &amp; Pay</span>
                   <span x-show="submitting">Creating booking...</span>
                   <i class="icon-arrow-right text-sm" x-show="!submitting"></i>

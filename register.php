@@ -182,7 +182,8 @@ require __DIR__ . '/includes/header.php';
         x-data="{
           type: '<?= h($_POST['customer_type'] ?? 'individual') ?>',
           step: 1,
-          submitting: false
+          submitting: false,
+          termsRead: false
         }">
 
         <!-- Honeypot -->
@@ -418,13 +419,17 @@ require __DIR__ . '/includes/header.php';
               </div>
             </div>
 
-            <div class="mt-4 flex gap-3 justify-between">
+            <?php require __DIR__ . '/includes/terms_scroll.php'; ?>
+
+            <div class="mt-2 flex gap-3 justify-between">
               <button type="button" @click="step=2"
                 class="rounded border border-border px-6 py-3 text-sm text-light-1 hover:text-white transition-colors">
                 <i class="icon-arrow-left mr-1"></i> Back
               </button>
-              <button type="submit" :disabled="submitting"
-                class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
+              <button type="submit"
+                :disabled="submitting || !termsRead"
+                :class="(submitting || !termsRead) ? 'opacity-50 cursor-not-allowed bg-blue-1' : 'bg-blue-1 hover:bg-yellow-3 cursor-pointer'"
+                class="text-dark-1 rounded px-8 py-3 font-semibold transition-colors flex items-center gap-2">
                 <svg x-show="submitting" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
@@ -573,13 +578,17 @@ require __DIR__ . '/includes/header.php';
               </div>
             </div>
 
-            <div class="mt-4 flex gap-3 justify-between">
+            <?php require __DIR__ . '/includes/terms_scroll.php'; ?>
+
+            <div class="mt-2 flex gap-3 justify-between">
               <button type="button" @click="step=1"
                 class="rounded border border-border px-6 py-3 text-sm text-light-1 hover:text-white transition-colors">
                 <i class="icon-arrow-left mr-1"></i> Back
               </button>
-              <button type="submit" :disabled="submitting"
-                class="bg-blue-1 hover:bg-yellow-3 text-dark-1 rounded px-8 py-3 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
+              <button type="submit"
+                :disabled="submitting || !termsRead"
+                :class="(submitting || !termsRead) ? 'opacity-50 cursor-not-allowed bg-blue-1' : 'bg-blue-1 hover:bg-yellow-3 cursor-pointer'"
+                class="text-dark-1 rounded px-8 py-3 font-semibold transition-colors flex items-center gap-2">
                 <svg x-show="submitting" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
